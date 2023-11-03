@@ -30,9 +30,9 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder loginMember = new StringBuilder();
-			loginMember.append("select count(user_id) \n");
-			loginMember.append("from member \n");
-			loginMember.append("where user_id = ? \n");
+			loginMember.append("select count(userId) \n");
+			loginMember.append("from members \n");
+			loginMember.append("where userId = ? \n");
 			pstmt = conn.prepareStatement(loginMember.toString());
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
@@ -52,8 +52,8 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("insert into member (user_name, user_id, user_pass, user_salt, email_id, email_domain) \n");
-			sql.append("values (?, ?, ?, ?, ?, ?)");
+			sql.append("insert into members (userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate) \n");
+			sql.append("values (?, ?, ?, ?, ?, ?, now())");
 			// salt 추가로 인해 column 하나 추가
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, memberDto.getUserName());
@@ -79,18 +79,18 @@ public class MemberDaoImpl implements MemberDao {
 			conn = dbUtil.getConnection();
 			StringBuilder loginMember = new StringBuilder();
 			loginMember.append("select * \n");
-			loginMember.append("from member \n");
-			loginMember.append("where user_id = ? and user_pass = ? \n");
+			loginMember.append("from members \n");
+			loginMember.append("where userId = ? and userPwd = ? \n");
 			pstmt = conn.prepareStatement(loginMember.toString());
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
 			rs = pstmt.executeQuery();
 			if (rs.next()) {
 				memberDto = new MemberDto();
-				memberDto.setUserId(rs.getString("user_id"));
-				memberDto.setUserName(rs.getString("user_name"));
-				memberDto.setEmailId(rs.getString("email_id"));
-				memberDto.setEmailDomain(rs.getString("email_domain"));
+				memberDto.setUserId(rs.getString("userId"));
+				memberDto.setUserName(rs.getString("userName"));
+				memberDto.setEmailId(rs.getString("emailId"));
+				memberDto.setEmailDomain(rs.getString("emailDomain"));
 			}
 		} finally {
 			dbUtil.close(rs, pstmt, conn);
@@ -105,9 +105,9 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("update member \n");
-			sql.append("set user_id = ?, user_name = ?,  email_id = ?, email_domain = ?	\n");
-			sql.append("where user_id = ?");
+			sql.append("update members \n");
+			sql.append("set userId = ?, userName = ?,  emailId = ?, emailDomain = ?	\n");
+			sql.append("where userId = ?");
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, memberDto.getUserId());
 			pstmt.setString(2, memberDto.getUserName());
@@ -127,10 +127,10 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("update member \n");
-			sql.append("set user_pass = ?, user_salt = ? \n");
+			sql.append("update members \n");
+			sql.append("set userPwd = ?, userSalt = ? \n");
 			// 비밀번호 변경 시 salt도 변경하도록 반영
-			sql.append("where user_id = ?");
+			sql.append("where userId = ?");
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, password);
 			pstmt.setString(2, userSalt);
@@ -148,8 +148,8 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("delete from member \n");
-			sql.append("where user_id = ?");
+			sql.append("delete from members \n");
+			sql.append("where userId = ?");
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, userId);
 			pstmt.executeUpdate();
@@ -173,14 +173,14 @@ public class MemberDaoImpl implements MemberDao {
 		try {
 			conn = dbUtil.getConnection();
 			StringBuilder sql = new StringBuilder();
-			sql.append("select user_salt from member \n");
-			sql.append("where user_id = ?");
+			sql.append("select userSalt from members \n");
+			sql.append("where userId = ?");
 			pstmt = conn.prepareStatement(sql.toString());
 			pstmt.setString(1, userId);
 			rs = pstmt.executeQuery();
 
 			if (rs.next()) {
-				salt = rs.getString("user_salt");
+				salt = rs.getString("userSalt");
 			}
 		} finally {
 			dbUtil.close(pstmt, conn);

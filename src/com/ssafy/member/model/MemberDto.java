@@ -7,7 +7,6 @@ public class MemberDto {
 	private String userPwd;
 	private String userSalt;
 	// UserSalt 추가
-
 	private String emailId;
 	private String emailDomain;
 	private String joinDate;

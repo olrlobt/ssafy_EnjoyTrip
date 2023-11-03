@@ -8,15 +8,15 @@ import java.sql.SQLException;
 
 public class DBUtil {
 	
-//	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
-//	private static final String URL = "jdbc:mysql://localhost:3306/ssafyweb?serverTimezone=UTC";
-//	private static final String DB_ID = "ssafy";
-//	private static final String DB_PWD = "ssafy";
+	private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+	private static final String URL = "jdbc:mysql://localhost:3306/UX?serverTimezone=UTC";
+	private static final String DB_ID = "root";
+	private static final String DB_PWD = "ssafy";
 
-	private static final String DRIVER = "org.h2.Driver";
-	private static final String URL = "jdbc:h2:tcp://localhost/~/test;MODE=MySQL"; //jdbc:h2:~/test
-	private static final String DB_ID = "sa";
-	private static final String DB_PWD = "";
+//	private static final String DRIVER = "org.h2.Driver";
+//	private static final String URL = "jdbc:h2:tcp://localhost/~/test;MODE=MySQL"; //jdbc:h2:~/test
+//	private static final String DB_ID = "sa";
+//	private static final String DB_PWD = "";
 	
 	private static DBUtil instance = new DBUtil();
 
