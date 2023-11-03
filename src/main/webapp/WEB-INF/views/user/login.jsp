@@ -17,13 +17,13 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
-    <link href="${root }/assets/css/app.css" rel="stylesheet" />
+    <link href="${root }/css/app.css" rel="stylesheet" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>여행가자</title>
     <base href="/" />
-    <script type="text/javascript" src="${root}/assets/js/join.js"></script>
-    <script type="text/javascript" src="${root}/assets/js/member.js"></script>
-    <script type="text/javascript" src="${root}/assets/js/message.js"></script>
+    <script type="text/javascript" src="${root}/js/join.js"></script>
+    <script type="text/javascript" src="${root}/js/member.js"></script>
+    <script type="text/javascript" src="${root}/js/message.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   </head>
   <%@ include file="../common/header.jsp" %>
@@ -86,9 +86,23 @@
       crossorigin="anonymous"
     ></script>
     <script type="text/javascript">
-      window.onload = failLogin("${root}", "${msg}");
-      login("${root }/user");
-      mvJoin("${root}");
+    document.querySelector("#btn-mv-join").addEventListener("click", function () {
+    	location.href = "${root}/user/join";
+      });
+    
+      document.querySelector("#btn-login").addEventListener("click", function () {
+        if (!document.querySelector("#userid").value) {
+          alert("아이디 입력!!");
+          return;
+        } else if (!document.querySelector("#userpwd").value) {
+          alert("비밀번호 입력!!");
+          return;
+        } else {
+          let form = document.querySelector("#form-login");
+          form.setAttribute("action", "${root}/user/login");
+          form.submit();
+        }
+      });
     </script>
   </body>
 </html>

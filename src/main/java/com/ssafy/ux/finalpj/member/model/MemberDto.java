@@ -1,5 +1,12 @@
 package com.ssafy.ux.finalpj.member.model;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class MemberDto {
 
 	private String userId;
@@ -11,66 +18,5 @@ public class MemberDto {
 	private String emailDomain;
 	private String joinDate;
 
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
-	}
-
-	public String getUserName() {
-		return userName;
-	}
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-	public String getUserPwd() {
-		return userPwd;
-	}
-
-	public void setUserPwd(String userPwd) {
-		this.userPwd = userPwd;
-	}
-
-	public String getUserSalt() {
-		return userSalt;
-	}
-
-	public void setUserSalt(String userSalt) {
-		this.userSalt = userSalt;
-	}
-
-	public String getEmailId() {
-		return emailId;
-	}
-
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
-	}
-
-	public String getEmailDomain() {
-		return emailDomain;
-	}
-
-	public void setEmailDomain(String emailDomain) {
-		this.emailDomain = emailDomain;
-	}
-
-	public String getJoinDate() {
-		return joinDate;
-	}
-
-	public void setJoinDate(String joinDate) {
-		this.joinDate = joinDate;
-	}
-
-	@Override
-	public String toString() {
-		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", emailId="
-				+ emailId + ", emailDomain=" + emailDomain + ", joinDate=" + joinDate + "]";
-	}
-
+	
 }

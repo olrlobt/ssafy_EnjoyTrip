@@ -1,6 +1,7 @@
 package com.ssafy.ux.finalpj.board.model;
 
 import java.text.ParseException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

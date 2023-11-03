@@ -6,25 +6,25 @@
 <%--css--%>
 <head>
 <link rel="icon" href="assets/img/favicon.png">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/animate.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/magnific-popup.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/gijgo.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/nice-select.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/slick.css">
-<link rel="stylesheet" type="text/css" href="${root}/assets/css/style.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/animate.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/magnific-popup.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/gijgo.min.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/nice-select.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/slick.css">
+<link rel="stylesheet" type="text/css" href="${root}/css/style.css">
 
 <!-- magnific CSS -->
-<link rel="stylesheet" href="${root}/assets/css/magnific-popup.css">
-<link rel="stylesheet" href="${root}/assets/css/gijgo.min.css">
+<link rel="stylesheet" href="${root}/css/magnific-popup.css">
+<link rel="stylesheet" href="${root}/css/gijgo.min.css">
 <!-- niceselect CSS -->
-<link rel="stylesheet" href="${root}/assets/css/nice-select.css">
+<link rel="stylesheet" href="${root}/css/nice-select.css">
 <!-- slick CSS -->
-<link rel="stylesheet" href="${root}/assets/css/slick.css">
+<link rel="stylesheet" href="${root}/css/slick.css">
 <!-- style CSS -->
-<link rel="stylesheet" href="${root}/assets/css/style.css">
-<link rel="stylesheet" href="${root}/assets/css/style.css">
+<link rel="stylesheet" href="${root}/css/style.css">
+<link rel="stylesheet" href="${root}/css/style.css">
 </head>
 
    <!--::header part start::-->
@@ -43,15 +43,15 @@
                             <div class="header_nav_menu">
                                 <div id="header_nav_menuitem_off">
                                   <div class="header_nav_menuitem">
-                                    <a class="nav_link" href="${root }/user?action=mvlogin"><span>로그인</span></a>
-                                    <a class="nav_link" href="${root }/user?action=mvjoin"><span>회원가입</span></a>
+                                    <a class="nav_link" href="${root }/user/login"><span>로그인</span></a>
+                                    <a class="nav_link" href="${root }/user/join"><span>회원가입</span></a>
                                   </div>
                                 </div>
                       
                                 <!-- 로그인 후 나오게 -->
                                 <div id="header_nav_menuitem_on" style="display: none">
                                   <div class="header_nav_menuitem">
-                                    <a class="nav_link" href="${root }/user?action=logout"><span>로그아웃</span></a>
+                                    <a class="nav_link" href="${root }/user/logout"><span>로그아웃</span></a>
                                     <a class="nav_link"  href="#" id="mypage"><span>마이페이지</span></a>
                                   </div>
                                 </div>

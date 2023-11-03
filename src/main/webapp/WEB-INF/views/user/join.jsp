@@ -38,7 +38,7 @@
                 type="text"
                 class="form-control"
                 id="username"
-                name="username"
+                name="userName"
                 placeholder="이름..."
               />
             </div>
@@ -48,7 +48,7 @@
                 type="text"
                 class="form-control"
                 id="userid"
-                name="userid"
+                name="userId"
                 placeholder="아이디..."
               />
             </div>
@@ -59,7 +59,7 @@
                 type="text"
                 class="form-control"
                 id="userpwd"
-                name="userpwd"
+                name="userPwd"
                 placeholder="비밀번호..."
               />
             </div>
@@ -74,14 +74,14 @@
                   type="text"
                   class="form-control"
                   id="emailid"
-                  name="emailid"
+                  name="emailId"
                   placeholder="이메일아이디"
                 />
                 <span class="input-group-text">@</span>
                 <select
                   class="form-select"
                   id="emaildomain"
-                  name="emaildomain"
+                  name="emailDomain"
                   aria-label="이메일 도메인 선택"
                 >
                   <option selected>선택</option>
@@ -129,43 +129,52 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      // 비동기 id check
-      let isUseId = false;
-      let input = document.querySelector("#userid");
-      let resultDiv = document.querySelector("#result-view");
-      input.addEventListener("keyup", function () {
-        let checkid = input.value;
-        let len = checkid.length;
-        if (len < 4 || len > 16) {
-          isUseId = false;
-          resultDiv.setAttribute("class", "mb-3 fw-bold text-dark");
-          resultDiv.innerHTML = "아이디는 4자이상 16자이하입니다.";
+    let isUseId = false;
+    document.querySelector("#userid").addEventListener("keyup", function () {
+		let userid = this.value;
+		console.log(userid);
+  	 	let resultDiv = document.querySelector("#idcheck-result");
+  	 	if(userid.length < 6 || userid.length > 16) {
+  		 	resultDiv.setAttribute("class", "mb-3 text-dark");
+  		 	resultDiv.textContent = "아이디는 6자 이상 16자 이하 입니다.";
+  		 	isUseId = false;
+  	 	} else {
+  		 	fetch("${root}/user/" + userid)
+	   		.then(response => response.text())
+	   		.then(data => {
+	   			console.log(data);
+		 		if(data == 0) {
+		   			resultDiv.setAttribute("class", "mb-3 text-primary");
+	       			resultDiv.textContent = userid + "는 사용할 수 있습니다.";
+	       			isUseId = true;
+		 		} else {
+		   			resultDiv.setAttribute("class", "mb-3 text-danger");
+ 		       		resultDiv.textContent = userid + "는 사용할 수 없습니다.";
+ 		     		isUseId = false;
+		 		}
+  		   });
+  	 	}
+    });
+    
+	document.querySelector("#btn-join").addEventListener("click", function () {
+		if (!document.querySelector("#username").value) {
+          alert("이름 입력!!");
+          return;
+        } else if (!document.querySelector("#userid").value) {
+          alert("아이디 입력!!");
+          return;
+        } else if (!document.querySelector("#userpwd").value) {
+          alert("비밀번호 입력!!");
+          return;
+        } else if (document.querySelector("#userpwd").value != document.querySelector("#pwdcheck").value) {
+          alert("비밀번호 확인!!");
+          return;
         } else {
-          let url = "${root}/user?action=idcheck&checkid=" + checkid;
-
-          // CSV
-          fetch(url)
-                  .then((response) => response.text())
-                  .then((data) => resultViewText(data));
+          let form = document.querySelector("#form-join");
+          form.setAttribute("action", "${root}/user/join");
+          form.submit();
         }
-      });
-
-      function resultViewText(data) {
-        let val = data.split(",");
-        let id = val[0];
-        let cnt = val[1];
-        if (cnt == 0) {
-          isUseId = true;
-          resultDiv.setAttribute("class", "mb-3 text-success");
-          resultDiv.innerHTML = "<span class='fw-bold'>" + id + "</span>은 사용할 수 있습니다.";
-        } else {
-          isUseId = false;
-          resultDiv.setAttribute("class", "mb-3 text-danger");
-          resultDiv.innerHTML = "<span class='fw-bold'>" + id + "</span>은 사용할 수 없습니다.";
-        }
-      }
-
-      signup("${root}/user?action=join");
+	});
     </script>
   </body>
 </html>
