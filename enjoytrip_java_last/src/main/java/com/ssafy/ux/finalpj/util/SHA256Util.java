@@ -8,13 +8,13 @@ import java.util.Random;
  * SHA-256 암호화
  *
  * @author Minchang Jang
- *
  */
 public class SHA256Util {
 
     /**
      * SHA-256 암호화 함
-     * @param source 원본
+     *
+     * @param source       원본
      * @param salt(String) SALT 값
      * @return
      */
@@ -24,7 +24,8 @@ public class SHA256Util {
 
     /**
      * SHA-256 암호화 함
-     * @param source 원본
+     *
+     * @param source       원본
      * @param salt(byte[]) SALT 값
      * @return
      */
@@ -60,6 +61,7 @@ public class SHA256Util {
 
     /**
      * SALT를 얻어온다.
+     *
      * @return
      */
     public static String generateSalt() {
@@ -71,7 +73,7 @@ public class SHA256Util {
         StringBuffer sb = new StringBuffer();
         for (int i = 0; i < salt.length; i++) {
             // byte 값을 Hex 값으로 바꾸기.
-            sb.append(String.format("%02x",salt[i]));
+            sb.append(String.format("%02x", salt[i]));
         }
 
         return sb.toString();

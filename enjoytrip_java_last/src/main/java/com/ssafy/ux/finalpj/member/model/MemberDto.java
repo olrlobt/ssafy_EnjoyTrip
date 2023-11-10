@@ -1,12 +1,8 @@
 package com.ssafy.ux.finalpj.member.model;
 
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
 
-@Getter
-@Setter
-@ToString
+@Data
 public class MemberDto {
 
 	private String userId;
@@ -18,5 +14,5 @@ public class MemberDto {
 	private String emailDomain;
 	private String joinDate;
 
-	
+
 }

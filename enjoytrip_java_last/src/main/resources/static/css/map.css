@@ -44,7 +44,6 @@
 }
 
 
-
 /* select tag */
 
 /* 기본 스타일 초기화 */
@@ -109,7 +108,6 @@ select#tourismType {
 }
 
 
-
 /* 사이드 바 (일정 계획 ) */
 
 .sidebar {
@@ -122,7 +120,7 @@ select#tourismType {
     overflow-y: scroll;
     padding: 20px;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    z-index: 1000;      /* 지도 위에 나타나게 합니다. */
+    z-index: 1000; /* 지도 위에 나타나게 합니다. */
 }
 
 
@@ -147,8 +145,8 @@ select#tourismType {
 
 .container-map {
     position: relative; /* 위치를 기준으로 내부 요소들을 배치합니다. */
-    overflow: hidden;   /* 내부 요소가 컨테이너를 벗어나지 않게 합니다. */
-    height: 1000px;     /* 필요한 경우 높이 조절 */
+    overflow: hidden; /* 내부 요소가 컨테이너를 벗어나지 않게 합니다. */
+    height: 1000px; /* 필요한 경우 높이 조절 */
 }
 
 /* 경로생성 버튼 */

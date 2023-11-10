@@ -13,16 +13,17 @@ import java.io.IOException;
 public class MessageController extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
 
         String action = request.getParameter("action");
         HttpSession session = request.getSession();
         session.removeAttribute("msg");
         session.removeAttribute("info");
         String path = "";
-        if("home".equals(action)){
+        if ("home".equals(action)) {
             redirect(request, response, path);
-        } else if("login".equals(action)) {
+        } else if ("login".equals(action)) {
             path = "login.jsp";
             redirect(request, response, path);
         } else {
@@ -30,7 +31,8 @@ public class MessageController extends HttpServlet {
         }
     }
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         request.setCharacterEncoding("utf-8");
         doGet(request, response);
     }

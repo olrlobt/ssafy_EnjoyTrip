@@ -42,31 +42,28 @@ public class MemberServiceImpl2 implements MemberService {
 
 	@Override
 	public MemberDto loginMember(MemberDto memberDto) throws Exception {
-
 		String salt = memberMapper.getSaltById(memberDto.getUserId());
-		log.debug("salt:{}", salt);
-		String pwd = SHA256Util.getEncrypt(memberDto.getUserPwd(), salt);
-		log.debug("pwd:{}", pwd);
-		memberDto.setUserPwd(pwd);
+		memberDto.setUserPwd(SHA256Util.getEncrypt(memberDto.getUserPwd(), salt));
+
 		return memberMapper.loginMember(memberDto);
 	}
 
-//	@Override
-//	public void modifyMember(MemberDto memberDto, String userId) throws Exception {
-//		memberMapper.modifyMember(memberDto, userId);
-//	}
-//
-//	@Override
-//	public void modifyMemberPass(String userId, String password) throws Exception {
-//
-//		String salt = SHA256Util.generateSalt();
-//		password = SHA256Util.getEncrypt(password, salt);
-//		memberMapper.modifyMemberPass(userId, password, salt);
-//	}
-//
-//	@Override
-//	public void withdraw(String userId) throws Exception {
-//		memberMapper.withdraw(userId);
-//	}
+	@Override
+	public void modifyMember(MemberDto memberDto, String userId) throws Exception {
+		memberMapper.modifyMember(memberDto, userId);
+	}
+
+	@Override
+	public void modifyMemberPass(String userId, String password) throws Exception {
+
+		String salt = SHA256Util.generateSalt();
+		password = SHA256Util.getEncrypt(password, salt);
+		memberMapper.modifyMemberPass(userId, password, salt);
+	}
+
+	@Override
+	public void withdraw(String userId) throws Exception {
+		memberMapper.withdraw(userId);
+	}
 
 }

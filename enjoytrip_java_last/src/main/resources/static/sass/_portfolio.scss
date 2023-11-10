@@ -1,9 +1,11 @@
 /**************** learn_about css start ****************/
 .portfolio_part {
   margin-bottom: -20px;
-  .card-columns{
+
+  .card-columns {
     overflow: hidden;
   }
+
   p {
     color: $white_color;
     margin-bottom: 25px;
@@ -39,9 +41,11 @@
       column-count: 2;
     }
 
-    @media #{$tab_device} {}
+    @media #{$tab_device} {
+    }
 
-    @media #{$medium_device} {}
+    @media #{$medium_device} {
+    }
 
     .blockquote {
       padding: 0px 10px 54px 0px;
@@ -109,16 +113,19 @@
       font-size: 16px;
       text-transform: uppercase;
       color: $btn_bg;
+
       img {
         width: 20px;
         height: 5px;
       }
     }
+
     .overlay {
       position: relative;
       z-index: 1;
       @include transform_time(.5s);
-      &:after{
+
+      &:after {
         position: absolute;
         left: 0px;
         top: 0px;
@@ -133,11 +140,12 @@
         @include transform_time(1s);
       }
     }
+
     .card {
       border: 0px solid transparent;
       position: relative;
       margin-bottom: 20px;
-      
+
       .card-body {
         display: inline-block;
         position: absolute;
@@ -175,8 +183,9 @@
           bottom: 0px;
           top: 20px;
         }
-        .overlay{
-          &:after{
+
+        .overlay {
+          &:after {
             opacity: 1;
           }
         }
@@ -189,20 +198,21 @@
 .see_more_project {
   background-color: $heading_color;
   height: 225px;
-text-align: center;
+  text-align: center;
+
   .btn_1 {
     margin-top: 15%;
     @media #{$small_mobile}{
       margin-top: 30%;
     }
     @media #{$large_mobile}{
-    
+
     }
     @media #{$tab_device}{
-    
+
     }
     @media #{$medium_device}{
-    
+
     }
   }
 }

@@ -24,7 +24,7 @@ function modify(path) {
         if (!document.querySelector("#username").value ||
             !document.querySelector("#userid").value ||
             (document.querySelector("#emailid").value &&
-            document.querySelector("#emaildomain").value == "선택")) {
+                document.querySelector("#emaildomain").value == "선택")) {
             Swal.fire({
                 title: '입력이 부족합니다',
                 html: `빈 칸으로 수정할 수 없습니다.`,
@@ -51,8 +51,8 @@ function mvlogin(root) {
         showCloseButton: true,
         confirmButtonColor: '#3085d6',
     }).then(() => {
-            location.href = root + "/user?action=mvlogin";
-        });
+        location.href = root + "/user?action=mvlogin";
+    });
 }
 
 function withdraw(root) {
@@ -66,25 +66,27 @@ function withdraw(root) {
         showCancelButton: true,
         cancelButtonText: `취소`,
         allowOutsideClick: false,
-        showLoaderOnConfirm: true}).then(
-            (result) => {
-                if(result.isConfirmed) {
-                    let url = root + "/user?action=withdraw";
-                    // CSV
-                    fetch(url)
-                        .then(() => Swal.fire({
-                            title: '회원 탈퇴성공',
-                            text: "이용해주셔서 감사합니다.",
-                            icon: 'info',
-                            focusConfirm: false,
-                            confirmButtonText: '확인',
-                            allowOutsideClick: false,
-                            showLoaderOnConfirm: true}).then(() => {
-                                location.href = root + "/index.jsp";
-                            }));
-                }
+        showLoaderOnConfirm: true
+    }).then(
+        (result) => {
+            if (result.isConfirmed) {
+                let url = root + "/user?action=withdraw";
+                // CSV
+                fetch(url)
+                    .then(() => Swal.fire({
+                        title: '회원 탈퇴성공',
+                        text: "이용해주셔서 감사합니다.",
+                        icon: 'info',
+                        focusConfirm: false,
+                        confirmButtonText: '확인',
+                        allowOutsideClick: false,
+                        showLoaderOnConfirm: true
+                    }).then(() => {
+                        location.href = root + "/index.jsp";
+                    }));
             }
-        );
+        }
+    );
 }
 
 function resetPassword(path) {

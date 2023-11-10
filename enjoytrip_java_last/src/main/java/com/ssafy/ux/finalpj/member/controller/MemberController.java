@@ -2,30 +2,22 @@
 //
 //import com.ssafy.ux.finalpj.member.model.MemberDto;
 //import com.ssafy.ux.finalpj.member.model.service.MemberService;
-//
-//import lombok.extern.slf4j.Slf4j;
+//import com.ssafy.ux.finalpj.member.model.service.MemberServiceImpl;
 //
 //import javax.servlet.RequestDispatcher;
 //import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
 //import javax.servlet.http.*;
-//
-//import org.springframework.stereotype.Controller;
-//import org.springframework.web.bind.annotation.RequestMapping;
-//
 //import java.io.IOException;
 //
-//@Slf4j
-//@Controller
-//@RequestMapping("/user")
+//@WebServlet("/user")
 //public class MemberController extends HttpServlet {
 //	private static final long serialVersionUID = 1L;
-//	
+//
 //	private MemberService memberService;
-//	
-//	public MemberController(MemberService memberService) {
-//		super();
-//		this.memberService = memberService;
+//
+//	public void init() {
+//		memberService = MemberServiceImpl.getMemberService();
 //	}
 //
 //	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -79,7 +71,7 @@
 //		request.setCharacterEncoding("utf-8");
 //		doGet(request, response);
 //	}
-//	
+//
 //	private void forward(HttpServletRequest request, HttpServletResponse response, String path)
 //			throws ServletException, IOException {
 //		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
@@ -89,7 +81,7 @@
 //	private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
 //		response.sendRedirect(request.getContextPath() + path);
 //	}
-//	
+//
 //	private String join(HttpServletRequest request, HttpServletResponse response) {
 //		MemberDto memberDto = new MemberDto();
 //		memberDto.setUserName(request.getParameter("username"));
@@ -109,7 +101,7 @@
 //			return "";
 //		}
 //	}
-//	
+//
 //	private String login(HttpServletRequest request, HttpServletResponse response) {
 //		String userId = request.getParameter("userid");
 //		String userPwd = request.getParameter("userpwd");
@@ -148,7 +140,7 @@
 //			return "";
 //		}
 //	}
-//	
+//
 //	private String logout(HttpServletRequest request, HttpServletResponse response) {
 //		HttpSession session = request.getSession();
 //		session.invalidate();

@@ -8,6 +8,7 @@
 		<result column="userId" property="userId"/>
 		<result column="userName" property="userName"/>
 	</resultMap>
+	
 
 	<select id="idCheck" parameterType="String" resultType="int">
 		select count(userId)
@@ -20,12 +21,25 @@
 		values (#{userName}, #{userId}, #{userPwd}, #{userSalt}, #{emailId}, #{emailDomain}, now())
 	</insert>
 
-	<select id="loginMember" parameterType="map" resultMap="member">
-		select (userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate)
+	<select id="loginMember" parameterType="map" resultType="memberDto">
+		select userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate
 		from members
 		where userId = #{userId} and userPwd = #{userPwd}
 	</select>
-	
+
+	<select id="getSaltById" parameterType="memberDto" resultType="String">
+		select userSalt
+		from members
+		where userId = #{userId}
+	</select>
+
+	<update id="modifyMember" parameterType="map">
+		update members
+		set userId = #{memberDto.userId}, userName = #{memberDto.userName},  emailId = #{memberDto.emailId}, emailDomain = #{memberDto.emailDomain}
+		where userId = #{userId}
+	</update>
+
+
 </mapper>
 
 <!-- 

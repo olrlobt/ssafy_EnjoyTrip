@@ -1,30 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="root" value="${pageContext.request.contextPath}"></c:set>
 
-<%--css--%>
 <head>
 <link rel="icon" href="assets/img/favicon.png">
-<link rel="stylesheet" type="text/css" href="${root}/css/bootstrap.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/animate.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/owl.carousel.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/magnific-popup.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/gijgo.min.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/nice-select.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/slick.css">
-<link rel="stylesheet" type="text/css" href="${root}/css/style.css">
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="css/animate.css">
+<link rel="stylesheet" type="text/css" href="css/owl.carousel.min.css">
+<link rel="stylesheet" type="text/css" href="css/magnific-popup.css">
+<link rel="stylesheet" type="text/css" href="css/gijgo.min.css">
+<link rel="stylesheet" type="text/css" href="css/nice-select.css">
+<link rel="stylesheet" type="text/css" href="css/slick.css">
+<link rel="stylesheet" type="text/css" href="css/style.css">
 
 <!-- magnific CSS -->
-<link rel="stylesheet" href="${root}/css/magnific-popup.css">
-<link rel="stylesheet" href="${root}/css/gijgo.min.css">
+<link rel="stylesheet" href="css/magnific-popup.css">
+<link rel="stylesheet" href="css/gijgo.min.css">
 <!-- niceselect CSS -->
-<link rel="stylesheet" href="${root}/css/nice-select.css">
+<link rel="stylesheet" href="css/nice-select.css">
 <!-- slick CSS -->
-<link rel="stylesheet" href="${root}/css/slick.css">
+<link rel="stylesheet" href="css/slick.css">
 <!-- style CSS -->
-<link rel="stylesheet" href="${root}/css/style.css">
-<link rel="stylesheet" href="${root}/css/style.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
 
    <!--::header part start::-->
@@ -43,15 +40,15 @@
                             <div class="header_nav_menu">
                                 <div id="header_nav_menuitem_off">
                                   <div class="header_nav_menuitem">
-                                    <a class="nav_link" href="${root }/user/login"><span>로그인</span></a>
-                                    <a class="nav_link" href="${root }/user/join"><span>회원가입</span></a>
+                                    <a class="nav_link" href="/user/login"><span>로그인</span></a>
+                                    <a class="nav_link" href="/user/join"><span>회원가입</span></a>
                                   </div>
                                 </div>
                       
                                 <!-- 로그인 후 나오게 -->
                                 <div id="header_nav_menuitem_on" style="display: none">
                                   <div class="header_nav_menuitem">
-                                    <a class="nav_link" href="${root }/user/logout"><span>로그아웃</span></a>
+                                    <a class="nav_link" href="/logout"><span>로그아웃</span></a>
                                     <a class="nav_link"  href="#" id="mypage"><span>마이페이지</span></a>
                                   </div>
                                 </div>
@@ -66,7 +63,7 @@
                 <div class="row align-items-center ">
                     <div class="col-lg-12">
                         <nav class="navbar navbar-expand-lg navbar-light justify-content-between">
-                            <a class="navbar-brand" href="${pageContext.request.contextPath}/index.jsp"> <img src="${pageContext.request.contextPath}/assets/img/logo.png" alt="logo" style="width: 150px"> </a>
+                            <a class="navbar-brand" href="/"> <img src="/img/logo.png" alt="logo" style="width: 150px"> </a>
                             <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                                 aria-expanded="false" aria-label="Toggle navigation">
@@ -77,17 +74,17 @@
                                 id="navbarSupportedContent">
                                 <ul class="navbar-nav">
                                     <li class="nav-item">
-                                        <a class="nav-link" href="${root }/map?action=map">여행 떠나기 </a>
+                                        <a class="nav-link" href="/map">여행 떠나기 </a>
                                     </li>
 
                                     <li class="nav-item">
-                                        <a class="nav-link" href="${root }/article?action=list&type=travel">여행 정보 공유</a>
+                                        <a class="nav-link" href="article/travel">여행 정보 공유</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="${root }/article?action=list&type=hot">핫플레이스</a>
+                                        <a class="nav-link" href="article/hot">핫플레이스</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="${root }/article?action=list&type=notice">공지사항</a>
+                                        <a class="nav-link" href="article/notice">공지사항</a>
                                     </li>
                                 </ul>
                             </div>
@@ -133,7 +130,7 @@
                 showLoaderOnConfirm: true}).then((result) => {
                 if (result.isConfirmed) {
                     // 수정
-                    location.href = "${root}/user/modify.jsp";
+                    location.href = "user/modify.jsp";
                 } else if (result.isDenied) {
                     // 회원 탈퇴
                     withdraw("${root}");
