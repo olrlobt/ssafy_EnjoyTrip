@@ -164,9 +164,7 @@
         crossorigin="anonymous"
 ></script>
 <script type="text/javascript" src="/${root}/assets/js/trip.js"></script>
-<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4c71c6b35a97dd4daf0d4904b4a37b7b
-"
-></script>
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=4c71c6b35a97dd4daf0d4904b4a37b7b"></script>
 <script type="text/javascript">
 
 
@@ -253,7 +251,7 @@
             });//each
         });//getJSON
 
-// 지도에 영역데이터를 폴리곤으로 표시합니다
+        // 지도에 영역데이터를 폴리곤으로 표시합니다
         for (var i = 0, len = areas.length; i < len; i++) {
             displayArea(areas[i]);
         }

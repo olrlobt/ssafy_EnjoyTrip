@@ -181,3 +181,57 @@ select#tourismType {
     background-color: #FF5733; /* 빨간색 */
     color: white;
 }
+
+
+.area {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #888;
+    border-radius: 3px;
+    font-size: 12px;
+    top: -5px;
+    left: 15px;
+    padding: 2px;
+}
+
+.info {
+    font-size: 12px;
+    padding: 5px;
+}
+
+.info .title {
+    font-weight: bold;
+}
+
+.button-group {
+    position: absolute;
+    bottom: 10px;
+    gap: 10px; /* 버튼 사이의 간격 */
+}
+
+
+.route-button {
+    flex: 1; /* 모든 버튼이 동일한 공간을 차지하도록 설정 */
+}
+
+.beautiful-button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 12px 28px; /* padding 값 조절 */
+    text-align: center;
+    text-decoration: none;
+    display: block;
+    font-size: 14px; /* font-size 조절 */
+    margin: 12px 4px;
+    transition-duration: 0.4s;
+    cursor: pointer;
+    border-radius: 12px; /* Rounded corners */
+    box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08); /* Shadow effect */
+}
+
+
+.beautiful-button:hover {
+    background-color: #45a049;
+    color: white;
+}

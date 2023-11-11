@@ -9,6 +9,9 @@
         <module name="enjoytrip_java_last" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="enjoytrip_java_last" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
