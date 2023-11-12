@@ -5,12 +5,12 @@
 <mapper namespace="com.ssafy.ux.finalpj.board.mapper.BoardMapper">
 
     <insert id="writeArticle" parameterType="boardDto" >
-        insert into boards (userid, subject, content, type)
-        values (#{userId}, #{subject}, #{content}, #{type})
+        insert into boards (userid, subject, content, type, registerTime)
+        values (#{userId}, #{subject}, #{content}, #{type}, now())
     </insert>
 
     <select id="listArticle" parameterType="map" resultType="boardDto">
-        SELECT articleno, userid, subject, content, hit, registertime
+        SELECT articleno, userid, subject, content, hit, registerTime
         FROM boards
         WHERE type = #{type}
         ORDER BY articleno DESC LIMIT #{itemsPerPage}

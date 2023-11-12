@@ -68,6 +68,7 @@ function writeArticle() {
    registArticle(article.value, ({ data }) => { 
     console.log("write data: "+ data)
     article.value = data;
+    moveList();
   },
     (error) => { 
       console.log(error)

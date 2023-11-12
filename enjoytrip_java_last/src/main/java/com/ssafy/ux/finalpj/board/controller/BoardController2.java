@@ -37,9 +37,7 @@ public class BoardController2 {
 //        }
         try {
 //            int totalPages = boardService.getTotalPage(type);
-        	System.out.println("들어옴: " + type);
             List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
-            System.out.println("서비스까지 옴");
             log.info("list size = {}" , list.size());
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {
@@ -59,7 +57,7 @@ public class BoardController2 {
     }
 
     @PostMapping("/{type}/write")
-    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, BoardDto boardDto) {
+    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto == null) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
@@ -69,7 +67,7 @@ public class BoardController2 {
         //임시로 userId, type 변경해주기
         boardDto.setUserId("user4");
         boardDto.setType("notice");
-        
+        System.out.println(boardDto);
 
         try {
             boardService.writeArticle(boardDto);
