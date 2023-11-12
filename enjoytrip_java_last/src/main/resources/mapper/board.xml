@@ -4,9 +4,14 @@
 
 <mapper namespace="com.ssafy.ux.finalpj.board.mapper.BoardMapper">
 
+<!--    <insert id="writeArticle" parameterType="boardDto" >-->
+<!--        insert into boards (userid, subject, content, type, registerTime)-->
+<!--        values (#{userId}, #{subject}, #{content}, #{type}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')-->
+<!--    </insert>-->
+
     <insert id="writeArticle" parameterType="boardDto" >
         insert into boards (userid, subject, content, type, registerTime)
-        values (#{userId}, #{subject}, #{content}, #{type}, now())
+        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'))
     </insert>
 
     <select id="listArticle" parameterType="map" resultType="boardDto">
