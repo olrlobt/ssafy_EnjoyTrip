@@ -1,130 +1,134 @@
-<script>
+<script setup>
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
-import {ref} from "vue";
+import KakaoMarker from "@/components/map/KakaoMarker.vue"
+import {ref, onMounted} from "vue";
 
-let polygons = [];
+const polygons = ref([]);
+const detailMode = ref(false);
+const {VITE_MAP_SRC} = import.meta.env;
 
-let detailMode = ref(false);
-const { VITE_MAP_SRC } = import.meta.env;
+const areas = ref([]);
+const map = ref(null);
+const customOverlay = ref(null);
+const mapLoaded = ref(false);
+const clickMarker = ref(null);
 
-export default {
-  name: "KakaoMap",
-  data() {
-    return {
-      areas : [],
-      markers: [],
-      infowindow: null,
+
+onMounted(() => {
+  if (window.kakao && window.kakao.maps) {
+    initMap();
+  } else {
+    const script = document.createElement("script");
+    /* global kakao */
+    script.onload = () => kakao.maps.load(initMap);
+    script.src = VITE_MAP_SRC;
+    document.head.appendChild(script);
+  }
+})
+
+
+
+
+function initMap() {
+  const container = document.getElementById("map");
+  const options = {
+    center: new kakao.maps.LatLng(37.566826, 126.9786567),
+    level: 12,
+  };
+
+  map.value = new kakao.maps.Map(container, options);
+  customOverlay.value = new kakao.maps.CustomOverlay({});
+  kakao.maps.event.addListener(map.value, 'zoom_changed', handleZoomChange);
+  readJson(sido);
+  mapLoaded.value = true;
+}
+
+function handleZoomChange() {
+  let level = map.value.getLevel();
+
+  if (!detailMode.value && level <= 10) {
+    detailMode.value = true;
+    removePolygon();
+    readJson(sig)
+  } else if (detailMode.value && level > 10) {
+    detailMode.value = false;
+    removePolygon();
+    readJson(sido)
+  }
+}
+
+function removePolygon() {
+  polygons.value.forEach(polygon => polygon.setMap(null));
+  areas.value = [];
+  polygons.value = [];
+}
+
+function readJson(json) {
+  const units = json.features;
+  units.forEach((unit, index) => {
+    let coordinates = unit.geometry.coordinates;
+    let name = unit.properties.SIG_KOR_NM;
+    let cd_location = unit.properties.SIG_CD;
+
+    let ob = {
+      name: name,
+      path: [],
+      location: cd_location
     };
-  },
-  mounted() {
-    if (window.kakao && window.kakao.maps) {
-      this.initMap();
+
+    coordinates[0].forEach((coordinate) => {
+      ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
+    });
+
+    areas.value[index] = ob;
+  });
+  // 지도에 영역데이터를 폴리곤으로 표시합니다
+  for (var i = 0; i < areas.value.length; i++) {
+    displayArea(areas.value[i]);
+  }
+}
+
+function displayArea(area) {
+  var polygon = new kakao.maps.Polygon({
+    map: map.value, // 다각형을 표시할 지도 객체
+    path: area.path,
+    strokeWeight: 2,
+    strokeColor: '#004c80',
+    strokeOpacity: 0.8,
+    fillColor: '#fff',
+    fillOpacity: 0.7
+  });
+
+  polygons.value.push(polygon);
+
+  kakao.maps.event.addListener(polygon, 'mouseover', (mouseEvent) => {
+    polygon.setOptions({fillColor: '#09f'});
+
+    customOverlay.value.setContent('<div class="area">' + area.name + '</div>');
+    customOverlay.value.setPosition(mouseEvent.latLng);
+    customOverlay.value.setMap(map.value);
+  });
+  kakao.maps.event.addListener(polygon, 'mousemove', (mouseEvent) => {
+    customOverlay.value.setPosition(mouseEvent.latLng);
+  });
+  kakao.maps.event.addListener(polygon, 'mouseout', () => {
+    polygon.setOptions({fillColor: '#fff'});
+    customOverlay.value.setMap(null);
+  });
+  kakao.maps.event.addListener(polygon, 'click', (mouseEvent) => {
+    if (!detailMode.value) {
+      map.value.setLevel(10);
+      map.value.panTo(mouseEvent.latLng);
     } else {
-      const script = document.createElement("script");
-      /* global kakao */
-      script.onload = () => kakao.maps.load(this.initMap);
-      script.src = VITE_MAP_SRC;
-      document.head.appendChild(script);
+
+      if(clickMarker.value){
+        clickMarker.value.callAPIWithRegionCode(area.location);
+      }
     }
-  },
-  methods: {
-    initMap() {
-      const container = document.getElementById("map");
-      const options = {
-        center: new kakao.maps.LatLng(37.566826, 126.9786567),
-        level: 12,
-      };
-      //지도 객체는 반응형 관리 대상이 아니므로 initMap에서 선언합니다.
-      this.map = new kakao.maps.Map(container, options);
-      this.customOverlay = new kakao.maps.CustomOverlay({});
-      kakao.maps.event.addListener(this.map, 'zoom_changed', this.handleZoomChange);
-      this.readJson(sido);
-    },
-    handleZoomChange(){
-      let level = this.map.getLevel();
+  });
+}
 
-      if (!detailMode.value && level <= 10) {
-        detailMode.value = true;
-        this.removePolygon();
-        this.readJson(sig)
-      } else if (detailMode.value && level > 10) {
-        detailMode.value = false;
-        this.removePolygon();
-        this.readJson(sido)
-      }
-    },
-    removePolygon() {
-        polygons.forEach(polygon => polygon.setMap(null));
-        this.areas = [];
-        polygons = [];
-    },
-    readJson(json) {
-      const units = json.features;
-
-      units.forEach((unit, index) => {
-        let coordinates = unit.geometry.coordinates;
-        let name = unit.properties.SIG_KOR_NM;
-        let cd_location = unit.properties.SIG_CD;
-
-        let ob = {
-          name: name,
-          path: [],
-          location: cd_location
-        };
-
-        coordinates[0].forEach((coordinate) => {
-          ob.path.push(new kakao.maps.LatLng(coordinate[1], coordinate[0]));
-        });
-
-        this.areas[index] = ob;
-      });
-      // 지도에 영역데이터를 폴리곤으로 표시합니다
-      for (var i = 0; i < this.areas.length; i++) {
-        this.displayArea(this.areas[i]);
-      }
-    },
-    displayArea(area) {
-      var polygon = new kakao.maps.Polygon({
-        map: this.map, // 다각형을 표시할 지도 객체
-        path: area.path,
-        strokeWeight: 2,
-        strokeColor: '#004c80',
-        strokeOpacity: 0.8,
-        fillColor: '#fff',
-        fillOpacity: 0.7
-      });
-
-      polygons.push(polygon);
-
-      kakao.maps.event.addListener(polygon, 'mouseover', (mouseEvent) => {
-        polygon.setOptions({fillColor: '#09f'});
-
-        this.customOverlay.setContent('<div class="area">' + area.name + '</div>');
-        this.customOverlay.setPosition(mouseEvent.latLng);
-        this.customOverlay.setMap(this.map);
-      });
-      kakao.maps.event.addListener(polygon, 'mousemove', (mouseEvent) => {
-        this.customOverlay.setPosition(mouseEvent.latLng);
-      });
-      kakao.maps.event.addListener(polygon, 'mouseout', () =>  {
-        polygon.setOptions({fillColor: '#fff'});
-        this.customOverlay.setMap(null);
-      });
-      kakao.maps.event.addListener(polygon, 'click', (mouseEvent) => {
-        if (!detailMode.value) {
-          this.map.setLevel(10);
-          this.map.panTo(mouseEvent.latLng);
-        } else {
-
-          // callFunctionWithRegionCode(area.location);
-        }
-      });
-    },
-
-
-  },
-};
 </script>
 
 <template>
@@ -145,7 +149,9 @@ export default {
       <button id="createRoute" class="route-button">경로 생성</button>
     </div>
 
+    <KakaoMarker v-if="mapLoaded" :map="map" ref="clickMarker"/>
     <div id="map" style="width: calc(100% - 250px); height: 1200px;"></div>
+
   </div>
 </template>
 
