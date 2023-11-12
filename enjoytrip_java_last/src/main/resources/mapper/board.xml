@@ -32,7 +32,7 @@
     <delete id="deleteArticle" parameterType="int" >
         DELETE
         FROM boards
-        WHERE articleno = #{articleNo}
+        WHERE articleNo = #{articleNo}
     </delete>
 
     <select id="getTotalPage" parameterType="String" resultType="int">

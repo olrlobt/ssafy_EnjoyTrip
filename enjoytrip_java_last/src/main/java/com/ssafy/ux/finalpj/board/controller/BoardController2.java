@@ -126,10 +126,10 @@ public class BoardController2 {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(int articleNo) {
+    @DeleteMapping("/{type}/delete/{articleNo}")
+    public ResponseEntity<?> delete(@PathVariable String articleNo) {
         try {
-            boardService.deleteArticle(articleNo);
+            boardService.deleteArticle(Integer.parseInt(articleNo));
             return ResponseEntity.ok().body("Article deleted successfully.");
         } catch (Exception e) {
             log.error("Error during article deletion", e);

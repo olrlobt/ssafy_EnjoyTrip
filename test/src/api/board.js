@@ -28,7 +28,7 @@ function modifyArticle(article, success, fail) {
 }
 
 function deleteArticle(articleno, success, fail) {
-  local.delete(`${url}/${articleno}`).then(success).catch(fail);
+  local.delete(`${url}/notice/delete/${articleno}`).then(success).catch(fail);
 }
 
 

@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailArticle } from "@/api/board";
+import { detailArticle, deleteArticle } from "@/api/board";
 
 const route = useRoute();
 const router = useRouter();
@@ -41,7 +41,16 @@ function moveModify() {
 function onDeleteArticle() {
   // const { articleno } = route.params;
   console.log(articleno + "번글 삭제하러 가자!!!");
-   // API 호출
+  // API 호출
+  deleteArticle(articleno, ({ data }) => { 
+    console.log(data)
+    article.value = data;
+    moveList();
+  },
+    (error) => { 
+      console.log(error)
+    });
+  
 }
 </script>
 
