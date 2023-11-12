@@ -41,7 +41,7 @@ const getArticleList = () => {
    // API 호출
   listArticle(param.value, ({ data }) => { 
     console.log(data)
-    articles.value = data.articles;
+    articles.value = data;
     currentPage.value = data.currentPage;
     totalPage.value = data.totalPageCount;
   },

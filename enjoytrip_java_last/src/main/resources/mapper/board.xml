@@ -5,12 +5,12 @@
 <mapper namespace="com.ssafy.ux.finalpj.board.mapper.BoardMapper">
 
     <insert id="writeArticle" parameterType="boardDto" >
-        insert into boards (userid, subject, content, type)
-        values (#{userId}, #{subject}, #{content}, #{type})
+        insert into boards (userid, subject, content, type, registerTime)
+        values (#{userId}, #{subject}, #{content}, #{type}, now())
     </insert>
 
     <select id="listArticle" parameterType="map" resultType="boardDto">
-        SELECT articleno, userid, subject, content, hit, registertime
+        SELECT articleno, userid, subject, content, hit, registerTime
         FROM boards
         WHERE type = #{type}
         ORDER BY articleno DESC LIMIT #{itemsPerPage}
@@ -26,13 +26,13 @@
         UPDATE boards
         SET subject = #{subject},
             content = #{content}
-        WHERE articleno = #{articleNo}
+        WHERE articleNo = #{articleNo}
     </update>
 
     <delete id="deleteArticle" parameterType="int" >
         DELETE
         FROM boards
-        WHERE articleno = #{articleNo}
+        WHERE articleNo = #{articleNo}
     </delete>
 
     <select id="getTotalPage" parameterType="String" resultType="int">
@@ -41,7 +41,7 @@
         where type = #{type}
     </select>
 
-    <select id="getArticleDetail" parameterType="String" resultType="int">
+    <select id="getArticleDetail" parameterType="int" resultType="boardDto">
         SELECT *
         FROM boards
         WHERE articleno = #{articleNo}

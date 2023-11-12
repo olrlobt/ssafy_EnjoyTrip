@@ -4,6 +4,8 @@ import com.ssafy.ux.finalpj.board.model.BoardDto;
 import com.ssafy.ux.finalpj.board.model.service.BoardService;
 import com.ssafy.ux.finalpj.member.model.MemberDto;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -18,6 +20,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/article")
 public class BoardController2 {
 
@@ -31,9 +34,9 @@ public class BoardController2 {
     public ResponseEntity<?> list(HttpSession session, @PathVariable("type") String type,
                                   @RequestParam(required = false, defaultValue = "1") int pageNum) {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-        if (memberDto == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-        }
+//        if (memberDto == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
+//        }
         try {
 //            int totalPages = boardService.getTotalPage(type);
             List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
@@ -56,13 +59,17 @@ public class BoardController2 {
     }
 
     @PostMapping("/{type}/write")
-    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, BoardDto boardDto) {
+    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-        if (memberDto == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-        }
-        boardDto.setUserId(memberDto.getUserId());
-        boardDto.setType(type);
+//        if (memberDto == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
+//        }
+//        boardDto.setUserId(memberDto.getUserId());
+//        boardDto.setType(type);
+        //임시로 userId, type 변경해주기
+        boardDto.setUserId("user4");
+        boardDto.setType("notice");
+        System.out.println(boardDto);
 
         try {
             boardService.writeArticle(boardDto);
@@ -73,10 +80,11 @@ public class BoardController2 {
         }
     }
 
-    @GetMapping("/modify")
-    public ResponseEntity<?> modify(int articleNo) {
+    @GetMapping("/{type}/view/{articleNo}")
+    public ResponseEntity<?> detail(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
         try {
-            BoardDto article = boardService.getArticleDetail(articleNo);
+        	System.out.println("articleNo: "+articleNo);
+            BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
 
             if (article == null) {
                 return ResponseEntity.notFound().build();
@@ -88,12 +96,29 @@ public class BoardController2 {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
         }
     }
+    @GetMapping("/{type}/modify/{articleNo}")
+    public ResponseEntity<?> getModify(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
+    	try {
+//    		System.out.println("articleNo: "+articleNo);
+    		BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
+    		
+    		if (article == null) {
+    			return ResponseEntity.notFound().build();
+    		}
+    		
+    		return ResponseEntity.ok().body(article);
+    	} catch (Exception e) {
+    		log.error("Error during article modification", e);
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
+    	}
+    }
 
-    @PutMapping("/modify")
-    public ResponseEntity<?> modify(BoardDto boardDto) {
+    @PutMapping("/{type}/modify")
+    public ResponseEntity<?> modify(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         try {
+        	System.out.println(boardDto);
             boardService.modifyArticle(boardDto);
-
+            System.out.println("수정완료");
             return ResponseEntity.ok().body("Article modified successfully.");
         } catch (Exception e) {
             log.error("Error during article modification", e);
@@ -101,10 +126,10 @@ public class BoardController2 {
         }
     }
 
-    @DeleteMapping("/delete")
-    public ResponseEntity<?> delete(int articleNo) {
+    @DeleteMapping("/{type}/delete/{articleNo}")
+    public ResponseEntity<?> delete(@PathVariable String articleNo) {
         try {
-            boardService.deleteArticle(articleNo);
+            boardService.deleteArticle(Integer.parseInt(articleNo));
             return ResponseEntity.ok().body("Article deleted successfully.");
         } catch (Exception e) {
             log.error("Error during article deletion", e);
