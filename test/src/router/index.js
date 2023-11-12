@@ -29,29 +29,6 @@ const router = createRouter({
       path: '/article-travel',
       name: 'article-travel',
       component: () => import("@/views/ArticleView.vue"),
-      // redirect: { name: "article-list" },
-      children: [
-        {
-          path: "list",
-          name: "article-list",
-          component: () => import("@/components/board/BoardList.vue"),
-        },
-        {
-          path: "view/:articleno",
-          name: "article-view",
-          component: () => import("@/components/board/BoardDetail.vue"),
-        },
-        {
-          path: "write",
-          name: "article-write",
-          component: () => import("@/components/board/BoardWrite.vue"),
-        },
-        {
-          path: "modify/:articleno",
-          name: "article-modify",
-          component: () => import("@/components/board/BoardModify.vue"),
-        },
-      ],
     },
     {
       path: '/article-hot',
@@ -62,10 +39,30 @@ const router = createRouter({
       path: '/article',
       name: 'article',
       component: () => import("@/views/ArticleView.vue"),
+      redirect: { name: "article-list" },
+      children: [
+        {
+          path: "notice",
+          name: "article-list",
+          component: () => import("@/components/board/BoardList.vue"),
+        },
+        {
+          path: "view/:articleno",
+          name: "article-view",
+          component: () => import("@/components/board/BoardDetail.vue"),
+        },
+        {
+          path: "notice/write",
+          name: "article-write",
+          component: () => import("@/components/board/BoardWrite.vue"),
+        },
+        {
+          path: "modify/:articleno",
+          name: "article-modify",
+          component: () => import("@/components/board/BoardModify.vue"),
+        },
+      ],
     },
-
-    
-   
   ]
 })
 

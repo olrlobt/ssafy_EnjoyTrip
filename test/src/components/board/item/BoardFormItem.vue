@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { registArticle } from "@/api/board";
 
 const router = useRouter();
 const route = useRoute();
@@ -64,6 +65,13 @@ function onSubmit() {
 function writeArticle() {
   console.log("글등록하자!!", article.value);
    // API 호출
+   registArticle(article.value, ({ data }) => { 
+    console.log("write data: "+ data)
+    article.value = data;
+  },
+    (error) => { 
+      console.log(error)
+    });
 }
 
 function updateArticle() {

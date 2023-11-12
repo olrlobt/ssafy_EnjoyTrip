@@ -18,6 +18,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/article")
 public class BoardController2 {
 
@@ -31,12 +32,14 @@ public class BoardController2 {
     public ResponseEntity<?> list(HttpSession session, @PathVariable("type") String type,
                                   @RequestParam(required = false, defaultValue = "1") int pageNum) {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-        if (memberDto == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-        }
+//        if (memberDto == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
+//        }
         try {
 //            int totalPages = boardService.getTotalPage(type);
+        	System.out.println("들어옴: " + type);
             List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
+            System.out.println("서비스까지 옴");
             log.info("list size = {}" , list.size());
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {
@@ -58,11 +61,15 @@ public class BoardController2 {
     @PostMapping("/{type}/write")
     public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, BoardDto boardDto) {
         MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-        if (memberDto == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-        }
-        boardDto.setUserId(memberDto.getUserId());
-        boardDto.setType(type);
+//        if (memberDto == null) {
+//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
+//        }
+//        boardDto.setUserId(memberDto.getUserId());
+//        boardDto.setType(type);
+        //임시로 userId, type 변경해주기
+        boardDto.setUserId("user4");
+        boardDto.setType("notice");
+        
 
         try {
             boardService.writeArticle(boardDto);

@@ -2,10 +2,11 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios(); // axios instance
 
-const url = "/ux"
+const url = "/article"
 
 function listArticle(param, success, fail) {
-  local.get(`${url}`, { params: param }).then(success).catch(fail);
+  console.log("param", param)
+  local.get(`${url}/notice`, { params: param }).then(success).catch(fail);
 }
 
 function detailArticle(articleno, success, fail) {
@@ -14,7 +15,8 @@ function detailArticle(articleno, success, fail) {
 
 function registArticle(article, success, fail) {
   console.log("boardjs article", article);
-  local.post(`${url}`, JSON.stringify(article)).then(success).catch(fail);
+
+  local.post(`${url}/notice/write`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 function getModifyArticle(articleno, success, fail) {
@@ -28,6 +30,8 @@ function modifyArticle(article, success, fail) {
 function deleteArticle(articleno, success, fail) {
   local.delete(`${url}/${articleno}`).then(success).catch(fail);
 }
+
+
 
 export {
   listArticle,
