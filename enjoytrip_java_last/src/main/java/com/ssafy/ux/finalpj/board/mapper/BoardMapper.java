@@ -11,6 +11,10 @@ public interface BoardMapper {
 
     void writeArticle(BoardDto boardDto) throws SQLException;
 
+    void updateRef(int articleNo) throws SQLException;
+
+    void updateStep(int articleNo) throws  SQLException;
+
     List<BoardDto> listArticle(String type, int currentPage, int itemsPerPage) throws SQLException;
 
     BoardDto getArticle(int articleNo) throws SQLException;

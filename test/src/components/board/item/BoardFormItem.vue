@@ -10,6 +10,15 @@ const props = defineProps({ type: String });
 const { boardType } = route.params;
 const isUseId = ref(false);
 
+
+
+const { articleno, refNo ,step, depth } = route.query;
+console.log(articleno)
+console.log(refNo)
+console.log(step)
+console.log(depth)
+
+
 const article = ref({
   articleNo: 0,
   subject: "",
@@ -18,6 +27,9 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
+  ref: 0,
+  step: 0,
+  depth: 0
 });
 
 
@@ -32,10 +44,9 @@ if (props.type === "modify") {
   (error) => {
     console.log(error);
   });
-  
 
   isUseId.value = true;
-};
+}
 
 const subjectErrMsg = ref("");
 const contentErrMsg = ref("");
@@ -75,6 +86,14 @@ function onSubmit() {
 function writeArticle() {
   console.log("글등록하자!!", article.value);
    // API 호출
+
+  article.value.ref = article.value.articleNo;
+  if(articleno){
+    article.value.ref = refNo;
+    article.value.step = parseInt(step)+1 ;
+    article.value.depth = parseInt(depth)+1 ;
+  }
+
    registArticle(boardType ,article.value, ({ data }) => {
     console.log("write data: "+ data)
     article.value = data;

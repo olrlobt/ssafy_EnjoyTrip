@@ -22,6 +22,10 @@ CREATE TABLE `boards` (
                           `hit`          INT          NOT NULL DEFAULT 0,
                           `registerTime` DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP,
                           `type`         VARCHAR(50)  NOT NULL,
+                          `ref`          INT          NOT NULL,
+                          `step`         INT          NOT NULL DEFAULT 0,
+                          `depth`        INT          NOT NULL DEFAULT 0,
                           PRIMARY KEY (`articleNo`),
                           FOREIGN KEY (`userId`) REFERENCES `members` (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+

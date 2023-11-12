@@ -9,16 +9,27 @@
 <!--        values (#{userId}, #{subject}, #{content}, #{type}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')-->
 <!--    </insert>-->
 
-    <insert id="writeArticle" parameterType="boardDto" >
-        insert into boards (userid, subject, content, type, registerTime)
-        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'))
+    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo">
+        insert into boards (userid, subject, content, type, registerTime, ref , step , depth)
+        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'), #{ref}, #{step}, #{depth})
     </insert>
 
+    <update id="updateRef" parameterType="int">
+        update boards set ref = #{articleNo} where articleNo = #{articleNo} and ref = 0
+    </update>
+
+    <update id="updateStep" parameterType="int">
+        UPDATE boards
+        SET step = step + 1
+        WHERE ref = (SELECT ref FROM boards WHERE articleNo = #{articleNo})
+        AND step >= (SELECT step FROM boards WHERE articleNo = #{articleNo});
+    </update>
+
     <select id="listArticle" parameterType="map" resultType="boardDto">
-        SELECT articleno, userid, subject, content, hit, registerTime
+        SELECT articleno, userid, subject, content, hit, registerTime, ref, step, depth
         FROM boards
         WHERE type = #{type}
-        ORDER BY articleno DESC LIMIT #{itemsPerPage}
+        ORDER BY ref DESC, step ASC, depth ASC LIMIT #{itemsPerPage}
     </select>
 
     <update id="updateHit" parameterType="int" >

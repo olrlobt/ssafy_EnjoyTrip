@@ -30,6 +30,11 @@ const getArticle = () => {
 
 };
 
+function reply(){
+  router.push({ name: "article-reply" , query: { articleno : articleno , refNo : article.value.ref , step : article.value.step , depth : article.value.depth} });
+}
+
+
 function moveList() {
   router.push({ name: "article-list" });
 }
@@ -88,6 +93,9 @@ function onDeleteArticle() {
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">
+            <button type="button" class="btn btn-outline-primary mb-3" @click="reply">
+              답글달기
+            </button>
             <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
               글목록
             </button>

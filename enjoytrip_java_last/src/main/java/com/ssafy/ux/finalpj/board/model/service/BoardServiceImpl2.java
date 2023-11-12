@@ -22,6 +22,12 @@ public class BoardServiceImpl2 implements BoardService {
     @Override
     public void writeArticle(BoardDto boardDto) throws Exception {
         boardMapper.writeArticle(boardDto);
+        if (boardDto.getRef() == 0) {
+            boardMapper.updateRef(boardDto.getArticleNo());
+        }else {
+            System.out.println("boardDto = " + boardDto.getArticleNo());
+            boardMapper.updateStep(boardDto.getArticleNo());
+        }
     }
 
     @Override
