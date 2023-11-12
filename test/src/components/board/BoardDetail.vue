@@ -35,7 +35,7 @@ function moveList() {
 }
 
 function moveModify() {
-  router.push({ name: "article-modify", params: { articleno } });
+  router.push({ name: "article-modify", query: { articleno, ...article.value } });
 }
 
 function onDeleteArticle() {

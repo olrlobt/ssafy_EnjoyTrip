@@ -20,11 +20,11 @@ function registArticle(article, success, fail) {
 }
 
 function getModifyArticle(articleno, success, fail) {
-  local.get(`${url}/modify/${articleno}`).then(success).catch(fail);
+  local.get(`${url}/notice/modify/${articleno}`).then(success).catch(fail);
 }
 
 function modifyArticle(article, success, fail) {
-  local.put(`${url}`, JSON.stringify(article)).then(success).catch(fail);
+  local.put(`${url}/notice/modify`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 function deleteArticle(articleno, success, fail) {

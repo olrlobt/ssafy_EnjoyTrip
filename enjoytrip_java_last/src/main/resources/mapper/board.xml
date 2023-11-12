@@ -26,7 +26,7 @@
         UPDATE boards
         SET subject = #{subject},
             content = #{content}
-        WHERE articleno = #{articleNo}
+        WHERE articleNo = #{articleNo}
     </update>
 
     <delete id="deleteArticle" parameterType="int" >

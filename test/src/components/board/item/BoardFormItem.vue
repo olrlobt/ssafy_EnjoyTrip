@@ -1,7 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { registArticle } from "@/api/board";
+import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
 
 const router = useRouter();
 const route = useRoute();
@@ -20,12 +20,22 @@ const article = ref({
   registerTime: "",
 });
 
+
 if (props.type === "modify") {
   let { articleno } = route.params;
   console.log(articleno + "번글 얻어와서 수정할거야");
   // API 호출
+  getModifyArticle(articleno, ({ data }) => {
+    console.log(data);
+    article.value = data;
+  },
+  (error) => {
+    console.log(error);
+  });
+  
+
   isUseId.value = true;
-}
+};
 
 const subjectErrMsg = ref("");
 const contentErrMsg = ref("");
@@ -78,10 +88,21 @@ function writeArticle() {
 function updateArticle() {
   console.log(article.value.articleNo + "번글 수정하자!!", article.value);
    // API 호출
+   modifyArticle(article.value, ({ data }) => {
+    console.log(data);
+    article.value = data;
+  },
+  (error) => {
+    console.log(error);
+  });
+  moveDetail();
 }
 
 function moveList() {
   router.push({ name: "article-list" });
+}
+function moveDetail(){
+  router.push({name: "article-view"});
 }
 </script>
 

@@ -96,12 +96,29 @@ public class BoardController2 {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
         }
     }
+    @GetMapping("/{type}/modify/{articleNo}")
+    public ResponseEntity<?> getModify(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
+    	try {
+//    		System.out.println("articleNo: "+articleNo);
+    		BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
+    		
+    		if (article == null) {
+    			return ResponseEntity.notFound().build();
+    		}
+    		
+    		return ResponseEntity.ok().body(article);
+    	} catch (Exception e) {
+    		log.error("Error during article modification", e);
+    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
+    	}
+    }
 
-    @PutMapping("/modify")
-    public ResponseEntity<?> modify(BoardDto boardDto) {
+    @PutMapping("/{type}/modify")
+    public ResponseEntity<?> modify(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         try {
+        	System.out.println(boardDto);
             boardService.modifyArticle(boardDto);
-
+            System.out.println("수정완료");
             return ResponseEntity.ok().body("Article modified successfully.");
         } catch (Exception e) {
             log.error("Error during article modification", e);

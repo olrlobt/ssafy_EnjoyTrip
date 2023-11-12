@@ -19,7 +19,7 @@ public class BoardDto {
 
     public void setRegisterTime(String registerTime) {
         if (registerTime != null && !registerTime.isEmpty()) {
-            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            SimpleDateFormat inputFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm");
             SimpleDateFormat outputFormat = new SimpleDateFormat("yy/MM/dd HH:mm");
 
             try {
