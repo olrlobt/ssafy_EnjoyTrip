@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
+import { detailArticle } from "@/api/board";
 
 const route = useRoute();
 const router = useRouter();
@@ -18,6 +19,15 @@ const getArticle = () => {
   // const { articleno } = route.params;
   console.log(articleno + "번글 얻으러 가자!!!");
    // API 호출
+   detailArticle(articleno, ({ data }) => { 
+    console.log(data)
+    article.value = data;
+  },
+    (error) => { 
+      console.log(error)
+    });
+
+
 };
 
 function moveList() {
@@ -55,17 +65,17 @@ function onDeleteArticle() {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">안효인</span> <br />
+                <span class="fw-bold">{{article.userId}}</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ article.registerTime }}1 조회 : {{ article.hit }}
+                  {{ article.registerTime }}<br/> 조회 : {{ article.hit }}
                 </span>
               </p>
+              <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
+              <div class="text-secondary">
+                {{ article.content }}
+              </div>
+              <div class="divider mb-3"></div>
             </div>
-          </div>
-          <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
-          <div class="divider mb-3"></div>
-          <div class="text-secondary">
-            {{ article.content }}
           </div>
           <div class="divider mt-3 mb-3"></div>
           <div class="d-flex justify-content-end">

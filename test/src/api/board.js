@@ -10,7 +10,7 @@ function listArticle(param, success, fail) {
 }
 
 function detailArticle(articleno, success, fail) {
-  local.get(`${url}/${articleno}`).then(success).catch(fail);
+  local.get(`${url}/notice/view/${articleno}`).then(success).catch(fail);
 }
 
 function registArticle(article, success, fail) {

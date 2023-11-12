@@ -4,6 +4,8 @@ import com.ssafy.ux.finalpj.board.model.BoardDto;
 import com.ssafy.ux.finalpj.board.model.service.BoardService;
 import com.ssafy.ux.finalpj.member.model.MemberDto;
 import lombok.extern.slf4j.Slf4j;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -78,10 +80,11 @@ public class BoardController2 {
         }
     }
 
-    @GetMapping("/modify")
-    public ResponseEntity<?> modify(int articleNo) {
+    @GetMapping("/{type}/view/{articleNo}")
+    public ResponseEntity<?> detail(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
         try {
-            BoardDto article = boardService.getArticleDetail(articleNo);
+        	System.out.println("articleNo: "+articleNo);
+            BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
 
             if (article == null) {
                 return ResponseEntity.notFound().build();
