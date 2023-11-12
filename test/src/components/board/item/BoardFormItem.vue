@@ -7,7 +7,7 @@ const router = useRouter();
 const route = useRoute();
 
 const props = defineProps({ type: String });
-
+const { boardType } = route.params;
 const isUseId = ref(false);
 
 const article = ref({
@@ -75,7 +75,7 @@ function onSubmit() {
 function writeArticle() {
   console.log("글등록하자!!", article.value);
    // API 호출
-   registArticle(article.value, ({ data }) => { 
+   registArticle(boardType ,article.value, ({ data }) => {
     console.log("write data: "+ data)
     article.value = data;
     moveList();

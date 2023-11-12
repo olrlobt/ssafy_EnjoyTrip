@@ -26,38 +26,29 @@ const router = createRouter({
       component: MapView,
     },
     {
-      path: '/article-travel',
-      name: 'article-travel',
-      component: () => import("@/views/ArticleView.vue"),
-    },
-    {
-      path: '/article-hot',
-      name: 'article-hot',
-      component: () => import("@/views/ArticleView.vue"),
-    },
-    {
-      path: '/article',
+      path: '/article/:boardType',
       name: 'article',
       component: () => import("@/views/ArticleView.vue"),
+      props: true,
       redirect: { name: "article-list" },
       children: [
         {
-          path: "notice",
+          path: "list",
           name: "article-list",
           component: () => import("@/components/board/BoardList.vue"),
         },
         {
-          path: "notice/view/:articleno",
+          path: "view/:articleno",
           name: "article-view",
           component: () => import("@/components/board/BoardDetail.vue"),
         },
         {
-          path: "notice/write",
+          path: "write",
           name: "article-write",
           component: () => import("@/components/board/BoardWrite.vue"),
         },
         {
-          path: "notice/modify/:articleno",
+          path: "modify/:articleno",
           name: "article-modify",
           component: () => import("@/components/board/BoardModify.vue"),
         },

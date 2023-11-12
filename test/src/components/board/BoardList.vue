@@ -1,6 +1,6 @@
 <script setup>
-import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
+import {ref, onMounted, watch} from "vue";
+import {useRoute, useRouter} from "vue-router";
 import { listArticle } from "@/api/board";
 
 import VSelect from "@/components/common/VSelect.vue";
@@ -8,6 +8,7 @@ import BoardListItem from "@/components/board/item/BoardListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
 
 const router = useRouter();
+const route = useRoute();
 
 const selectOption = ref([
   { text: "검색조건", value: "" },
@@ -25,9 +26,12 @@ const param = ref({
   spp: VITE_ARTICLE_LIST_SIZE,
   key: "",
   word: "",
+  boardType: ""
 });
+const { boardType } = route.params;
 
 onMounted(() => {
+  param.value.boardType = boardType;
   getArticleList();
 });
 
@@ -35,6 +39,8 @@ const changeKey = (val) => {
   console.log("BoarList에서 선택한 조건 : " + val);
   param.value.key = val;
 };
+
+
 
 const getArticleList = () => {
   console.log("서버에서 글목록 얻어오자!!!", param.value);

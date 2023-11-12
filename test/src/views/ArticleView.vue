@@ -3,7 +3,7 @@
 <template>
   <div class="container text-center mt-3">
     <div class="alert alert-info" role="alert">여행정보게시판 - 추후</div>
-    <router-view></router-view>
+    <router-view :key="$route.path"></router-view>
   </div>
 </template> 
 

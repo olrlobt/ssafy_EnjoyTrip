@@ -5,30 +5,29 @@ const local = localAxios(); // axios instance
 const url = "/article"
 
 function listArticle(param, success, fail) {
-  console.log("param", param)
-  local.get(`${url}/notice`, { params: param }).then(success).catch(fail);
+  local.get(`${url}/${param.boardType}`, { params: param }).then(success).catch(fail);
 }
 
 function detailArticle(articleno, success, fail) {
-  local.get(`${url}/notice/view/${articleno}`).then(success).catch(fail);
+  local.get(`${url}/view/${articleno}`).then(success).catch(fail);
 }
 
-function registArticle(article, success, fail) {
-  console.log("boardjs article", article);
+function registArticle(boardType, article, success, fail) {
+  console.log("boardjs article", article, boardType);
 
-  local.post(`${url}/notice/write`, JSON.stringify(article)).then(success).catch(fail);
+  local.post(`${url}/${boardType}/write`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 function getModifyArticle(articleno, success, fail) {
-  local.get(`${url}/notice/modify/${articleno}`).then(success).catch(fail);
+  local.get(`${url}/modify/${articleno}`).then(success).catch(fail);
 }
 
 function modifyArticle(article, success, fail) {
-  local.put(`${url}/notice/modify`, JSON.stringify(article)).then(success).catch(fail);
+  local.put(`${url}/modify`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 function deleteArticle(articleno, success, fail) {
-  local.delete(`${url}/notice/delete/${articleno}`).then(success).catch(fail);
+  local.delete(`${url}/delete/${articleno}`).then(success).catch(fail);
 }
 
 

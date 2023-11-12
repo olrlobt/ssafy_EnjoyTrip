@@ -69,7 +69,7 @@ public class BoardController2 {
 //        boardDto.setType(type);
         //임시로 userId, type 변경해주기
         boardDto.setUserId("user4");
-        boardDto.setType("notice");
+        boardDto.setType(type);
         System.out.println(boardDto);
 
         try {
@@ -81,8 +81,8 @@ public class BoardController2 {
         }
     }
 
-    @GetMapping("/{type}/view/{articleNo}")
-    public ResponseEntity<?> detail(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
+    @GetMapping("/view/{articleNo}")
+    public ResponseEntity<?> detail(@PathVariable("articleNo")String articleNo) {
         try {
         	System.out.println("articleNo: "+articleNo);
             BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
@@ -97,8 +97,8 @@ public class BoardController2 {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
         }
     }
-    @GetMapping("/{type}/modify/{articleNo}")
-    public ResponseEntity<?> getModify(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
+    @GetMapping("/modify/{articleNo}")
+    public ResponseEntity<?> getModify( @PathVariable("articleNo")String articleNo) {
     	try {
 //    		System.out.println("articleNo: "+articleNo);
     		BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
@@ -114,10 +114,10 @@ public class BoardController2 {
     	}
     }
 
-    @PutMapping("/{type}/modify")
-    public ResponseEntity<?> modify(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
+    @PutMapping("/modify")
+    public ResponseEntity<?> modify( @RequestBody BoardDto boardDto) {
         try {
-        	System.out.println(boardDto);
+//        	System.out.println(boardDto);
             boardService.modifyArticle(boardDto);
             System.out.println("수정완료");
             return ResponseEntity.ok().body("Article modified successfully.");
@@ -127,7 +127,7 @@ public class BoardController2 {
         }
     }
 
-    @DeleteMapping("/{type}/delete/{articleNo}")
+    @DeleteMapping("/delete/{articleNo}")
     public ResponseEntity<?> delete(@PathVariable String articleNo) {
         try {
             boardService.deleteArticle(Integer.parseInt(articleNo));

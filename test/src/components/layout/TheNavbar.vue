@@ -56,13 +56,13 @@
                                     </li>
 
                                     <li class="nav-item">
-                                        <RouterLink to="/article-travel" class="nav-link">여행 정보 공유</RouterLink>
+                                        <RouterLink to="/article/travel" class="nav-link">여행 정보 공유</RouterLink>
                                     </li>
                                     <li class="nav-item">
-                                        <RouterLink to="/article-hot" class="nav-link">핫플레이스</RouterLink>
+                                        <RouterLink to="/article/hot" class="nav-link">핫플레이스</RouterLink>
                                     </li>
                                     <li class="nav-item">
-                                        <RouterLink to="/article" class="nav-link">공지사항</RouterLink>
+                                        <RouterLink to="/article/notice" class="nav-link">공지사항</RouterLink>
                                     </li>
 
                                 </ul>
