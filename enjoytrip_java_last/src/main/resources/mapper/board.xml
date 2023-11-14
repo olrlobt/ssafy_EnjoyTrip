@@ -4,15 +4,15 @@
 
 <mapper namespace="com.ssafy.ux.finalpj.board.mapper.BoardMapper">
 
-<!--    <insert id="writeArticle" parameterType="boardDto" >-->
-<!--        insert into boards (userid, subject, content, type, registerTime)-->
-<!--        values (#{userId}, #{subject}, #{content}, #{type}, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s')-->
-<!--    </insert>-->
-
-    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo">
+    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo" >
         insert into boards (userid, subject, content, type, registerTime, ref , step , depth)
-        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'), #{ref}, #{step}, #{depth})
+        values (#{userId}, #{subject}, #{content}, #{type}, now(), #{ref}, #{step}, #{depth})
     </insert>
+
+<!--    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo">-->
+<!--        insert into boards (userid, subject, content, type, registerTime, ref , step , depth)-->
+<!--        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'), #{ref}, #{step}, #{depth})-->
+<!--    </insert>-->
 
     <update id="updateRef" parameterType="int">
         update boards set ref = #{articleNo} where articleNo = #{articleNo} and ref = 0
