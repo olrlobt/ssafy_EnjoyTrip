@@ -18,11 +18,11 @@
         update boards set ref = #{articleNo} where articleNo = #{articleNo} and ref = 0
     </update>
 
-    <update id="updateStep" parameterType="int">
+    <update id="updateStep" parameterType="boardDto">
         UPDATE boards
         SET step = step + 1
-        WHERE ref = (SELECT ref FROM boards WHERE articleNo = #{articleNo})
-        AND step >= (SELECT step FROM boards WHERE articleNo = #{articleNo});
+        WHERE ref = #{ref}
+        AND step > #{step};
     </update>
 
     <select id="listArticle" parameterType="map" resultType="boardDto">

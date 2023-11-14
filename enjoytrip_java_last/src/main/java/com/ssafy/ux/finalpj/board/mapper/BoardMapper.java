@@ -13,7 +13,7 @@ public interface BoardMapper {
 
     void updateRef(int articleNo) throws SQLException;
 
-    void updateStep(int articleNo) throws  SQLException;
+    void updateStep(BoardDto boardDto) throws  SQLException;
 
     List<BoardDto> listArticle(String type, int currentPage, int itemsPerPage) throws SQLException;
 

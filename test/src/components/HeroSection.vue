@@ -1,3 +1,8 @@
+
+<script setup>
+
+</script>
+
 <template>
   <div class="hero">
     <div class="container">
@@ -63,32 +68,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'HeroSection',
-  // 필요한 데이터, 메서드, 컴퓨티드 프로퍼티 등을 추가하세요
-};
-</script>
 
 <style scoped>
-/* 히어로 섹션에 대한 CSS 스타일 */
-
-
-.typed-cursor{
-  opacity: 1;
-}
-.typed-cursor.typed-cursor--blink{
-  animation: typedjsBlink 0.7s infinite;
-  -webkit-animation: typedjsBlink 0.7s infinite;
-  animation: typedjsBlink 0.7s infinite;
-}
-@keyframes typedjsBlink{
-  50% { opacity: 0.0; }
-}
-@-webkit-keyframes typedjsBlink{
-  0% { opacity: 1; }
-  50% { opacity: 0.0; }
-  100% { opacity: 1; }
-}
 
 </style>

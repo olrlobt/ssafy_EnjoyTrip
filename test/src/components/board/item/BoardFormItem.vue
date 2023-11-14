@@ -13,11 +13,6 @@ const isUseId = ref(false);
 
 
 const { articleno, refNo ,step, depth } = route.query;
-console.log(articleno)
-console.log(refNo)
-console.log(step)
-console.log(depth)
-
 
 const article = ref({
   articleNo: 0,
@@ -89,9 +84,10 @@ function writeArticle() {
 
   article.value.ref = article.value.articleNo;
   if(articleno){
+    console.log(" 답 글 인 듯 ")
     article.value.ref = refNo;
-    article.value.step = parseInt(step)+1 ;
-    article.value.depth = parseInt(depth)+1 ;
+    article.value.step = parseInt(step);
+    article.value.depth = parseInt(depth);
   }
 
    registArticle(boardType ,article.value, ({ data }) => {

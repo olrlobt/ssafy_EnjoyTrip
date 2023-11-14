@@ -21,12 +21,15 @@ public class BoardServiceImpl2 implements BoardService {
 
     @Override
     public void writeArticle(BoardDto boardDto) throws Exception {
-        boardMapper.writeArticle(boardDto);
-        if (boardDto.getRef() == 0) {
+
+        if (boardDto.getRef() == 0) { // 답글 아님
+            boardMapper.writeArticle(boardDto);
             boardMapper.updateRef(boardDto.getArticleNo());
-        }else {
-            System.out.println("boardDto = " + boardDto.getArticleNo());
-            boardMapper.updateStep(boardDto.getArticleNo());
+        } else { // 답글
+            boardMapper.updateStep(boardDto);
+            boardDto.setStep(boardDto.getStep() + 1);
+            boardDto.setDepth(boardDto.getDepth() + 1);
+            boardMapper.writeArticle(boardDto);
         }
     }
 

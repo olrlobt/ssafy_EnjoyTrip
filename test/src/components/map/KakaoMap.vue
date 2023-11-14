@@ -33,8 +33,8 @@ onMounted(() => {
 function initMap() {
   const container = document.getElementById("map");
   const options = {
-    center: new kakao.maps.LatLng(37.566826, 126.9786567),
-    level: 12,
+    center: new kakao.maps.LatLng(34.566826, 126.9786567),
+    level: 13,
   };
 
   map.value = new kakao.maps.Map(container, options);
@@ -140,7 +140,6 @@ function displayArea(area) {
       </ul>
 
       <div class="button-group">
-
         <button id="shortRoute_start" class="beautiful-button">시작지 최단경로 보기</button>
         <button id="shortRoute_return" class="beautiful-button">순회 최단경로 보기</button>
         <button id="shortRoute" class="beautiful-button">여행 최단경로 보기</button>
@@ -155,6 +154,6 @@ function displayArea(area) {
   </div>
 </template>
 
-<style scoped>
+<style>
 @import "@/assets/css/map.css";
 </style>

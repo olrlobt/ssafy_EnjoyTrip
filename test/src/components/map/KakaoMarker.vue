@@ -130,7 +130,6 @@ function callAPI(params, keyword_search) {
 
       if (isDuplicate) continue;
 
-
       let marker = new kakao.maps.Marker({
         position: markerPosition,
         map: prop.map

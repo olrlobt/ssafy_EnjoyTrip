@@ -14,7 +14,6 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 
-import 'owl.carousel';
 
 const app = createApp(App)
 

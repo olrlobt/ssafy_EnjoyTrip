@@ -296,7 +296,6 @@
                     // 지도의 중심을 부드럽게 클릭한 위치로 이동시킵니다.
                     map.panTo(latlng);
                 } else {
-
                     callFunctionWithRegionCode(area.location);
                 }
             });

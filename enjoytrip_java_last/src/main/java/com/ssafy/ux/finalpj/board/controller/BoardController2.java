@@ -41,14 +41,12 @@ public class BoardController2 {
         try {
 //            int totalPages = boardService.getTotalPage(type);
             List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
-            log.info("list size = {}" , list.size());
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {
             log.error("Error getting articles list", e);
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error getting articles list");
         }
     }
-
 
     @GetMapping("/writeForm")
     public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type) {
@@ -97,6 +95,7 @@ public class BoardController2 {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
         }
     }
+
     @GetMapping("/modify/{articleNo}")
     public ResponseEntity<?> getModify( @PathVariable("articleNo")String articleNo) {
     	try {
@@ -117,9 +116,7 @@ public class BoardController2 {
     @PutMapping("/modify")
     public ResponseEntity<?> modify( @RequestBody BoardDto boardDto) {
         try {
-//        	System.out.println(boardDto);
             boardService.modifyArticle(boardDto);
-            System.out.println("수정완료");
             return ResponseEntity.ok().body("Article modified successfully.");
         } catch (Exception e) {
             log.error("Error during article modification", e);

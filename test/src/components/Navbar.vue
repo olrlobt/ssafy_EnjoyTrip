@@ -1,29 +1,35 @@
+<script setup>
+
+
+</script>
+
+
 <template>
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
-        <a href="../views/index.html" class="logo m-0"><img src="@/assets/img/logo.png" width="75px"><span class="text-primary">.</span></a>
+        <RouterLink to="/"><img src="@/assets/images/logo.png" width="72"></RouterLink>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
           <li class="active"><a href="../views/index.html">Home</a></li>
 
-          <li><a href="services.html">Map</a></li>
+          <li><RouterLink to="/map">Map</RouterLink></li>
 
           <li class="has-children">
-            <a href="#">Share UX</a>
+            <RouterLink to="#">Share UX</RouterLink>
             <ul class="dropdown">
-              <li><a href="#">My Route</a></li>
-              <li><a href="#">My Likes</a></li>
+              <li><RouterLink to="#">My Route</RouterLink></li>
+              <li><RouterLink to="#">My Likes</RouterLink></li>
             </ul>
           </li>
 
           <li class="has-children menu-item">
-            <a href="#">CS</a>
+            <RouterLink to="/article/notice">CS</RouterLink>
             <ul class="dropdown">
-              <li><a href="#">Notice</a></li>
-              <li><a href="#">Q&A</a></li>
+              <li><RouterLink to="/article/notice">Notice</RouterLink></li>
+              <li><RouterLink to="/article/qna">Q&A</RouterLink></li>
             </ul>
           </li>
-          <li><a href="#">Login / Sign up</a></li>
+          <li><RouterLink to="/login">Login / Sign up</RouterLink></li>
           <!--          <li class="has-children">-->
 <!--            <a href="#">Share UX</a>-->
 <!--            <ul class="dropdown">-->
@@ -52,12 +58,7 @@
   </nav>
 </template>
 
-<script>
-export default {
-  name: 'Navbar',
-  // 여기에 필요한 데이터, 메서드, 컴퓨티드 프로퍼티 등을 추가하세요
-};
-</script>
+
 
 <style scoped>
 /* 네비게이션 바에 대한 CSS 스타일 */
