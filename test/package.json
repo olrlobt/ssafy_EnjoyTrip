@@ -12,11 +12,8 @@
     "axios": "^1.6.1",
     "jwt-decode": "^4.0.0",
     "owl.carousel": "^2.3.4",
-<<<<<<< HEAD
     "pinia": "^2.1.7",
-=======
     "sass": "^1.69.5",
->>>>>>> bc0cda1c2fd42883fa0d2cbb698d8d2b07381135
     "vue": "^3.3.4",
     "vue-router": "^4.2.5"
   },
