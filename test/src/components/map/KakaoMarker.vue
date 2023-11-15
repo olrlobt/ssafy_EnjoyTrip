@@ -1,9 +1,10 @@
 <script setup>
-import { defineProps, onMounted, ref } from "vue";
+import {defineProps, onMounted, ref} from "vue";
 
 
 const { VITE_TRAVEL_API_KEY } = import.meta.env;
 const selectedTourismType = ref("");
+const searchInputKeyword = ref("");
 const markers = ref([]);
 const fixedMarkers = ref([]);
 const fixedMarkerPositions = ref([]);
@@ -45,10 +46,32 @@ onMounted(() => {
   //   position: new kakao.maps.LatLng(37.566, 126.9784),
   //   map: prop.map
   // });
-
-
 });
 
+
+const searchKeyword = (event) => {
+  let params = {
+    numOfRows: 50,
+    MobileOS: 'ETC',
+    MobileApp: 'YourAppName',
+    keyword: event.target.value,
+    contentTypeId: selectedTourismType.value,
+    serviceKey: VITE_TRAVEL_API_KEY,
+    _type: 'json'
+  };
+    console.log(params.keyword)
+  searchWithDebounce(params, "searchKeyword1");
+}
+
+let debounceTimeout;
+function searchWithDebounce(params, keyword_search) {
+  if (debounceTimeout) {
+    clearTimeout(debounceTimeout);
+  }
+  debounceTimeout = setTimeout(() => {
+    callAPI(params, keyword_search);
+  }, 200);  // 300ms 동안 추가 입력이 없으면 callAPI를 호출합니다.
+}
 
 
 function callAPIWithRegionCode(originalCode) {
@@ -342,8 +365,8 @@ function callAPI(params, keyword_search) {
 
 <template>
 
-  <div class="control-container">
-    <select id="tourismType">
+  <div class="control-container map-popup">
+    <select id="tourismType ">
       <option value="12" selected>관광타입 선택</option>
       <option value="12">관광지</option>
       <option value="14">문화시설</option>
@@ -355,7 +378,7 @@ function callAPI(params, keyword_search) {
       <option value="39">음식점</option>
     </select>
     <div class="search-container">
-      <input type="text" v-model="selectedTourismType" class="search-input" id="keyword" placeholder="검색어를 입력하세요...">
+      <input type="text" class="search-input" id="keyword" placeholder="지역/상호명" @keyup="searchKeyword">
       <button class="search-button">검색</button>
     </div>
   </div>

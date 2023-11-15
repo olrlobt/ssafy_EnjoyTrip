@@ -8,9 +8,9 @@
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
-        <RouterLink to="/"><img src="@/assets/images/logo.png" width="72"></RouterLink>
+        <RouterLink to="/"><img src="@/assets/images/logo2.png" width="85"></RouterLink>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
-          <li class="active"><a href="../views/index.html">Home</a></li>
+          <li class="active"><RouterLink to="/">Home</RouterLink></li>
 
           <li><RouterLink to="/map">Map</RouterLink></li>
 

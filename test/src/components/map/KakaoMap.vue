@@ -2,7 +2,10 @@
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
 import KakaoMarker from "@/components/map/KakaoMarker.vue"
+import KakaoRoute from "@/components/map/KakaoRoute.vue";
 import {ref, onMounted} from "vue";
+
+
 
 const polygons = ref([]);
 const detailMode = ref(false);
@@ -128,30 +131,16 @@ function displayArea(area) {
     }
   });
 }
-
 </script>
 
 <template>
-  <div class="container-map">
-    <div class="sidebar">
-      <h3>여행 경로</h3>
-      <ul id="travelRouteList">
-        <!-- 여기에 장소가 추가됩니다 -->
-      </ul>
 
-      <div class="button-group">
-        <button id="shortRoute_start" class="beautiful-button">시작지 최단경로 보기</button>
-        <button id="shortRoute_return" class="beautiful-button">순회 최단경로 보기</button>
-        <button id="shortRoute" class="beautiful-button">여행 최단경로 보기</button>
-      </div>
 
-      <button id="createRoute" class="route-button">경로 생성</button>
+    <div id="map" style="width: 100%; height: 100vh;">
+        <KakaoMarker v-if="mapLoaded" :map="map" ref="clickMarker"/>
+        <KakaoRoute/>
     </div>
 
-    <KakaoMarker v-if="mapLoaded" :map="map" ref="clickMarker"/>
-    <div id="map" style="width: calc(100% - 250px); height: 1200px;"></div>
-
-  </div>
 </template>
 
 <style>
