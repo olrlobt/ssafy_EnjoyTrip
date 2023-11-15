@@ -159,8 +159,9 @@ select#tourismType {
     top: 30px;
     left: 30px;
     overflow: hidden;   /* 내부 요소가 컨테이너를 벗어나지 않게 합니다. */
-    height: 500px;     /* 필요한 경우 높이 조절 */
+    height: 80%;     /* 필요한 경우 높이 조절 */
     width: 30%;
+    max-width: 300px;
 }
 
 /* 경로생성 버튼 */

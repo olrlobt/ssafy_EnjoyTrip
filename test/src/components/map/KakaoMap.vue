@@ -1,10 +1,9 @@
 <script setup>
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
-import KakaoMarker from "@/components/map/KakaoMarker.vue"
-import KakaoRoute from "@/components/map/KakaoRoute.vue";
+import KakaoMarker from "@/components/map/KakaoMarker2.vue"
+import KakaoRoute from "@/components/map/KakaoRoute2.vue";
 import {ref, onMounted} from "vue";
-
 
 
 const polygons = ref([]);
@@ -134,7 +133,6 @@ function displayArea(area) {
 </script>
 
 <template>
-
 
     <div id="map" style="width: 100%; height: 100vh;">
         <KakaoMarker v-if="mapLoaded" :map="map" ref="clickMarker"/>
