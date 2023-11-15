@@ -1,10 +1,10 @@
 <script setup>
 import KakaoMap from "@/components/map/KakaoMap.vue";
-import TheHero from "@/components/TheHero2.vue"
+import MapHeader from "@/components/MapHeader.vue"
 </script>
 
 <template>
-  <TheHero/>
+  <MapHeader/>
   <KakaoMap/>
 </template>
 
