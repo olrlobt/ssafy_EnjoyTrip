@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class MemberController2 extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -41,8 +43,9 @@ public class MemberController2 extends HttpServlet {
     }
 
     @PostMapping("/join")
-    public ResponseEntity<?> join(MemberDto memberDto) {
+    public ResponseEntity<?> join(@RequestBody MemberDto memberDto) {
         try {
+        	System.out.println("join_memberDto: " + memberDto);
             memberService.joinMember(memberDto);
             return ResponseEntity.status(HttpStatus.CREATED).body("회원 가입에 성공하였습니다.");
         } catch (Exception e) {
