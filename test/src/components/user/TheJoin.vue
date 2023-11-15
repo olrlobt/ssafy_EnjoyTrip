@@ -108,7 +108,7 @@ function join() {
               <button type="button" @click = join() id="btn-join" class="btn btn-outline-primary mb-3" >
                 회원가입
               </button>
-              <button type="button" class="btn btn-outline-success mb-3" >초기화</button>
+              <button type="button" @click = reset() class="btn btn-outline-success mb-3" >초기화</button>
             </div>
           </form>
         </div>

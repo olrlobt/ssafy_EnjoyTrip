@@ -1,6 +1,7 @@
 package com.ssafy.ux.finalpj.member.mapper;
 
 import java.sql.SQLException;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 
@@ -22,4 +23,12 @@ public interface MemberMapper {
 	void withdraw(String userId) throws Exception;
 
 	MemberDto loginMember(MemberDto memberDto);
+	
+	//jwt
+	MemberDto userInfo(String userId) throws SQLException;
+	void saveRefreshToken(Map<String, String> map) throws SQLException;
+	Object getRefreshToken(String userid) throws SQLException;
+	void deleteRefreshToken(Map<String, String> map) throws SQLException;
+	
+	
 }

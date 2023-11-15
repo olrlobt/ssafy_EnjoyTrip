@@ -22,7 +22,7 @@
 	</insert>
 
 	<select id="loginMember" parameterType="map" resultType="memberDto">
-		select userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate
+		select userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate, token
 		from members
 		where userId = #{userId} and userPwd = #{userPwd}
 	</select>
@@ -39,6 +39,30 @@
 		where userId = #{userId}
 	</update>
 
+	<select id="userInfo" parameterType="string" resultMap="member">
+		select userName, userId, emailId, emailDomain, joinDate
+		from members
+		where userId = #{userId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where userId = #{userId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where userId = #{userId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+	
 
 </mapper>
 

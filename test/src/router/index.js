@@ -3,7 +3,9 @@ import HomeView from "../views/HomeView.vue"
 import MapView from "../views/MapView.vue";
 
 const router = createRouter({
+
   history: createWebHistory(import.meta.env.BASE_URL),
+
   routes: [
     {
       path: '/',
@@ -11,7 +13,7 @@ const router = createRouter({
       component: HomeView,
     },
     {
-      path: '/login',
+      path: '/user/login',
       name: 'login',
       component: () => import("@/components/user/TheLogin.vue"),
     },

@@ -1,5 +1,18 @@
 <script setup>
+import { useMenuStore } from "@/stores/menu";
+import { storeToRefs } from "pinia";
 
+const menuStore = useMenuStore();
+
+// 반응형을 유지하면서 스토어에서 속성을 추출하려면, storeToRefs()를 사용
+// https://pinia.vuejs.kr/core-concepts/
+const { menuList } = storeToRefs(menuStore);
+const { changeMenuState } = menuStore;
+
+const logout = () => {
+  console.log("로그아웃!!!!");
+  changeMenuState();
+};
 
 </script>
 
@@ -29,7 +42,32 @@
               <li><RouterLink to="/article/qna">Q&A</RouterLink></li>
             </ul>
           </li>
-          <li><RouterLink to="/login">Login / Sign up</RouterLink></li>
+
+          <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li>
+<!-- 
+        <li>
+          <template v-for="menu in menuList" :key="menu.routeName">
+            <template v-if="menu.show">
+              <template v-if="menu.routeName === 'logout'">
+                <li class="nav-item">
+                  <router-link to="/" @click.prevent="logout" class="nav-link">{{
+                    menu.name
+                  }}</router-link>
+                </li>
+              </template>
+              <template v-else>
+                <li class="nav-item">
+                  <router-link :to="{ name: menu.routeName }" class="nav-link">{{
+                    menu.name
+                  }}</router-link>
+                </li>
+              </template>
+            </template>
+          </template>
+        </li> -->
+
+
+
           <!--          <li class="has-children">-->
 <!--            <a href="#">Share UX</a>-->
 <!--            <ul class="dropdown">-->

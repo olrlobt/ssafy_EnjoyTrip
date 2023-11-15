@@ -1,12 +1,41 @@
 <script setup>
 import TheHeroVue from "../TheHero.vue";
-import { useRoute, useRouter } from "vue-router";
-const router = useRouter();
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { useMemberStore } from "@/stores/member";
+import { useMenuStore } from "@/stores/menu";
 
+const router = useRouter();
+const memberStore = useMemberStore();
+
+const { isLogin } = storeToRefs(memberStore);
+const { userLogin, getUserInfo } = memberStore;
+const { changeMenuState } = useMenuStore();
+
+const loginUser = ref({
+  userId: "",
+  userPwd: "",
+});
+
+const login = async () => {
+  console.log("login ing!!!! !!!");
+  await userLogin(loginUser.value);
+  let token = sessionStorage.getItem("accessToken");
+  console.log("111. ", token);
+  console.log("isLogin: ", isLogin);
+  if (isLogin) {
+    console.log("로그인 성공아닌가???");
+    getUserInfo(token);
+    changeMenuState();
+  }
+  router.push("/");
+};
 
 const join = () => {
   router.push({ name: "join" });
 }
+
 
 
 </script>
@@ -23,10 +52,10 @@ const join = () => {
               <input
                 type="text"
                 class="form-control"
+                v-model="loginUser.userId"
                 id="userid"
                 name="userid"
                 placeholder="아이디..."
-                value="${saveid}"
               />
             </div>
             <div class="mb-3">
@@ -34,6 +63,7 @@ const join = () => {
               <input
                 type="password"
                 class="form-control"
+                v-model="loginUser.userPwd"
                 id="userpwd"
                 name="userpwd"
                 placeholder="비밀번호..."
