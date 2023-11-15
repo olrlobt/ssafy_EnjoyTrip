@@ -1,23 +1,49 @@
 <script setup>
+import TheHeroVue from "../TheHero.vue";
+import { ref, onMounted } from "vue";
+import { useRouter } from "vue-router";
+import { joinUser } from "@/api/user.js";
+
+const router = useRouter();
+// const props = defineProps({ type: String });
+
+const memberInfo = ref({
+  userId: "",
+  userName: "",
+  userPwd: "",
+  emailId: "",
+  emailDomain: "",
+});
+
+
+function join() { 
+  console.log("회원가입 클릭")
+  joinUser(memberInfo.value,
+    (response) => { 
+      let msg = "글등록 처리시 문제 발생했습니다.";
+      if (response.status == 201) msg = "회원가입 성공"
+      alert(msg);
+      router.push({ name: "login" });
+    },
+    (error) => console.error(error));
+}
+
+
 
 </script>
 
 <template>
-           <div class="container">
+    <TheHeroVue/>
+      <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
-          <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-            <mark class="orange">회원가입</mark>
-          </h2>
-        </div>
-        <div class="col-lg-8 col-md-10 col-sm-12">
-          <form id="form-join" method="POST" action="">
-            <input type="hidden" name="action" value="join">
+          <form @submit.prevent="onSubmit">
             <div class="mb-3">
               <label for="username" class="form-label">이름 : </label>
               <input
                 type="text"
                 class="form-control"
+                v-model="memberInfo.userName"
                 id="username"
                 name="userName"
                 placeholder="이름..."
@@ -28,6 +54,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="memberInfo.userId"
                 id="userid"
                 name="userId"
                 placeholder="아이디..."
@@ -39,6 +66,7 @@
               <input
                 type="text"
                 class="form-control"
+                v-model="memberInfo.userPwd"
                 id="userpwd"
                 name="userPwd"
                 placeholder="비밀번호..."
@@ -54,6 +82,7 @@
                 <input
                   type="text"
                   class="form-control"
+                  v-model="memberInfo.emailId"
                   id="emailid"
                   name="emailId"
                   placeholder="이메일아이디"
@@ -61,24 +90,25 @@
                 <span class="input-group-text">@</span>
                 <select
                   class="form-select"
+                  v-model="memberInfo.emailDomain"
                   id="emaildomain"
                   name="emailDomain"
                   aria-label="이메일 도메인 선택"
                 >
                   <option selected>선택</option>
-                  <option value="ssafy.com">싸피</option>
-                  <option value="google.com">구글</option>
-                  <option value="naver.com">네이버</option>
-                  <option value="kakao.com">카카오</option>
+                  <option value="ssafy.com">ssafy.com</option>
+                  <option value="google.com">google.com</option>
+                  <option value="naver.com">naver.com</option>
+                  <option value="kakao.com">kakao.com</option>
                 </select>
               </div>
             </div>
     
             <div class="col-auto text-center">
-              <button type="button" id="btn-join" class="btn btn-outline-primary mb-3">
+              <button type="button" @click = join() id="btn-join" class="btn btn-outline-primary mb-3" >
                 회원가입
               </button>
-              <button type="button" class="btn btn-outline-success mb-3">초기화</button>
+              <button type="button" class="btn btn-outline-success mb-3" >초기화</button>
             </div>
           </form>
         </div>
