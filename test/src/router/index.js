@@ -11,6 +11,13 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
+      // beforeEnter(to, from, next) { // index 접근시 localStorage에 토큰이 있는지 확인.
+      //   if (localStorage.getItem('accessToken')) {
+      //     next({ name: 'home' }) //메뉴가  마이페이지/로그아웃 만들게 해야함.
+      //   } else { 
+      //     next({ name :  'login'});
+      //   }
+      // }
     },
     {
       path: '/user/login',
@@ -21,6 +28,12 @@ const router = createRouter({
       path: '/join',
       name: 'join',
       component: () => import("@/components/user/TheJoin.vue"),
+    },
+    {
+      // path: '/user/mypage/:userId',
+      path: '/user/mypage',
+      name: 'mypage',
+      component: () => import("@/components/user/TheMypage.vue"),
     },
     {
       path: '/map',

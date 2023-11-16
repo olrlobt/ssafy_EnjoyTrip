@@ -4,7 +4,7 @@ import TheHero from "@/components/TheHero.vue"
 </script>
 
 <template>
-  <TheHero/>
+  <TheHero title="게시판" contents ="게시판입니다."/>
   <div class="container text-center mt-3">
     <router-view :key="$route.path"></router-view>
   </div>
