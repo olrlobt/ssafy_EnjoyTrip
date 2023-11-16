@@ -43,28 +43,24 @@ const logout = () => {
             </ul>
           </li>
 
-          <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li>
-<!-- 
+          <!-- <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li> -->
+
         <li>
           <template v-for="menu in menuList" :key="menu.routeName">
             <template v-if="menu.show">
               <template v-if="menu.routeName === 'logout'">
-                <li class="nav-item">
                   <router-link to="/" @click.prevent="logout" class="nav-link">{{
                     menu.name
                   }}</router-link>
-                </li>
               </template>
               <template v-else>
-                <li class="nav-item">
                   <router-link :to="{ name: menu.routeName }" class="nav-link">{{
                     menu.name
                   }}</router-link>
-                </li>
               </template>
             </template>
           </template>
-        </li> -->
+        </li> 
 
 
 
