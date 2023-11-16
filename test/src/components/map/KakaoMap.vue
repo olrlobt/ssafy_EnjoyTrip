@@ -1,8 +1,9 @@
 <script setup>
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
-import KakaoMarker from "@/components/map/KakaoMarker2.vue"
-import KakaoRoute from "@/components/map/KakaoRoute2.vue";
+import KakaoMarker from "@/components/map/KakaoMarkerSearch.vue"
+import KakaoRoute from "@/components/map/KakaoSideList.vue";
+import KakaoMarkerPopup from "@/components/map/KakaoDetailPopup.vue"
 import {ref, onMounted} from "vue";
 
 
@@ -29,13 +30,10 @@ onMounted(() => {
   }
 })
 
-
-
-
 function initMap() {
   const container = document.getElementById("map");
   const options = {
-    center: new kakao.maps.LatLng(34.566826, 126.9786567),
+    center: new kakao.maps.LatLng(35.566826, 128.0786567),
     level: 13,
   };
 
@@ -137,6 +135,7 @@ function displayArea(area) {
     <div id="map" style="width: 100%; height: 100vh;">
         <KakaoMarker v-if="mapLoaded" :map="map" ref="clickMarker"/>
         <KakaoRoute/>
+        <KakaoMarkerPopup/>
     </div>
 
 </template>

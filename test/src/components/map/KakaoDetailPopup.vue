@@ -1,5 +1,5 @@
 <template>
-  <div class="window">
+  <div class="window3">
     <div class="head">
       <div class="buttons">
         <div class="button -red"></div>
@@ -7,49 +7,20 @@
         <div class="button -green"></div>
       </div>
       <div class="tabs-group">
-<!--        <draggable :list="$data.tabs" v-bind="dragOptions" :style="tabsWidth">-->
-<!--          <transition-group class="tabs" name="list-complete">-->
-<!--            <template v-for="tab in $data.tabs" :key="tab.id">-->
-<!--              <div-->
-<!--                  :class="[active(tab.id), 'tab']" @mousedown="changeTab(tab.id)"-->
-<!--              >-->
-<!--                <p class="text">{{ tab.name }}</p>-->
-<!--                <div-->
-<!--                    class="close-button"-->
-<!--                    @mousedown="beforeCloseTab($event)"-->
-<!--                    @click="closeTab(tab.id)"-->
-<!--                ></div>-->
-<!--              </div>-->
-<!--            </template>-->
-<!--          </transition-group>-->
-<!--        </draggable>-->
 
         <div class="tabs"  :style="tabsWidth">
           <div
               :class="[active(1), 'tab']"
-               @mousedown="changeTab(1)"
+              @mousedown="changeTab(1)"
           >
-            <span class="text"> 여행경로</span>
+            <span class="text"> 세부사항</span>
             <div
                 class="close-button"
                 @mousedown="beforeCloseTab($event)"
                 @click="closeTab(1)"
             ></div>
           </div>
-
-          <div
-              :class="[active(2), 'tab']"
-              @mousedown="changeTab(2)"
-          >
-            <span class="text"> 관광리스트</span>
-            <div
-                class="close-button"
-                @mousedown="beforeCloseTab($event)"
-                @click="closeTab(2)"
-            ></div>
-          </div>
         </div>
-
 
         <div key="add-button" class="add-button" @click="addTab"></div>
       </div>
@@ -63,20 +34,23 @@
       </div>
       <input class="search" type="text" />
     </div>
+
     <div class="content">
-      <template v-for="tab in $data.tabs" :key="tab.id">
-        <div :class="[active(tab.id), 'tab-content']" >
-
-
-
+        <div style="display: flex; align-items: center;">
+          <img src= "{{mapStore.detailState.firstimage }}" alt="{{mapStore.detailState.title}}" style="width: 60px; height: 60px; object-fit: cover; margin-right: 10px;"/>
+          <div style="font-size: 0.9rem;">
+            <strong>{{mapStore.detailState.title}}</strong><br/>
+            {{mapStore.detailState.addr1}}
+          </div>
         </div>
-      </template>
     </div>
   </div>
 </template>
 <script setup>
 import { ref, reactive, computed, onMounted } from 'vue';
+import {useMapStore} from "../../stores/map";
 
+const mapStore = useMapStore();
 const currentTabId = ref(1);
 const nextTabId = ref(4);
 
@@ -155,15 +129,15 @@ $gray-light: #e7eaef;
 //  background: linear-gradient(135deg, rgb(250,250,255) 0%, rgb(240,240,246) 50%, rgb(230,230,237) 100%);
 //}
 
-.window {
-  position: relative;
-  z-index: 3;
-  top: 20px;
-  left: 20px;
-  width: 100%;
-  max-width: 350px;
-  max-height: 80%;
-  height: 100%;
+.window3 {
+  position: absolute;
+  z-index: 4;
+  top: 200px;
+  right: 30px;
+  width: 30%;
+  max-width: 700px;
+  max-height: 50%;
+  height: 50%;
   border-radius: 8px;
   overflow: hidden;
   background-color: #fff;

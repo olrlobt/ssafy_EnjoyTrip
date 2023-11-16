@@ -4,7 +4,7 @@
 </script>
 
 <template>
-    <div class="hero " style="padding: 2rem 0 5rem 0; margin-bottom: 0px">
+    <div class="hero " style="padding: 2rem 0 5rem 0; margin-bottom: 5px; box-shadow: 0 10px 10px -5px;">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 mx-auto text-center">
