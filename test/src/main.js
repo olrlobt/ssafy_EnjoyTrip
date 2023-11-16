@@ -14,18 +14,15 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
 import { createPinia } from 'pinia';
-import { useMemberStore } from './stores/member';
 
 const app = createApp(App);
 const pinia = createPinia();
 app.use(pinia);
 
-const store = useMemberStore();
-app.use(store);
-// app.mixin({
-//     // beforeCreate() { 
-//     //     store.loginCheck();
-//     // }
-// });
+// app.provide('isLoggedIn', () => {
+//     const token = sessionStorage.getItem('accessToken');
+//     return token !== null && token !== undefined;
+//   });
+
 app.use(router);
 app.mount('#app');

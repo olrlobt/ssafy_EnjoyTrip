@@ -11,13 +11,6 @@ const router = createRouter({
       path: '/',
       name: 'home',
       component: HomeView,
-      // beforeEnter(to, from, next) { // index 접근시 localStorage에 토큰이 있는지 확인.
-      //   if (localStorage.getItem('accessToken')) {
-      //     next({ name: 'home' }) //메뉴가  마이페이지/로그아웃 만들게 해야함.
-      //   } else { 
-      //     next({ name :  'login'});
-      //   }
-      // }
     },
     {
       path: '/user/login',
@@ -30,15 +23,10 @@ const router = createRouter({
       component: () => import("@/components/user/TheJoin.vue"),
     },
     {
-      // path: '/user/mypage/:userId',
-      path: '/user/mypage',
-      name: 'mypage',
-      component: () => import("@/components/user/TheMypage.vue"),
-    },
-    {
       path: '/map',
       name: 'map',
       component: MapView,
+      meta: { requiresAuth: true } 
     },
     {
       path: '/article/:boardType',
@@ -74,7 +62,39 @@ const router = createRouter({
         },
       ],
     },
-  ]
+  ],
 })
+
+// beforeEach를 사용하여 라우터 네비게이션 가드 구현
+router.beforeEach((to, from, next) => {
+  // to.meta.requiresAuth가 true이고 sessionStorage에 토큰이 없다면 홈페이지로 리다이렉트
+  if (to.meta.requiresAuth && !isLoggedIn()) {
+    next('/');
+  } else {
+    // 그렇지 않으면 계속 진행
+    next();
+  }
+})
+
+// sessionStorage에서 토큰이 있는지 여부를 확인하여 로그인 상태를 반환
+function isLoggedIn() {
+  const token = sessionStorage.getItem('accessToken')
+  
+  // sessionStorage에 토큰이 있는지 여부에 따라 로그인 상태를 결정
+  return token !== null && token !== undefined
+}
+
+// 홈 경로에서도 사용자가 로그인 상태인지 체크
+router.beforeEach((to, from, next) => {
+  // 사용자가 로그인 상태가 아니라면
+  if (to.path === '/' && isLoggedIn()) {
+    // 로그인 페이지로 리다이렉트
+    next();
+  } else {
+    // 그렇지 않으면 계속 진행
+    next();
+  }
+});
+
 
 export default router

@@ -1,44 +1,29 @@
-<script setup>
-import { useMenuStore } from "@/stores/menu";
-import { storeToRefs } from "pinia";
-import { useMemberStore } from "@/stores/member";
-import {  ref, watch, onMounted } from "vue";
+<script>
+import { useRouter } from 'vue-router'
 
-const menuStore = useMenuStore();
-const userStore = useMemberStore();
+const router = useRouter();
 
-// 반응형을 유지하면서 스토어에서 속성을 추출하려면, storeToRefs()를 사용
-// https://pinia.vuejs.kr/core-concepts/
-const { menuList } = storeToRefs(menuStore);
-const { userInfo } = storeToRefs(userStore);
-const { changeMenuState } = menuStore;
-
-const logout = () => {
-  console.log("로그아웃!!!!");
-  changeMenuState();
-};
-
-console.log(userInfo)
-const user = ref(userInfo);
-//route 를 이용한 myPage 접근
-//만약 userInfo에 정보가 있으면 menu.js 는 changeMenuState(); 를 해야함
-// userInfo의 변화를 감지하여 changeMenu 함수 호출
-
-const changeMenu = () => { 
-  if (user) { 
-    console.log("들어오나");
-    changeMenuState();
+export default {
+  computed: {
+    isLoggedIn() {
+      const token = sessionStorage.getItem('accessToken')
+      return token !== null && token !== undefined
+    }
+  },
+  methods: {
+    logout() {
+      // 로그아웃 로직을 구현
+      // sessionStorage에서 토큰을 삭제하거나 만료시키는 등의 작업이 필요
+      sessionStorage.removeItem('accessToken')
+      sessionStorage.removeItem('refreshToken')
+      // 로그아웃 후 홈페이지로 리다이렉트 등의 추가 작업이 필요
+      router.push('/')
+    }
   }
 }
 
-watch(user, (newUserInfo) => {
-  if (newUserInfo) {
-    changeMenu();
-  }
-});
-
-
 </script>
+
 
 
 <template>
@@ -48,8 +33,9 @@ watch(user, (newUserInfo) => {
         <RouterLink to="/"><img src="@/assets/images/logo2.png" width="85"></RouterLink>
         <ul class="js-clone-nav d-none d-lg-inline-block text-left site-menu float-right">
           <li class="active"><RouterLink to="/">Home</RouterLink></li>
+
           <li><RouterLink to="/map">Map</RouterLink></li>
-          <!-- <div @click="checkUser"> click </div> -->
+
           <li class="has-children">
             <RouterLink to="#">Share UX</RouterLink>
             <ul class="dropdown">
@@ -67,24 +53,11 @@ watch(user, (newUserInfo) => {
           </li>
 
           <!-- <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li> -->
-
-        <li>
-          <template v-for="menu in menuList" :key="menu.routeName">
-            <template v-if="menu.show">
-              <template v-if="menu.routeName === 'logout'">
-                  <router-link to="/" @click.prevent="logout" class="nav-link">
-                  {{menu.name}}
-                  </router-link>
-              </template>
-              
-              <template v-else>
-                  <router-link :to="{ name: menu.routeName }" class="nav-link">{{
-                    menu.name
-                  }}</router-link>
-              </template>
-            </template>
-          </template>
-        </li> 
+          <li>
+          <router-link to="/user/login" v-if="!isLoggedIn">Login</router-link>
+          <router-link to="/logout" v-if="isLoggedIn" @click="logout">Logout</router-link>
+          <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link>
+        </li>
 
 
 

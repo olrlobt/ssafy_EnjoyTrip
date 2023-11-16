@@ -1,42 +1,54 @@
 <script setup>
+
 import TheHeroVue from "../TheHero.vue";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useMemberStore } from "@/stores/member";
-import { useMenuStore } from "@/stores/menu";
+// import { useMenuStore } from "@/stores/menu";
 
 const router = useRouter();
 const memberStore = useMemberStore();
 
 const { isLogin } = storeToRefs(memberStore);
 const { userLogin, getUserInfo } = memberStore;
-const { changeMenuState } = useMenuStore();
+// const { changeMenuState } = useMenuStore();
 
 const loginUser = ref({
   userId: "",
   userPwd: "",
 });
 
+
 const login = async () => {
   console.log("login ing!!!! !!!");
   console.log("loginUser: " + loginUser.value.userId);
-  await userLogin(loginUser.value);
-  let token = sessionStorage.getItem("accessToken");
-  console.log("111. ", token);
-  console.log("isLogin: ", isLogin);
-  if (isLogin) {
-    console.log("로그인 성공아닌가???");
-    console.log("token" + token);
-    getUserInfo(token);
-    changeMenuState();
+  try {
+    // userLogin 메서드가 Promise를 반환하도록 가정합니다.
+    await userLogin(loginUser.value);
+
+    let token = sessionStorage.getItem("accessToken");
+    console.log("111. ", token);
+    console.log("isLogin: ", isLogin);
+
+    if (isLogin.value) {
+      console.log("로그인 성공아닌가???");
+      console.log("token" + token);
+      getUserInfo(token);
+      
+      router.push("/");
+
+      console.log("가나욤")
+    }
+  } catch (error) {
+    console.error("로그인 중 에러 발생:", error);
   }
-  router.push("/");
 };
 
 const join = () => {
   router.push({ name: "join" });
 }
+
 
 
 
@@ -93,6 +105,9 @@ const join = () => {
       </div>
     </div>
 </template>
+
+<!-- 함수를 하위 컴포넌트로 제공 -->
+<!-- <provide :checkLoggedIn="checkLoggedIn" /> -->
 
 <style scoped>
 

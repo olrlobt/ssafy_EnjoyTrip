@@ -4,8 +4,6 @@ import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
 import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
-
-
 export const useMemberStore = defineStore("memberStore", () => {
   const router = useRouter();
 
@@ -13,23 +11,6 @@ export const useMemberStore = defineStore("memberStore", () => {
   const isLoginError = ref(false);
   const userInfo = ref(null);
   const isValidToken = ref(false);
-  const accessToken = sessionStorage.getItem("accessToken");
-  
-  const loginCheck = () => { 
-    if (accessToken) {
-      //로그인이 되어있는 상태에서 필요한 로직 구현
-      console.log(" 로그인 체크 함수: " + accessToken);
-      getUserInfo(accessToken);
-
-
-    } else {
-      //로그인페이지로 이동
-      // router.push({
-      //   name: 'login' ,
-      // }).catch(error => {})
-      console.log("로그인체크");
-    }
-  }
 
   const userLogin = async (loginUser) => {
     console.log("userLogin: "+ loginUser.userId);
@@ -153,19 +134,14 @@ export const useMemberStore = defineStore("memberStore", () => {
     );
   };
 
-
-
   return {
     isLogin,
     isLoginError,
     userInfo,
     isValidToken,
-    accessToken,
     userLogin,
     getUserInfo,
     tokenRegenerate,
     userLogout,
-    loginCheck,
   };
 });
-

@@ -14,57 +14,29 @@ Team : 이승헌 , 정유경
 
  UX
  너와 경험하다
+ <br><br><br>
+### 모든 페이지 SPA 구현
 
+![](docs/SPA.gif)
+<br><br><br>
+### 게시글 작성, 상세보기
 
+![](docs/CreateDetail.gif)
+<br><br><br>
+### 게시글 수정
 
-# 유저
+![](docs/Update.gif)
+<br><br><br>
+### 게시글 삭제
 
-## 회원가입
+![](docs/Delete.gif)
+<br><br><br>
+### 게시글 답글 & 답답글
 
-![](docs/join.png)
+![](docs/Answer.gif)
 
+- UI부분 수정이 필요
+<br><br><br>
+### 지도 Vue 전환 (일부 구현)
 
-
-
-## 로그인
-
-![](docs/login.png)
-
-
-
-
-## 회원 수정
-
-![](docs/modify.png)
-
-
-
-
-
-
-
-
-<hr>
-
-# 게시판
-
-## 핫플레이스
-![](docs/list_hot.png)
-
-## 공지사항
-![](docs/list_notice.png)
-
-## 여행게시판
-![](docs/list_travel.png)
-
-
-## 게시판 작성
-![](docs/board_write.png)
-
-## 게시판 수정
-![](docs/board_modify.png)
-
-## 게시판 삭제
-![](docs/board_delete.png)
-
-
+![](docs/map.gif)

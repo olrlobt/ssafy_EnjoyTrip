@@ -10,7 +10,7 @@ VALUES
 
 INSERT INTO `boards` (`userId`, `subject`, `content`, `hit`, `registerTime`, `type`)
 VALUES
-    ('user1', 'Subject 1', 'Content of article 1', 0, NOW(), 'hot'),
+    ('user1', 'Subject 1', 'Content of article 1', 0, DATE_FORMAT(now(), '%Y-%m-%d %H:%i:%s', 'hot'),
     ('user2', 'Subject 2', 'Content of article 2', 0, NOW(), 'notice'),
     ('user3', 'Subject 3', 'Content of article 3', 0, NOW(), 'notice'),
     ('user4', 'Subject 4', 'Content of article 4', 0, NOW(), 'travel'),
