@@ -1,32 +1,28 @@
 <script>
-import { useRouter } from 'vue-router'
-
-const router = useRouter();
-
 export default {
   computed: {
     isLoggedIn() {
-      const token = sessionStorage.getItem('accessToken')
-      return token !== null && token !== undefined
-    }
+      const token = sessionStorage.getItem('accessToken');
+      const result = token !== null && token !== undefined;
+      console.log('isLoggedIn:', result);
+      return result;
+    },
   },
   methods: {
     logout() {
-      // 로그아웃 로직을 구현
-      // sessionStorage에서 토큰을 삭제하거나 만료시키는 등의 작업이 필요
-      sessionStorage.removeItem('accessToken')
-      sessionStorage.removeItem('refreshToken')
-      // 로그아웃 후 홈페이지로 리다이렉트 등의 추가 작업이 필요
-      router.push('/')
-    }
-  }
-}
-
+      sessionStorage.removeItem('accessToken');
+      sessionStorage.removeItem('refreshToken');
+      this.$router.push('/');
+      // 페이지 새로 고침
+      window.location.reload();
+    },
+  },
+};
 </script>
 
 
-
 <template>
+  <!-- <div>{{ isLoggedIn }}</div> -->
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">
@@ -55,7 +51,7 @@ export default {
           <!-- <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li> -->
           <li>
           <router-link to="/user/login" v-if="!isLoggedIn">Login</router-link>
-          <router-link to="/logout" v-if="isLoggedIn" @click="logout">Logout</router-link>
+          <router-link to="/user/logout" v-if="isLoggedIn" @click="logout">Logout</router-link>
           <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link>
         </li>
 

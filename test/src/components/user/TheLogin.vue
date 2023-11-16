@@ -36,7 +36,10 @@ const login = async () => {
       console.log("token" + token);
       getUserInfo(token);
       
-      router.push("/");
+      router.push("/").then(()=>{
+        // 페이지 새로 고침
+        window.location.reload();
+      });
 
       console.log("가나욤")
     }
