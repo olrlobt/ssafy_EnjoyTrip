@@ -14,8 +14,12 @@ export const useMapStore = defineStore("mapStore", () => {
     // };
 
     const detailState = ref({});
+    const travelList = ref([]);
+
 
     return {
-        detailState
+        detailState,
+        travelList
     };
+
 });

@@ -46,7 +46,18 @@
     </div>
 
     <div class="content">
-        <div :class="[active(2), 'tab-content']" >
+        <div :class="[active(1), 'tab-content']" >
+          <ul id="travelRouteList">
+            <li v-for="(item, index) in travelPlan" :key="index"
+                draggable="true"
+                @dragstart="handleDragStart(index, $event)"
+                @dragover.prevent
+                @drop="handleDrop(index)">
+              {{ item.title }}
+              <button @click="removeFromTravelPlan(index)">삭제</button>
+            </li>
+          </ul>
+
 
 
         </div>
@@ -54,21 +65,11 @@
   </div>
 </template>
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, onMounted } from 'vue';
+import {useMapStore} from "@/stores/map";
 
+const mapStore = useMapStore();
 const currentTabId = ref(1);
-const nextTabId = ref(4);
-
-const tabs = reactive([
-  {
-    id: 1,
-    name: "여행 경로",
-  },
-  {
-    id: 2,
-    name: "관광지 리스트",
-  }
-]);
 
 
 onMounted(() => {
@@ -78,45 +79,6 @@ onMounted(() => {
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
 
-
-const tabsWidth = computed(() => {
-  return {
-    maxWidth: tabs.length * 190 + "px",
-    width: "100%",
-    minWidth: "0px",
-    transition: "max-width 0.2s",
-  };
-});
-
-function changeTab(id) {
-  currentTabId.value = id;
-}
-
-function beforeCloseTab(e) {
-  e.stopPropagation();
-}
-
-function addTab() {
-  tabs.push({
-    id: nextTabId.value,
-    name: "new tab"
-  });
-  currentTabId.value = nextTabId.value;
-  nextTabId.value++;
-}
-
-function closeTab(id) {
-  const index = tabs.findIndex(tab => tab.id === id);
-  if (index !== -1) {
-    tabs.splice(index, 1);
-    if (currentTabId.value === id) {
-      currentTabId.value = tabs.length > 0
-          ? tabs[index] ? tabs[index].id : tabs[index - 1].id
-          : null;
-    }
-  }
-}
-
 const props = defineProps({
   searchKeyword: Function
 });
@@ -124,6 +86,35 @@ const props = defineProps({
 const searchKeyup = (event) => {
   props.searchKeyword(event);
 }
+
+
+
+
+
+const travelPlan = mapStore.travelList;
+
+
+let draggedIndex = null; // 드래그 중인 항목의 인덱스
+
+
+
+
+
+const handleDragStart = (index, event) => {
+  draggedIndex = index;
+  event.dataTransfer.effectAllowed = 'move';
+  event.dataTransfer.setData('text/plain', index); // 드래그 데이터 설정
+};
+
+const handleDrop = (targetIndex) => {
+  const itemToMove = travelPlan.splice(draggedIndex, 1)[0];
+  travelPlan.splice(targetIndex, 0, itemToMove);
+};
+
+const removeFromTravelPlan = (index) => {
+  travelPlan.splice(index, 1);
+};
+
 
 </script>
 
