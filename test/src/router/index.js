@@ -26,12 +26,13 @@ const router = createRouter({
       path: '/map',
       name: 'map',
       component: MapView,
-      meta: { requiresAuth: true } 
+      
     },
     {
       path: '/article/:boardType',
       name: 'article',
       component: () => import("@/views/ArticleView.vue"),
+      meta: { requiresAuth: true } ,
       props: true,
       redirect: { name: "article-list" },
       children: [

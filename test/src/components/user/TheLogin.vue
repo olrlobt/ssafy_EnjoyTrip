@@ -52,9 +52,6 @@ const join = () => {
   router.push({ name: "join" });
 }
 
-
-
-
 </script>
 
 <template>

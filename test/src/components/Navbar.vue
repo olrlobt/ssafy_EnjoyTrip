@@ -12,9 +12,9 @@ export default {
     logout() {
       sessionStorage.removeItem('accessToken');
       sessionStorage.removeItem('refreshToken');
-      this.$router.push('/');
-      // 페이지 새로 고침
-      window.location.reload();
+      this.$router.push('/').then(()=>{
+        window.location.reload();
+      });
     },
   },
 };
