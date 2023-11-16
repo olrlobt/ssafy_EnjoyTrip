@@ -2,7 +2,7 @@
   <template></template>
 </template>
 <script setup>
-import { ref, onMounted, defineProps } from 'vue';
+import {ref, onMounted, defineProps} from 'vue';
 import {useMapStore} from "@/stores/map";
 
 const mapStore = useMapStore();
@@ -11,7 +11,7 @@ onMounted(() => {
 
 })
 
-const { VITE_TRAVEL_API_KEY } = import.meta.env;
+const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
 const markers = ref([]);
 const fixedMarkers = ref([]);
@@ -22,7 +22,6 @@ const infoWindow = ref(new kakao.maps.InfoWindow());
 
 // map prop 정의
 let prop = defineProps(['map', 'changeSelectMarker']);
-
 const addListenersMap = ref(new Map());
 const removeListenersMap = ref(new Map());
 
@@ -53,7 +52,7 @@ onMounted(() => {
 
 
 const searchKeyword = (event) => {
-  if(event){
+  if (event) {
     let params = {
       numOfRows: 50,
       MobileOS: 'ETC',
@@ -71,6 +70,7 @@ const searchKeyword = (event) => {
 defineExpose({callAPIWithRegionCode, searchKeyword}); // 부모에 코드 노출
 
 let debounceTimeout;
+
 function searchWithDebounce(params, keyword_search) {
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);
@@ -101,7 +101,6 @@ function callAPIWithRegionCode(originalCode) {
     console.error(" 잘못된 지역코드 입니다. ");
   }
 }
-
 
 
 function callAPI(params, keyword_search) {
@@ -152,6 +151,7 @@ function callAPI(params, keyword_search) {
   function updateMap(coordinates) {
     infoWindow.value.close();
     prop.changeSelectMarker(false);
+
     for (let coord of coordinates) {
       let markerPosition = new kakao.maps.LatLng(coord.mapy, coord.mapx);
 
@@ -174,45 +174,23 @@ function callAPI(params, keyword_search) {
     }
   }
 
-
   function handleAddButtonClick(marker, coord) {
+    console.log("click")
     fixMarker(marker, coord);
     addToTravelPlan(coord);
   }
 
+
+
+
   function addToTravelPlan(coord) {
-    // const travelList = document.getElementById('travelRouteList');
-    // 리스트 아이템 생성
-    const listItem = document.createElement('li');
-    listItem.textContent = coord.title + `-` + coord.addr1;
+    console.log("add Travel Plan")
+    console.log(coord);
+    console.log(mapStore.travelList);
+    mapStore.travelList.push(coord);
 
-    listItem.draggable = true;  // 드래그 가능하게 설정
-
-    // 드래그 시작 이벤트 처리
-    listItem.addEventListener('dragstart', (e) => {
-      e.dataTransfer.setData('text/plain', listItem.textContent);
-      e.dataTransfer.dropEffect = 'move';
-      e.target.classList.add('dragging');
-    });
-
-    // 드래그 종료 이벤트 처리
-    listItem.addEventListener('dragend', (e) => {
-      e.target.classList.remove('dragging');
-    });
-
-    // 삭제 버튼 추가 (선택적)
-    const removeButton = document.createElement('button');
-    removeButton.textContent = '삭제';
-    removeButton.classList.add("deleteButton");
-    removeButton.addEventListener('click', () => {
-      // travelList.removeChild(listItem);
-    });
-    listItem.appendChild(removeButton);
-    listItem.dataset.lat = coord.mapy; // 위도
-    listItem.dataset.lng = coord.mapx; // 경도
-    listItem.dataset.title = coord.title;
-    // travelList.appendChild(listItem);
   }
+
 
   function handleRemoveButtonClick(marker) {
     revertMarker(marker);
@@ -255,18 +233,16 @@ function callAPI(params, keyword_search) {
       addButton.addEventListener('click', addListener);
     }
 
-
-    document.querySelector('.register-btn').addEventListener('click', function () {
-      // showSweetAlert(coord);
-    });
-
+    // 등록버튼
+    // document.querySelector('.register-btn').addEventListener('click', function () {
+    //   // showSweetAlert(coord);
+    // });
   }
 
 
   function revertMarker(targetMarker) {
     const markerTitle = targetMarker.getTitle();
     const listItemToRemove = document.querySelector(`li[data-title=" ` + markerTitle + `"]`);
-
 
     if (listItemToRemove) {
       removeFromTravelRoute(listItemToRemove);
@@ -282,7 +258,7 @@ function callAPI(params, keyword_search) {
       fixedMarkerPositions.value.splice(positionIndex, 1);
     }
 
-    targetMarker.setImage(null);
+    targetMarker.setImage(null); // 마커 기본 이미지로
 
     // 이벤트 핸들러를 변수로 저장
     const addListener = () => handleAddButtonClick(targetMarker);
@@ -295,25 +271,21 @@ function callAPI(params, keyword_search) {
     }
 
     if (addListener != null && addButton != null) {
-
       addListenersMap.value.set(targetMarker, addListener);
       addButton.addEventListener('click', addListener);
-
     }
     // drawLine();
     infoWindow.value.close();
     prop.changeSelectMarker(false);
   }
 
-  function removeFromTravelRoute(listItem) {
+  const removeFromTravelRoute = (listItem) => {
     listItem.remove();
   }
-
 
   function fixMarker(marker, coord) {
     marker.setTitle(coord.title);
     fixedMarkers.value.push(marker);
-    console.log(fixedMarkers);
     fixedMarkerPositions.value.push(marker.getPosition());
 
     const redMarkerImage = new kakao.maps.MarkerImage(
@@ -330,21 +302,19 @@ function callAPI(params, keyword_search) {
     const buttonClass = isFixed ? 'remove-marker-btn' : 'add-marker-btn';
 
     return `
-        <div style="display: flex; flex-direction: column; padding: 5px; align-items: start; max-width: 250px;">
-            <div style="display: flex; align-items: center;">
-                <img src= "` + coord.firstimage + `" alt="` + coord.title + `" style="width: 60px; height: 60px; object-fit: cover; margin-right: 10px;"/>
-                <div style="font-size: 0.9rem;">
-                    <strong>` + coord.title + `</strong><br/>
-                    ` + coord.addr1 + `
-                </div>
+        <div class="info-window-container">
+            <div class="info-window-header">
+                <img class="info-window-image" src= "` + coord.firstimage + `" alt="` + coord.title + `"/>
+                <div class="info-window-title">` + coord.title + `</div>
             </div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <button class="button-common ` + buttonClass + `">` + buttonLabel + `  </button>
+                <button class="button-common ` + buttonClass + `">` + buttonLabel + `</button>
                 <button class="button-common register-btn">등록</button>
             </div>
         </div>
     `;
   }
+
 
 
   function arePositionsClose(position1, position2, threshold = 0.00001) {
@@ -354,28 +324,58 @@ function callAPI(params, keyword_search) {
   }
 
 
-  // document.getElementById('travelRouteList').addEventListener('click', function (event) {
-  //   if (event.target.className === 'deleteButton') {  // 'deleteButton' 클래스를 가진 버튼을 클릭했을 때만 동작
-  //     const listItem = event.target.closest('li');   // 삭제 버튼의 부모 li 요소를 찾습니다.
-  //     const markerTitle = listItem.getAttribute('data-title');
-  //
-  //     // fixedMarkers 배열에서 해당 제목과 일치하는 마커를 찾습니다.
-  //     const targetMarker = fixedMarkers.value.find(marker => marker.getTitle() === markerTitle);
-  //     if (targetMarker) {
-  //       revertMarker(targetMarker); // 해당 마커의 고정을 해제합니다.
-  //     }
-  //
-  //     // 목록에서 해당 항목을 제거합니다.
-  //     listItem.remove();
-  //   }
-  // });
-}
+  document.getElementById('travelRouteList').addEventListener('click', function (event) {
+    if (event.target.className === 'deleteButton') {  // 'deleteButton' 클래스를 가진 버튼을 클릭했을 때만 동작
+      const listItem = event.target.closest('li');   // 삭제 버튼의 부모 li 요소를 찾습니다.
+      const markerTitle = listItem.getAttribute('data-title');
 
+      // fixedMarkers 배열에서 해당 제목과 일치하는 마커를 찾습니다.
+      const targetMarker = fixedMarkers.value.find(marker => marker.getTitle() === markerTitle);
+      if (targetMarker) {
+        revertMarker(targetMarker); // 해당 마커의 고정을 해제합니다.
+      }
+      listItem.remove();
+    }
+  });
+}
 
 
 </script>
 
 
-<style>
+<style lang="scss">
+
+.close-button {
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  border-radius: 100%;
+  padding: 4px;
+  position: absolute;
+  right: 8px;
+
+  &:hover {
+     background-color: #ddd;
+   }
+
+  &::before,
+  &::after {
+     content: "";
+     position: absolute;
+     display: block;
+     width: 2px;
+     height: 12px;
+     background-color: #666;
+   }
+
+  &::before {
+     transform: rotate(90deg);
+   }
+}
+
+@import "src/assets/css/map/infowindow";
 
 </style>

@@ -1,7 +1,7 @@
 <script setup>
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
-import KakaoMarkerSearch from "@/components/map/KakaoMarkerSearch.vue"
+import KakaoMarkerSearch from "@/components/map/KakaoMarker.vue"
 import KakaoSideList from "@/components/map/KakaoSideList.vue";
 import KakaoMarkerPopup from "@/components/map/KakaoDetailPopup.vue"
 import {ref, onMounted} from "vue";
@@ -208,7 +208,7 @@ const getItemStyle = () => {
 </template>
 
 <style>
-@import "@/assets/css/map.css";
+@import "@/assets/css/map/map.css";
 .draggable {
   width: 100px;
   height: 100px;
