@@ -44,12 +44,6 @@ public class MemberController2 extends HttpServlet {
         this.jwtUtil = jwtUtil;
     }
 
-    /* 회원가입 */
-    @GetMapping("/join")
-    public void join() {
-        log.info("join");
-    }
-
     @PostMapping("/join")
     public ResponseEntity<?> join(@RequestBody MemberDto memberDto) {
         try {
@@ -71,15 +65,19 @@ public class MemberController2 extends HttpServlet {
     	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+//		System.out.println(getmemberDto);
 		
         try {
             MemberDto loginUser = memberService.loginMember(getmemberDto);
-            if (loginUser != null) {
+            System.out.println(loginUser);
+            if (loginUser != null) { //여기서부터 고칠 것
             	//jwt
             	String accessToken = jwtUtil.createAccessToken(loginUser.getUserId());
 				String refreshToken = jwtUtil.createRefreshToken(loginUser.getUserId());
 				log.debug("access token : {}", accessToken);
 				log.debug("refresh token : {}", refreshToken);
+				
+				System.out.println("access TOKEN: " + accessToken);
 
 //				발급받은 refresh token을 DB에 저장.
 				memberService.saveRefreshToken(loginUser.getUserId(), refreshToken);
@@ -92,14 +90,14 @@ public class MemberController2 extends HttpServlet {
 				status = HttpStatus.CREATED;
 				
 				//쿠키 설정
-                Cookie cookie = new Cookie("ssafy_id", getmemberDto.getUserId());
-                cookie.setPath("/");
-                if ("ok".equals(saveid)) {
-                    cookie.setMaxAge(60 * 60 * 24 * 365 * 40);
-                } else {
-                    cookie.setMaxAge(0);
-                }
-                response.addCookie(cookie);
+//                Cookie cookie = new Cookie("ssafy_id", getmemberDto.getUserId());
+//                cookie.setPath("/");
+//                if ("ok".equals(saveid)) {
+//                    cookie.setMaxAge(60 * 60 * 24 * 365 * 40);
+//                } else {
+//                    cookie.setMaxAge(0);
+//                }
+//                response.addCookie(cookie);
 
 //                return ResponseEntity.ok().body(loginUser);
             } else {
@@ -120,13 +118,14 @@ public class MemberController2 extends HttpServlet {
 
     }
 
-	@GetMapping("/info/{userId}")
+	@GetMapping("/info/{userid}")
 	public ResponseEntity<Map<String, Object>> getInfo(
-			@PathVariable("userId") String userId,
+			@PathVariable("userid") String userId,
 			HttpServletRequest request) {
 //		logger.debug("userId : {} ", userId);
 		Map<String, Object> resultMap = new HashMap<>();
 		HttpStatus status = HttpStatus.ACCEPTED;
+		System.out.println("getInfo 들어오나");
 		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
 			log.info("사용 가능한 토큰!!!");
 			try {
@@ -134,6 +133,7 @@ public class MemberController2 extends HttpServlet {
 				MemberDto memberDto = memberService.userInfo(userId);
 				resultMap.put("userInfo", memberDto);
 				status = HttpStatus.OK;
+				System.out.println(memberDto);
 			} catch (Exception e) {
 				log.error("정보조회 실패 : {}", e);
 				resultMap.put("message", e.getMessage());

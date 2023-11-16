@@ -13,12 +13,15 @@ export const useMemberStore = defineStore("memberStore", () => {
   const isValidToken = ref(false);
 
   const userLogin = async (loginUser) => {
+    console.log("userLogin: "+ loginUser.userId);
     await userConfirm(
       loginUser,
       (response) => {
-        console.log("login ok!!!!", response.status);
-        // console.log("login ok!!!!", httpStatusCode.CREATE);
-        if (response.status === httpStatusCode.CREATE) {
+        console.log("response: " + response);
+        // console.log("login ok1!!!!" +  response.status);
+        // console.log("login ok2!!!!", httpStatusCode.CREATE);
+        if (response.status == 201) {
+          
           let { data } = response;
           // console.log("data", data);
           let accessToken = data["access-token"];
@@ -52,7 +55,7 @@ export const useMemberStore = defineStore("memberStore", () => {
     findById(
       decodeToken.userId,
       (response) => {
-        if (response.status === httpStatusCode.OK) {
+        if (response.status == 200) {
           userInfo.value = response.data.userInfo;
           console.log("3. getUserInfo data >> ", response.data);
         } else {
