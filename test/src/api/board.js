@@ -2,7 +2,7 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios(); // axios instance
 
-const url = "/article"
+const url = "http://70.12.60.179:80/article"
 
 function listArticle(param, success, fail) {
   local.get(`${url}/${param.boardType}`, { params: param }).then(success).catch(fail);
