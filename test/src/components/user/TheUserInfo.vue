@@ -20,9 +20,9 @@ const memberInfo = ref({
 });
 
 onMounted(() => getMemberInfo());
-const getMemberInfo = () => {
+const getMemberInfo = async () => {
   try {
-    memberStore.getUserInfo(token);
+    await memberStore.getUserInfo(token);
     const userInfo =  memberStore.userInfo;
     // console.log(userInfo);
     if (userInfo) {

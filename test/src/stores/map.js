@@ -15,6 +15,8 @@ export const useMapStore = defineStore("mapStore", () => {
 
     const currentSelectMarker = ref({});
     const travelList = ref([]);
+    const fixedMarkers = ref([]);
+
 
     const updateTravelList = (travelPlan) => {
         console.log(travelPlan)
@@ -24,6 +26,7 @@ export const useMapStore = defineStore("mapStore", () => {
     return {
         currentSelectMarker,
         travelList,
+        fixedMarkers,
         updateTravelList
     };
 });

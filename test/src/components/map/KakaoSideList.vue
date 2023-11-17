@@ -51,7 +51,6 @@
         <div :class="[active(1), 'tab-content']" >
 
           <VueDraggableNext id="travelRouteList" v-model="localTravelPlan" @end="handleEnd">
-
             <div
                 class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
                 v-for="(item,index) in localTravelPlan"
@@ -60,13 +59,16 @@
               <img :src="item.firstimage" class="travel-item-image" alt="">
               <span class="travel-item-title">{{ item.title }}</span>
               <div class="close-button2" @click="removeFromTravelPlan(index)"></div>
-
             </div>
           </VueDraggableNext>
 
-
         </div>
+      <div :class="[active(2), 'tab-content']" >
+        <h1>hi</h1>
+      </div>
     </div>
+
+
   </div>
 </template>
 <script setup>
@@ -77,6 +79,7 @@ import { VueDraggableNext } from 'vue-draggable-next'
 const mapStore = useMapStore();
 const currentTabId = ref(1);
 const localTravelPlan = ref([]);
+const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
 const props = defineProps({
@@ -91,20 +94,37 @@ function changeTab(id) {
   currentTabId.value = id;
 }
 
-const travelPlan = mapStore.travelList;
-localTravelPlan.value = travelPlan;
+localTravelPlan.value = mapStore.travelList;
+localFixedMarker.value = mapStore.fixedMarkers;
 
 watch(() => mapStore.travelList, (newList) => {
   localTravelPlan.value = newList;
 }, { deep: true });
 
+watch(() => mapStore.fixedMarkers, (fixedList) => {
+  localFixedMarker.value = fixedList;
+});
+
 const handleEnd = () => {
   mapStore.updateTravelList(localTravelPlan.value);
 };
 
-
 const removeFromTravelPlan = (index) => {
-  console.log(index)
+
+  const { matching, notMatching } = localFixedMarker.value.reduce((acc, fixed) => {
+    if (fixed.Gb === localTravelPlan.value[index].title) {
+      acc.matching.push(fixed);
+    } else {
+      acc.notMatching.push(fixed);
+    }
+    return acc;
+  }, { matching: [], notMatching: [] });
+
+  mapStore.fixedMarkers = notMatching;
+
+  if(matching){
+    matching[0].setImage(null);
+  }
   localTravelPlan.value.splice(index, 1);
 };
 
@@ -123,9 +143,5 @@ const removeFromTravelPlan = (index) => {
   max-height: 100%;
   height: 100%;
 }
-
-
-
-
 
 </style>
