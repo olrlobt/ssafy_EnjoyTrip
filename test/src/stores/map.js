@@ -16,10 +16,14 @@ export const useMapStore = defineStore("mapStore", () => {
     const detailState = ref({});
     const travelList = ref([]);
 
+    const updateTravelList = (travelPlan) => {
+        console.log(travelPlan)
+        travelList.value = travelPlan;
+    }
 
     return {
         detailState,
-        travelList
+        travelList,
+        updateTravelList
     };
-
 });

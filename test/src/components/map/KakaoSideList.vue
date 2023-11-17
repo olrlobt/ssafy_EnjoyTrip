@@ -45,19 +45,24 @@
       <input class="search" type="text"  id="keyword" placeholder="지역/상호명 검색" @keyup="searchKeyup" />
     </div>
 
+    
+    
     <div class="content">
         <div :class="[active(1), 'tab-content']" >
-          <ul id="travelRouteList">
-            <li v-for="(item, index) in travelPlan" :key="index"
-                draggable="true"
-                @dragstart="handleDragStart(index, $event)"
-                @dragover.prevent
-                @drop="handleDrop(index)">
-              {{ item.title }}
-              <button @click="removeFromTravelPlan(index)">삭제</button>
-            </li>
-          </ul>
 
+          <VueDraggableNext id="travelRouteList" v-model="localTravelPlan" @end="handleEnd">
+
+            <div
+                class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
+                v-for="(item,index) in localTravelPlan"
+                :key="item.id"
+            >
+              <img :src="item.firstimage" class="travel-item-image" alt="">
+              <span class="travel-item-title">{{ item.title }}</span>
+              <div class="close-button2" @click="removeFromTravelPlan(index)"></div>
+
+            </div>
+          </VueDraggableNext>
 
 
         </div>
@@ -65,19 +70,14 @@
   </div>
 </template>
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref,  watch } from 'vue';
 import {useMapStore} from "@/stores/map";
+import { VueDraggableNext } from 'vue-draggable-next'
 
 const mapStore = useMapStore();
 const currentTabId = ref(1);
-
-
-onMounted(() => {
-
-})
-
+const localTravelPlan = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
-
 
 const props = defineProps({
   searchKeyword: Function
@@ -87,33 +87,30 @@ const searchKeyup = (event) => {
   props.searchKeyword(event);
 }
 
-
-
-
+function changeTab(id) {
+  currentTabId.value = id;
+}
 
 const travelPlan = mapStore.travelList;
+localTravelPlan.value = travelPlan;
 
+watch(() => mapStore.travelList, (newList) => {
+  localTravelPlan.value = newList;
+}, { deep: true });
 
-let draggedIndex = null; // 드래그 중인 항목의 인덱스
-
-
-
-
-
-const handleDragStart = (index, event) => {
-  draggedIndex = index;
-  event.dataTransfer.effectAllowed = 'move';
-  event.dataTransfer.setData('text/plain', index); // 드래그 데이터 설정
+const handleEnd = () => {
+  mapStore.updateTravelList(localTravelPlan.value);
 };
 
-const handleDrop = (targetIndex) => {
-  const itemToMove = travelPlan.splice(draggedIndex, 1)[0];
-  travelPlan.splice(targetIndex, 0, itemToMove);
-};
 
 const removeFromTravelPlan = (index) => {
-  travelPlan.splice(index, 1);
+  console.log(index)
+  localTravelPlan.value.splice(index, 1);
 };
+
+
+
+
 
 
 </script>
@@ -121,7 +118,7 @@ const removeFromTravelPlan = (index) => {
 
 <style lang="scss" scoped>
 @import "src/assets/scss/map/mapAppleThema";
-
+@import "src/assets/scss/map/mapTravelList";
 .window{
   top: 0px;
   left: 0px;
@@ -130,6 +127,9 @@ const removeFromTravelPlan = (index) => {
   max-height: 100%;
   height: 100%;
 }
+
+
+
 
 
 </style>
