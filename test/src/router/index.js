@@ -29,6 +29,13 @@ const router = createRouter({
       
     },
     {
+      path: '/user/modify',
+      name: 'userInfo',
+      meta: { requiresAuth: true },
+      component: () => import("@/components/user/TheUserInfo.vue"),
+      
+    },
+    {
       path: '/article/:boardType',
       name: 'article',
       component: () => import("@/views/ArticleView.vue"),

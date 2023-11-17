@@ -27,7 +27,6 @@ const getArticle = () => {
       console.log(error)
     });
 
-
 };
 
 function reply(){

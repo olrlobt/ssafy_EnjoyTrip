@@ -29,11 +29,16 @@ async function userConfirm(param, success, fail) {
     await local.get(`${url}/logout/${userid}`).then(success).catch(fail);
 }
   
+function modifyUser(member, success, fail) { 
+  // console("user.jsmodifyUser", member);
+  local.put(`${url}/modify`, JSON.stringify(member)).then(success).catch(fail);
+}
 
 export {
     joinUser,
     userConfirm,
     findById,
     tokenRegeneration,
-    logout
+    logout,
+    modifyUser,
   };

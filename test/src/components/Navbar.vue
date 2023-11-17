@@ -47,12 +47,23 @@ export default {
               <li><RouterLink to="/article/qna">Q&A</RouterLink></li>
             </ul>
           </li>
+          <li class="has-children menu-item2"  v-if="isLoggedIn">
+            <RouterLink to="">MyPage</RouterLink>
+            <ul class="dropdown">
+              <li><RouterLink to="/user/modify">회원수정</RouterLink></li>
+              <!-- <li><RouterLink to="/user/like">나만의 경험</RouterLink></li> -->
+              <!-- <li><RouterLink to="/user/like">나만의 핫플레이스</RouterLink></li> -->
+            </ul>
+          </li>
 
           <!-- <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li> -->
           <li>
           <router-link to="/user/login" v-if="!isLoggedIn">Login</router-link>
           <router-link to="/user/logout" v-if="isLoggedIn" @click="logout">Logout</router-link>
-          <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link>
+
+          
+          <!-- <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link> -->
+          
         </li>
 
 

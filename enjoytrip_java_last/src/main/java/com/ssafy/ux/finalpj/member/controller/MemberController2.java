@@ -190,15 +190,16 @@ public class MemberController2 extends HttpServlet {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-    @GetMapping("/modify")
-    public String modify(HttpSession session) {
-
-        return "user/modify";
-    }
+//    @GetMapping("/modify")
+//    public String modify(HttpSession session) {
+//
+//        return "user/modify";
+//    }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modify(MemberDto memberDto, HttpSession session) throws Exception {
-        memberService.modifyMember(memberDto, ((MemberDto) session.getAttribute("userinfo")).getUserId());
+    public ResponseEntity<?> modify(@RequestBody MemberDto memberDto, HttpSession session) throws Exception {
+    	System.out.println("modify 접근: " + memberDto);
+        memberService.modifyMember(memberDto, memberDto.getUserId());
         return ResponseEntity.ok(HttpStatus.OK);
     }
 }
