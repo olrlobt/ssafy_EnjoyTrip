@@ -8,7 +8,7 @@
 <!--      </div>-->
       <div class="tabs-group">
 
-        <div class="tabs"  :style="tabsWidth">
+        <div class="tabs"  >
           <div
               :class="[active(1), 'tab']"
               @mousedown="changeTab(1)"
@@ -31,7 +31,7 @@
         </div>
 
 
-        <div key="add-button" class="add-button" @click="addTab"></div>
+        <div key="add-button" class="minus-button" @click="addTab"></div>
       </div>
     </div>
 
@@ -107,10 +107,6 @@ const removeFromTravelPlan = (index) => {
   console.log(index)
   localTravelPlan.value.splice(index, 1);
 };
-
-
-
-
 
 
 </script>
