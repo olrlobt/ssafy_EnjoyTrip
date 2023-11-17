@@ -1,14 +1,21 @@
 <script setup>
-import {ref, onMounted, watch} from "vue";
+import {ref, onMounted, watch , defineProps} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import { listArticle } from "@/api/board";
 
 import VSelect from "@/components/common/VSelect.vue";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
+import ArticleView from "../../views/ArticleView.vue";
+
 
 const router = useRouter();
 const route = useRoute();
+
+const props = defineProps([
+  'changeHero'
+])
+
 
 const selectOption = ref([
   { text: "검색조건", value: "" },
@@ -32,6 +39,8 @@ const { boardType } = route.params;
 
 onMounted(() => {
   param.value.boardType = boardType;
+  props.changeHero("리스트","헬로")
+  console.log("mount")
   getArticleList();
 });
 
@@ -66,9 +75,16 @@ const onPageChange = (val) => {
 const moveWrite = () => {
   router.push({ name: "article-write" });
 };
+
+const heroProps = ref({
+  title: "List",
+  contents: "상세설명페이지 입니다",
+});
+
 </script>
 
 <template>
+  <!-- <ArticleView :heroProps="heroProps"/> -->
   <div class="container">
     <div class="row justify-content-center">
 

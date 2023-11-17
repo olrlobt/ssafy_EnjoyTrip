@@ -48,31 +48,45 @@ export const useMemberStore = defineStore("memberStore", () => {
     );
   };
 
-  const getUserInfo = (token) => {
-    console.log("getUserInfo token: " + token);
-    let decodeToken = jwtDecode(token);
-    console.log("2. decodeToken", decodeToken);
-    findById(
-      decodeToken.userId,
-      (response) => {
-        if (response.status == 200) {
-          userInfo.value = response.data.userInfo;
-          console.log("3. getUserInfo data >> ", response.data);
-        } else {
-          console.log("유저 정보 없음!!!!");
-        }
-      },
-      async (error) => {
-        console.error(
-          "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
-          error.response.status
-        );
-        isValidToken.value = false;
 
-        await tokenRegenerate();
-      }
-    );
+  function findByIdPromise(userId) {
+    return new Promise((resolve, reject) => {
+      findById(
+        userId,
+        (response) => {
+          if (response.status == 200) {
+            resolve(response.data.userInfo);
+          } else {
+            reject(new Error("유저 정보 없음"));
+          }
+        },
+        (error) => {
+          reject(error);
+        }
+      );
+    });
+  }
+  
+  const getUserInfo = async (token) => {
+    try {
+      console.log("getUserInfo token: " + token);
+      let decodeToken = jwtDecode(token);
+      console.log("2. decodeToken", decodeToken);
+  
+      const data = await findByIdPromise(decodeToken.userId);
+      userInfo.value = data;
+      console.log("3. getUserInfo data >> ", data);
+  
+    } catch (error) {
+      console.error(
+        "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",
+        error.response ? error.response.status : error
+      );
+      isValidToken.value = false;
+      await tokenRegenerate();
+    }
   };
+  
 
   const tokenRegenerate = async () => {
     console.log("토큰 재발급 >> 기존 토큰 정보 : {}", sessionStorage.getItem("accessToken"));
