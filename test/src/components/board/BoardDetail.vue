@@ -2,9 +2,10 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import ArticleView from "../../views/ArticleView.vue";
 
 const route = useRoute();
-const router = useRouter();
+const router = useRouter(); 
 
 // const articleno = ref(route.params.articleno);
 const { articleno } = route.params;
@@ -18,21 +19,20 @@ onMounted(() => {
 const getArticle = () => {
   // const { articleno } = route.params;
   console.log(articleno + "번글 얻으러 가자!!!");
-   // API 호출
-   detailArticle(articleno, ({ data }) => { 
+  // API 호출
+  detailArticle(articleno, ({ data }) => {
     console.log(data)
     article.value = data;
   },
-    (error) => { 
+    (error) => {
       console.log(error)
     });
 
 };
 
-function reply(){
-  router.push({ name: "article-reply" , query: { articleno : articleno , refNo : article.value.ref , step : article.value.step , depth : article.value.depth} });
+function reply() {
+  router.push({ name: "article-reply", query: { articleno: articleno, refNo: article.value.ref, step: article.value.step, depth: article.value.depth } });
 }
-
 
 function moveList() {
   router.push({ name: "article-list" });
@@ -46,26 +46,22 @@ function onDeleteArticle() {
   // const { articleno } = route.params;
   console.log(articleno + "번글 삭제하러 가자!!!");
   // API 호출
-  deleteArticle(articleno, ({ data }) => { 
+  deleteArticle(articleno, ({ data }) => {
     console.log(data)
     article.value = data;
     moveList();
   },
-    (error) => { 
+    (error) => {
       console.log(error)
     });
-  
+
 }
+
 </script>
 
 <template>
+  
   <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글보기</mark>
-        </h2>
-      </div>
       <div class="col-lg-10 text-start">
         <div class="row my-2">
           <h2 class="text-secondary px-5">{{ article.articleNo }}. {{ article.subject }}</h2>
@@ -73,14 +69,12 @@ function onDeleteArticle() {
         <div class="row">
           <div class="col-md-8">
             <div class="clearfix align-content-center">
-              <img
-                class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
-              />
+              <img class="avatar me-2 float-md-start bg-light p-2"
+                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
               <p>
-                <span class="fw-bold">{{article.userId}}</span> <br />
+                <span class="fw-bold">{{ article.userId }}</span> <br />
                 <span class="text-secondary fw-light">
-                  {{ article.registerTime }}<br/> 조회 : {{ article.hit }}
+                  {{ article.registerTime }}<br /> 조회 : {{ article.hit }}
                 </span>
               </p>
               <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
@@ -108,7 +102,6 @@ function onDeleteArticle() {
         </div>
       </div>
     </div>
-  </div>
 </template>
 
 <style scoped></style>

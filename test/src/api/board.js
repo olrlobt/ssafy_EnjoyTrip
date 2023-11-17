@@ -2,7 +2,8 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios(); // axios instance
 
-const url = "http://70.12.60.179:80/article"
+// const url = "http://70.12.60.179:80/article"
+const url = "/article"
 
 function listArticle(param, success, fail) {
   console.log("param", param)
