@@ -2,15 +2,10 @@
   <template></template>
 </template>
 <script setup>
-import {ref, onMounted, defineProps} from 'vue';
+import {ref, defineProps} from 'vue';
 import {useMapStore} from "@/stores/map";
 
 const mapStore = useMapStore();
-
-onMounted(() => {
-
-})
-
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
 const markers = ref([]);
@@ -19,7 +14,6 @@ const fixedMarkerPositions = ref([]);
 
 /* global kakao */
 const infoWindow = ref(new kakao.maps.InfoWindow());
-
 // map prop 정의
 let prop = defineProps(['map', 'changeSelectMarker']);
 const addListenersMap = ref(new Map());
@@ -46,9 +40,6 @@ const regionCodeMapping = {
   50: 39  // 제주도
 };
 
-onMounted(() => {
-
-});
 
 
 const searchKeyword = (event) => {
@@ -62,15 +53,15 @@ const searchKeyword = (event) => {
       serviceKey: VITE_TRAVEL_API_KEY,
       _type: 'json'
     };
-    console.log(params.keyword)
     searchWithDebounce(params, "searchKeyword1");
   }
 }
 
 defineExpose({callAPIWithRegionCode, searchKeyword}); // 부모에 코드 노출
 
-let debounceTimeout;
 
+
+let debounceTimeout;
 function searchWithDebounce(params, keyword_search) {
   if (debounceTimeout) {
     clearTimeout(debounceTimeout);
@@ -110,7 +101,6 @@ function callAPI(params, keyword_search) {
     }
   }
   // markers = [];  // markers 배열 초기화
-
   const API_ENDPOINT = 'http://apis.data.go.kr/B551011/KorService1';
   const queryString = new URLSearchParams(params).toString();
   const requestURL = API_ENDPOINT + '/' + keyword_search + '?' + queryString;
@@ -147,7 +137,6 @@ function callAPI(params, keyword_search) {
     return coordinates;
   }
 
-
   function updateMap(coordinates) {
     infoWindow.value.close();
     prop.changeSelectMarker(false);
@@ -175,34 +164,20 @@ function callAPI(params, keyword_search) {
   }
 
   function handleAddButtonClick(marker, coord) {
-    console.log("click")
     fixMarker(marker, coord);
     addToTravelPlan(coord);
   }
 
-
-
-
   function addToTravelPlan(coord) {
-    console.log("add Travel Plan")
-    console.log(coord);
-    console.log(mapStore.travelList);
     mapStore.travelList.push(coord);
-
-  }
-
-
-  function handleRemoveButtonClick(marker) {
-    revertMarker(marker);
+    mapStore.currentSelectMarker = coord; // 마커 클릭시로 바꿔야해
   }
 
   function handleMarkerClick(marker, coord) {
     prop.changeSelectMarker(true);
-
     const isFixed = fixedMarkers.value.includes(marker);
 
-    mapStore.detailState = coord;
-    console.log(mapStore.detailState);
+
 
     // 인포윈도우 업데이트 로직
     const content = generateInfoWindowContent(coord, isFixed);
@@ -217,7 +192,7 @@ function callAPI(params, keyword_search) {
         removeListenersMap.value.delete(marker);
       }
 
-      const removeListener = () => handleRemoveButtonClick(marker);
+      const removeListener = () => revertMarker(marker);
       removeListenersMap.value.set(marker, removeListener);
       removeButton.addEventListener('click', removeListener);
     } else {
@@ -241,12 +216,16 @@ function callAPI(params, keyword_search) {
 
 
   function revertMarker(targetMarker) {
-    const markerTitle = targetMarker.getTitle();
-    const listItemToRemove = document.querySelector(`li[data-title=" ` + markerTitle + `"]`);
 
-    if (listItemToRemove) {
-      removeFromTravelRoute(listItemToRemove);
-    }
+    let travelList = mapStore.travelList;
+
+    const listItemToRemove = document.querySelector(`li[data-title=" ` +  + `"]`);
+
+
+    mapStore.travelList = travelList.filter(value => value.title !== targetMarker.getTitle());
+
+
+
 
     const markerIndex = fixedMarkers.value.indexOf(targetMarker);
     if (markerIndex > -1) {
@@ -284,17 +263,16 @@ function callAPI(params, keyword_search) {
   }
 
   function fixMarker(marker, coord) {
+
     marker.setTitle(coord.title);
     fixedMarkers.value.push(marker);
     fixedMarkerPositions.value.push(marker.getPosition());
 
-    const redMarkerImage = new kakao.maps.MarkerImage(
+    marker.setImage(new kakao.maps.MarkerImage(
         'src/assets/images/pickMarker.png',
         new kakao.maps.Size(40, 40)
-    );
-
-    marker.setImage(redMarkerImage);
-    handleMarkerClick(marker, coord);  // Update the infoWindow.value content
+    ));
+    handleMarkerClick(marker, coord);
   }
 
   function generateInfoWindowContent(coord, isFixed) {

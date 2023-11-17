@@ -13,13 +13,17 @@ export const useMapStore = defineStore("mapStore", () => {
     //     menuList.value = menuList.value.map((item) => ({ ...item, show: !item.show }));
     // };
 
-    const detailState = ref({});
+    const currentSelectMarker = ref({});
     const travelList = ref([]);
 
+    const updateTravelList = (travelPlan) => {
+        console.log(travelPlan)
+        travelList.value = travelPlan;
+    }
 
     return {
-        detailState,
-        travelList
+        currentSelectMarker,
+        travelList,
+        updateTravelList
     };
-
 });

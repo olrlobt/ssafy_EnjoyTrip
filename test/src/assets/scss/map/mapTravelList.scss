@@ -1,0 +1,78 @@
+
+/* 전체 리스트 스타일 */
+#travelRouteList {
+  list-style: none; /* 기본 리스트 스타일 제거 */
+  height: 100%;
+  padding: 0;
+}
+
+.travel-list{
+  height: 100%;
+}
+
+/* 각 리스트 아이템 스타일 */
+.travel-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 100px;
+  background-color: #f9f9f9; /* 배경색 */
+  border: 1px solid #ddd; /* 테두리 */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+  padding: 10px;
+  margin-bottom: 8px; /* 아이템 간 여백 */
+  border-radius: 8px; /* 둥근 모서리 */
+}
+
+.item-content {
+  display: flex;
+  align-items: center;
+}
+
+.travel-item img {
+  border-radius: 8px;
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  margin-right: 10px; /* 이미지와 텍스트 사이 여백 */
+}
+
+.travel-item-title {
+  font-weight: bold; /* 제목 굵기 */
+  color: #333; /* 제목 색상 */
+  font-size: 16px; /* 제목 글꼴 크기 */
+}
+
+
+
+.close-button2 {
+  width: 10px;
+  height: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(45deg);
+  border-radius: 100%;
+  padding: 4px;
+  //position: absolute;
+  right: 8px;
+
+  &:hover {
+    background-color: #ddd;
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: 12px;
+    background-color: #666;
+  }
+
+  &::before {
+    transform: rotate(90deg);
+  }
+}
+
