@@ -9,7 +9,7 @@ const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
 const markers = ref([]);
-const fixedMarkers = mapStore.fixedMarkers;
+let fixedMarkers = mapStore.fixedMarkers;
 const fixedMarkerPositions = ref([]);
 
 /* global kakao */
@@ -57,10 +57,8 @@ const searchKeyword = (event) => {
   }
 }
 
-watch(() => mapStore.fixedMarkers, (newValue, oldValue) => {
-  // 여기에서 fixedMarkers의 변경에 대응하는 로직을 작성합니다.
-  mapStore.fixedMarkers = fixedMarkers;
-  console.log('fixedMarkers 변경됨:', newValue);
+watch(() => mapStore.fixedMarkers, () => {
+  fixedMarkers = mapStore.fixedMarkers ;
 });
 
 
