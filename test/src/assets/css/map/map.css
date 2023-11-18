@@ -192,16 +192,20 @@ select#tourismType option {
     color: white;
 }
 
-
 .area {
     position: absolute;
-    background: #fff;
-    border: 1px solid #888;
-    border-radius: 3px;
-    font-size: 12px;
+    background: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 14px;
+    color: #333;
     top: -5px;
     left: 15px;
-    padding: 2px;
+    padding: 5px 10px;
+    white-space: nowrap;
+    z-index: 1000;
+    font-family: Arial, sans-serif;
 }
 
 .info {
