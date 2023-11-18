@@ -70,7 +70,7 @@ function searchWithDebounce(params, keyword_search) {
   }
   debounceTimeout = setTimeout(() => {
     callAPI(params, keyword_search);
-  }, 200);  // 300ms 동안 추가 입력이 없으면 callAPI를 호출합니다.
+  }, 200);
 }
 
 
@@ -166,6 +166,7 @@ function callAPI(params, keyword_search) {
    */
   function handleMarkerClick(marker, coord) {
     prop.changeSelectMarker(true);
+    mapStore.currentSelectMarker = coord;
     const isFixed = mapStore.fixedMarkers.includes(marker);
 
     const content = generateInfoWindowContent(coord, isFixed);
@@ -238,7 +239,7 @@ function callAPI(params, keyword_search) {
    */
   function handleAddButtonClick(marker, coord) {
     fixMarker(marker, coord);
-    addToTravelPlan(marker,coord);
+    mapStore.travelList.push(coord);
   }
 
   function fixMarker(marker, coord) {
@@ -251,11 +252,6 @@ function callAPI(params, keyword_search) {
     mapStore.fixedMarkers.push(marker);
     fixedMarkerPositions.value.push(marker.getPosition());
     handleMarkerClick(marker, coord);
-  }
-
-  function addToTravelPlan(marker, coord) {
-    mapStore.travelList.push(coord);
-    mapStore.currentSelectMarker = coord; // 마커 클릭시로 바꿔야해
   }
 
   function generateInfoWindowContent(coord, isFixed) {
@@ -273,8 +269,8 @@ function callAPI(params, keyword_search) {
     `;
   }
 
-  const arePositionsClose = (position1, position2, threshold = 0.00001) => Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
-
+  const arePositionsClose = (position1, position2, threshold = 0.00001) =>
+      Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
 }
 
 

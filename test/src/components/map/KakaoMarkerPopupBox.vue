@@ -18,13 +18,10 @@ onMounted(() => {
       x: rect.left - popupBoxRect.left,
       y: rect.top - popupBoxRect.top
     };
-    console.log(rect)
   }
-  console.log(minimizedPosition)
 });
 
 const getPopupBoxStyle = () => {
-  console.log(minimizedPosition.value.x)
   if (isMinimized.value) {
     return {
       transform: `translate(${minimizedPosition.value.x}px, ${minimizedPosition.value.y}px) scale(0)`,
@@ -91,6 +88,7 @@ function hideMarkerPopup() {
 
 </script>
 
+
 <template>
   <div class="popup-box ">
     <KakaoDetailPopup
@@ -101,6 +99,7 @@ function hideMarkerPopup() {
     <div class="minimize-handle"  v-if="isMinimized" @click="hideMarkerPopup"></div>
   </div>
 </template>
+
 
 <style>
 
