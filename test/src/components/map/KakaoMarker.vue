@@ -9,7 +9,6 @@ const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
 const markers = ref([]);
-let fixedMarkers = mapStore.fixedMarkers;
 const fixedMarkerPositions = ref([]);
 
 /* global kakao */
@@ -58,7 +57,7 @@ const searchKeyword = (event) => {
 }
 
 watch(() => mapStore.fixedMarkers, () => {
-  fixedMarkers = mapStore.fixedMarkers ;
+  console.log(mapStore.fixedMarkers)
 });
 
 
@@ -99,7 +98,7 @@ function callAPIWithRegionCode(originalCode) {
 function callAPI(params, keyword_search) {
 
   for (let i = 0; i < markers.value.length; i++) {
-    if (!fixedMarkers.some(fixed => fixed === markers.value[i])) {
+    if (!mapStore.fixedMarkers.some(fixed => fixed === markers.value[i])) {
       markers.value[i].setMap(null);
     }
   }
@@ -146,7 +145,7 @@ function callAPI(params, keyword_search) {
     for (let coord of coordinates) {
       let markerPosition = new kakao.maps.LatLng(coord.mapy, coord.mapx);
 
-      if (fixedMarkers.some(fixedPosition =>
+      if (mapStore.fixedMarkers.some(fixedPosition =>
           arePositionsClose(fixedPosition.getPosition(), markerPosition))) {
         continue;
       }
@@ -167,7 +166,7 @@ function callAPI(params, keyword_search) {
    */
   function handleMarkerClick(marker, coord) {
     prop.changeSelectMarker(true);
-    const isFixed = fixedMarkers.includes(marker);
+    const isFixed = mapStore.fixedMarkers.includes(marker);
 
     const content = generateInfoWindowContent(coord, isFixed);
     infoWindow.value.setContent(content);
@@ -205,9 +204,9 @@ function callAPI(params, keyword_search) {
     let travelList = mapStore.travelList;
     mapStore.travelList = travelList.filter(value => value.title !== targetMarker.getTitle());
 
-    const markerIndex = fixedMarkers.indexOf(targetMarker);
+    const markerIndex = mapStore.fixedMarkers.indexOf(targetMarker);
     if (markerIndex > -1) {
-      fixedMarkers.splice(markerIndex, 1); // fixedMarkers 배열에서 제거
+      mapStore.fixedMarkers.splice(markerIndex, 1); // fixedMarkers 배열에서 제거
     }
 
     const positionIndex = fixedMarkerPositions.value.findIndex(pos => arePositionsClose(pos, targetMarker.getPosition()));
@@ -248,7 +247,7 @@ function callAPI(params, keyword_search) {
         new kakao.maps.Size(40, 40)
     ));
 
-    fixedMarkers.push(marker);
+    mapStore.fixedMarkers.push(marker);
     fixedMarkerPositions.value.push(marker.getPosition());
     handleMarkerClick(marker, coord);
   }

@@ -145,9 +145,6 @@ let startX, startY;
 
 
 const startDrag = (event) => {
-  console.log("start" )
-
-
   startX = event.clientX;
   startY = event.clientY;
   position.value.dragging = true;
@@ -174,8 +171,6 @@ const onDrag = (event) => {
 };
 
 const stopDrag = () => {
-  console.log("stop" + position.value.x + " / " + position.value.y)
-
   position.value.dragging = false;
   document.removeEventListener('mousemove', onDrag);
   document.removeEventListener('mouseup', stopDrag);

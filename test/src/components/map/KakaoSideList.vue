@@ -110,23 +110,18 @@ const handleEnd = () => {
 };
 
 const removeFromTravelPlan = (index) => {
+  const titleToRemove = localTravelPlan.value[index].title;
 
-  const { matching, notMatching } = localFixedMarker.value.reduce((acc, fixed) => {
-    if (fixed.Gb === localTravelPlan.value[index].title) {
-      acc.matching.push(fixed);
-    } else {
-      acc.notMatching.push(fixed);
+  for (let i = mapStore.fixedMarkers.length - 1; i >= 0; i--) {
+    if (mapStore.fixedMarkers[i].Gb === titleToRemove) {
+      mapStore.fixedMarkers[i].setImage(null);
+      mapStore.fixedMarkers.splice(i, 1);
     }
-    return acc;
-  }, { matching: [], notMatching: [] });
-
-  mapStore.fixedMarkers = notMatching;
-
-  if(matching){
-    matching[0].setImage(null);
   }
+
   localTravelPlan.value.splice(index, 1);
 };
+
 
 
 </script>
