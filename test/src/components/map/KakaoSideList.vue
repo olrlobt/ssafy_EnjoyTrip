@@ -119,6 +119,10 @@ const removeFromTravelPlan = (index) => {
     }
   }
 
+  if(mapStore.currentSelectMarker.title === titleToRemove){
+    mapStore.infoWindow.close();
+  }
+
   localTravelPlan.value.splice(index, 1);
 };
 

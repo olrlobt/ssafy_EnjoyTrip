@@ -16,10 +16,9 @@ export const useMapStore = defineStore("mapStore", () => {
     const currentSelectMarker = ref({});
     const travelList = ref([]);
     const fixedMarkers = ref([]);
-
+    const infoWindow = ref(null);
 
     const updateTravelList = (travelPlan) => {
-        console.log(travelPlan)
         travelList.value = travelPlan;
     }
 

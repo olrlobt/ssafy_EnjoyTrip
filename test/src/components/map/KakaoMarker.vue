@@ -171,6 +171,7 @@ function callAPI(params, keyword_search) {
     const content = generateInfoWindowContent(coord, isFixed);
     infoWindow.value.setContent(content);
     infoWindow.value.open(prop.map, marker);
+    mapStore.infoWindow = infoWindow.value;
 
     if (isFixed) { // 고정된 마커일 경우
       const removeButton = document.querySelector('.remove-marker-btn');
