@@ -19,7 +19,7 @@
           </div>
         </div>
 
-        <div key="add-button" class="minus-button"></div>
+        <div key="add-button" class="minus-button" @click="props.hideMarkerPopup"></div>
       </div>
     </div>
     <div class="menu">
@@ -67,6 +67,9 @@ onMounted(() => {
 
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
+const props = defineProps({
+  hideMarkerPopup: Function
+})
 
 
 </script>
@@ -76,10 +79,8 @@ const active = (id) => id === currentTabId.value ? "-active" : "";
 @import "src/assets/scss/map/mapAppleThema";
 
 .window{
-  width: 30%;
-  max-width: 700px;
-  max-height: 50%;
-  height: 50%;
+  width: 100%;
+  height: 100%;
 }
 
 </style>

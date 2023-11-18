@@ -2,9 +2,9 @@
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
 import KakaoMarkerSearch from "@/components/map/KakaoMarker.vue"
-import KakaoSideList from "@/components/map/KakaoSideList.vue";
-import KakaoMarkerPopup from "@/components/map/KakaoDetailPopup.vue"
+import KakaoSideListBox from "@/components/map/KakaoSideListBox.vue";
 import {ref, onMounted} from "vue";
+import KakaoMarkerPopupBox from "@/components/map/KakaoMarkerPopupBox.vue";
 
 
 const polygons = ref([]);
@@ -140,51 +140,12 @@ function displayArea(area) {
 const changeSelectMarker = (value) => {
   selectMarker.value = value;
 }
-const position = ref({ x: 30, y: 30 , dragging: false});
-let startX, startY;
 
+const isSlideOut = ref(true);
 
-const startDrag = (event) => {
-  startX = event.clientX;
-  startY = event.clientY;
-  position.value.dragging = true;
-
-  document.addEventListener('mousemove', onDrag);
-  document.addEventListener('mouseup', stopDrag);
-};
-
-const onDrag = (event) => {
-
-  if (position.value.dragging) {
-    // 드래그 중 마우스의 현재 위치와 시작 위치의 차이를 계산
-    const dx = event.clientX - startX;
-    const dy = event.clientY - startY;
-
-    // 드래그 대상의 새 위치 계산
-    position.value.x -= dx;
-    position.value.y += dy;
-
-    // 다음 이벤트를 위해 현재 위치를 시작 위치로 업데이트
-    startX = event.clientX;
-    startY = event.clientY;
-  }
-};
-
-const stopDrag = () => {
-  position.value.dragging = false;
-  document.removeEventListener('mousemove', onDrag);
-  document.removeEventListener('mouseup', stopDrag);
-};
-
-const getItemStyle = () => {
-  return {
-    position: 'absolute',
-    right: `${position.value.x}px`,
-    top: `${position.value.y}px`,
-    cursor: position.value.dragging ? 'grabbing' : 'grab'
-  };
-};
-
+function hideSideList() {
+  isSlideOut.value = !isSlideOut.value;
+}
 
 </script>
 
@@ -192,22 +153,35 @@ const getItemStyle = () => {
 
   <div id="map" style=" position: relative; width: 100%; height: 100vh;">
     <KakaoMarkerSearch v-if="mapLoaded" :map="map" ref="clickMarker" :changeSelectMarker="changeSelectMarker"/>
-    <KakaoSideList :searchKeyword="clickMarkerMethod"/>
-    <KakaoMarkerPopup class="draggable"
-                      @mousedown="startDrag"
-                      :style=getItemStyle()
-                       v-if="selectMarker"
-                      />
+    <KakaoSideListBox :class="{ 'slide-out': isSlideOut, 'slide-in': !isSlideOut }"
+                   :searchKeyword="clickMarkerMethod"
+                   :hideSideList="hideSideList"/>
+
+    <KakaoMarkerPopupBox v-if="selectMarker" />
   </div>
 
 </template>
 
 <style>
 @import "@/assets/css/map/map.css";
-.draggable {
-  width: 100px;
-  height: 100px;
-  background-color: lightblue;
-  /* 기타 필요한 스타일 */
+
+
+@keyframes slideOut {
+  from { transform: translateX(-95%); }
+  to { transform: translateX(0); }
 }
+
+@keyframes slideIn {
+  from { transform: translateX(0%); }
+  to { transform: translateX(-95%); }
+}
+
+.slide-out {
+  animation: slideOut 0.4s forwards;
+}
+
+.slide-in {
+  animation: slideIn 0.4s forwards;
+}
+
 </style>

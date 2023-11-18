@@ -41,50 +41,47 @@
 
 /* 관광 타입 선택 select 스타일 */
 #tourismType {
-    width: 200px; /* 또는 원하는 너비 설정 */
+    width: 100px; /* 또는 원하는 너비 설정 */
     padding: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 
-
-/* select tag */
-
-/* 기본 스타일 초기화 */
 select#tourismType {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
     outline: none;
-    border: none;
-    background-color: #f4f4f4;
-    padding: 10px 15px;
-    border-radius: 5px;
-    font-size: 16px;
-    color: #333;
+    border: 1px solid #dcdcdc; /* subtle border */
+    background-color: #fff; /* white background */
+    padding: 3px 5px;
+    border-radius: 5px; /* rounded corners */
+    font-size: 12px;
+    color: #333; /* slightly dark text for readability */
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: border-color 0.3s, box-shadow 0.3s; /* smooth transition for hover and focus */
 }
 
-/* 호버 효과 */
+/* Hover effect */
 select#tourismType:hover {
-    background-color: #e4e4e4;
+    border-color: #a0a0a0; /* darker border on hover */
 }
 
-/* 옵션 스타일 */
+/* Focus effect */
+select#tourismType:focus {
+    box-shadow: 0 0 5px rgba(81, 203, 238, 1); /* glow effect for focus */
+    border-color: #81c0eb; /* matching border color for focus */
+}
+
+/* Option style */
 select#tourismType option {
     padding: 10px;
-    font-size: 16px;
-    color: #555;
+    font-size: 12px;
+    color: #555; /* slightly lighter text in options for distinction */
+    background-color: #fff; /* ensuring option background is white */
 }
 
-/* 화살표 부분을 대체할 배경 이미지 스타일 */
-select#tourismType {
-    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="6"><path d="M1.4 1.3L6 6l4.6-4.7" fill="none" stroke="#333" stroke-width="2"/></svg>');
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-}
 
 
 /* 추가 삭제 btn */

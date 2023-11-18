@@ -31,16 +31,28 @@
         </div>
 
 
-        <div key="add-button" class="minus-button" @click="addTab"></div>
+        <div key="add-button" class="minus-button"></div>
       </div>
     </div>
 
     <div v-if="currentTabId == 2" class="menu">
       <div class="buttons">
-        <div class="arrows">
-          <div class="arrow -back"></div>
-          <div class="arrow -forward"></div>
-        </div>
+<!--        <div class="arrows">-->
+<!--          <div class="arrow -back"></div>-->
+<!--          <div class="arrow -forward"></div>-->
+<!--        </div>-->
+
+        <select id="tourismType">
+          <option value="12" selected>관광타입 선택</option>
+          <option value="12">관광지</option>
+          <option value="14">문화시설</option>
+          <option value="15">축제공연행사</option>
+          <option value="25">여행코스</option>
+          <option value="28">레포츠</option>
+          <option value="32">숙박</option>
+          <option value="38">쇼핑</option>
+          <option value="39">음식점</option>
+        </select>
       </div>
       <input class="search" type="text"  id="keyword" placeholder="지역/상호명 검색" @keyup="searchKeyup" />
     </div>
@@ -67,9 +79,12 @@
         <h1>hi</h1>
       </div>
     </div>
-
-
   </div>
+
+
+
+
+
 </template>
 <script setup>
 import { ref,  watch } from 'vue';
@@ -83,7 +98,7 @@ const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
 const props = defineProps({
-  searchKeyword: Function
+  searchKeyword: Function,
 });
 
 const searchKeyup = (event) => {
@@ -134,13 +149,13 @@ const removeFromTravelPlan = (index) => {
 <style lang="scss" scoped>
 @import "src/assets/scss/map/mapAppleThema";
 @import "src/assets/scss/map/mapTravelList";
+
 .window{
-  top: 0px;
-  left: 0px;
   width: 100%;
   max-width: 350px;
   max-height: 100%;
   height: 100%;
 }
+
 
 </style>
