@@ -78,9 +78,13 @@ const props = defineProps({
 <style lang="scss" scoped>
 @import "src/assets/scss/map/mapAppleThema";
 
-.window{
-  width: 100%;
-  height: 100%;
+.window {
+  position: relative;
+  width: 30vw;
+  max-width: 600px;
+  height: 40vw;
+  max-height: 500px;
+
 }
 
 </style>

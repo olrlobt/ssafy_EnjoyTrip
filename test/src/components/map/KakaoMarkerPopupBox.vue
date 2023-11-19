@@ -107,22 +107,21 @@ function hideMarkerPopup() {
   position: fixed;
   right: 30px;
   top: 30px;
-  width: 30%;
-  max-width: 700px;
-  max-height: 50%;
-  height: 50%;
+  width: 0;
+  height: 0;
   z-index: 100;
+  overflow: visible;
 }
 
 
 .minimize-handle {
   position: fixed;
-  right: 0; /* 오른쪽 끝에 맞춤 */
-  top: 30%; /* 상단에 맞춤 */
+  right: 0;
+  top: 30%;
   width: 20px;
   height: 100px;
   background-color: #e8eaee;
-  border-radius: 10px 0px 0px 10px; /* 오른쪽 상단 모서리 둥글게 */
+  border-radius: 10px 0px 0px 10px;
   box-shadow: 0 2px 4px rgba(0,0,0,0.5);
   cursor: pointer;
   z-index: 100;
