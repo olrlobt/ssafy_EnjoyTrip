@@ -2,30 +2,38 @@ import { ref } from "vue";
 import { defineStore } from "pinia";
 
 export const useMapStore = defineStore("mapStore", () => {
-    // const menuList = ref([
-    //     { name: "회원가입", show: true, routeName: "join" },
-    //     { name: "로그인", show: true, routeName: "login" },
-    //     { name: "내정보", show: false, routeName: "mypage" },
-    //     { name: "로그아웃", show: false, routeName: "logout" },
-    // ]);
 
-    // const changeMenuState = () => {
-    //     menuList.value = menuList.value.map((item) => ({ ...item, show: !item.show }));
-    // };
-
-    const currentSelectMarker = ref({});
-    const travelList = ref([]);
-    const fixedMarkers = ref([]);
+    const currentSelectMarker = ref({
+        marker: null,
+        coord : {}
+    }); // marker
+    const travelList = ref([]); // coord
+    const fixedMarkers = ref([]); // marker
     const infoWindow = ref(null);
+    const currentSideList = ref([]); // coord
+    const markers = ref([]); // marker, coord
 
     const updateTravelList = (travelPlan) => {
         travelList.value = travelPlan;
     }
 
+    const removeIndexOfTravelList = (targetMarker) => {
+        const index = travelList.value.findIndex(item => item.coord.title === targetMarker.getTitle());
+
+        if (index !== -1) {
+            travelList.value.splice(index, 1);
+        }
+    };
+
+
+
     return {
         currentSelectMarker,
         travelList,
         fixedMarkers,
-        updateTravelList
+        currentSideList,
+        markers,
+        updateTravelList,
+        removeIndexOfTravelList
     };
 });

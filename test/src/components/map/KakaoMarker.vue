@@ -8,7 +8,6 @@ import {useMapStore} from "@/stores/map";
 const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
-const markers = ref([]);
 const fixedMarkerPositions = ref([]);
 
 /* global kakao */
@@ -97,12 +96,12 @@ function callAPIWithRegionCode(originalCode) {
 
 function callAPI(params, keyword_search) {
 
-  for (let i = 0; i < markers.value.length; i++) {
-    if (!mapStore.fixedMarkers.some(fixed => fixed === markers.value[i])) {
-      markers.value[i].setMap(null);
+  for (let i = 0; i < mapStore.markers.length; i++) {
+    if (!mapStore.fixedMarkers.some(fixed => fixed === mapStore.markers[i].marker)) {
+      mapStore.markers[i].marker.setMap(null);
     }
   }
-  // markers = [];  // markers 배열 초기화
+
   const API_ENDPOINT = 'http://apis.data.go.kr/B551011/KorService1';
   const queryString = new URLSearchParams(params).toString();
   const requestURL = API_ENDPOINT + '/' + keyword_search + '?' + queryString;
@@ -121,141 +120,105 @@ function callAPI(params, keyword_search) {
         console.error(error);
       });
 
+}
 
-  function getMapCoordinates(data) {
-    let coordinates = [];
+function getMapCoordinates(data) {
+  let coordinates = [];
 
-    for (let item of data.response.body.items.item) {
-      coordinates.push({
-        mapx: item.mapx,
-        mapy: item.mapy,
-        firstimage: item.firstimage,
-        addr1: item.addr1,
-        areacode: item.areacode,
-        title: item.title
-      });
+  for (let item of data.response.body.items.item) {
+    coordinates.push({
+      mapx: item.mapx,
+      mapy: item.mapy,
+      firstimage: item.firstimage,
+      addr1: item.addr1,
+      areacode: item.areacode,
+      title: item.title
+    });
+  }
+  return coordinates;
+}
+
+function updateMap(coordinates) {
+  infoWindow.value.close();
+  prop.changeSelectMarker(false);
+  mapStore.currentSideList = coordinates;
+
+  for (let coord of coordinates) {
+    let markerPosition = new kakao.maps.LatLng(coord.mapy, coord.mapx);
+
+    if (mapStore.fixedMarkers.some(fixedPosition =>
+        arePositionsClose(fixedPosition.getPosition(), markerPosition))) {
+      continue;
     }
-    return coordinates;
+
+    let marker = new kakao.maps.Marker({
+      position: markerPosition,
+      title: coord.title,
+      map: prop.map
+    });
+
+    mapStore.markers.push({marker, coord});
+    kakao.maps.event.addListener(marker, 'click', ()=> handleMarkerClick(marker, coord));
+  }
+}
+
+
+
+
+function revertMarker(targetMarker) {
+
+
+  mapStore.removeIndexOfTravelList(targetMarker);
+
+  const markerIndex = mapStore.fixedMarkers.indexOf(targetMarker);
+  if (markerIndex > -1) {
+    mapStore.fixedMarkers.splice(markerIndex, 1); // fixedMarkers 배열에서 제거
   }
 
-  function updateMap(coordinates) {
-    infoWindow.value.close();
-    prop.changeSelectMarker(false);
+  const positionIndex = fixedMarkerPositions.value.findIndex(pos => arePositionsClose(pos, targetMarker.getPosition()));
+  if (positionIndex > -1) {
+    fixedMarkerPositions.value.splice(positionIndex, 1);
+  }
+  targetMarker.setImage(null); // 마커 기본 이미지로
 
-    for (let coord of coordinates) {
-      let markerPosition = new kakao.maps.LatLng(coord.mapy, coord.mapx);
+  // 이벤트 핸들러를 변수로 저장
+  const addListener = () => handleAddButtonClick(targetMarker);
+  const addButton = document.querySelector('.add-marker-btn');
 
-      if (mapStore.fixedMarkers.some(fixedPosition =>
-          arePositionsClose(fixedPosition.getPosition(), markerPosition))) {
-        continue;
-      }
-
-      let marker = new kakao.maps.Marker({
-        position: markerPosition,
-        map: prop.map
-      });
-
-      markers.value.push(marker);
-      kakao.maps.event.addListener(marker, 'click', ()=> handleMarkerClick(marker, coord));
-    }
+  if (addListenersMap.value.has(targetMarker)) {
+    addListenersMap.value.delete(targetMarker);
   }
 
-
-  /**
-   * 마커 클릭 이벤트
-   */
-  function handleMarkerClick(marker, coord) {
-    prop.changeSelectMarker(true);
-    mapStore.currentSelectMarker = coord;
-    const isFixed = mapStore.fixedMarkers.includes(marker);
-
-    const content = generateInfoWindowContent(coord, isFixed);
-    infoWindow.value.setContent(content);
-    infoWindow.value.open(prop.map, marker);
-    mapStore.infoWindow = infoWindow.value;
-
-    if (isFixed) { // 고정된 마커일 경우
-      const removeButton = document.querySelector('.remove-marker-btn');
-      if (removeListenersMap.value.has(marker)) {
-        removeButton.removeEventListener('click', removeListenersMap.value.get(marker));
-        removeListenersMap.value.delete(marker);
-      }
-
-      removeListenersMap.value.set(marker, () => revertMarker(marker));
-      removeButton.addEventListener('click', () => revertMarker(marker));
-    } else {
-      const addButton = document.querySelector('.add-marker-btn');
-
-      if (addListenersMap.value.has(marker)) {
-        addButton.removeEventListener('click', addListenersMap.value.get(marker));
-        addListenersMap.value.delete(marker);
-      }
-      addListenersMap.value.set(marker, () => handleAddButtonClick(marker, coord));
-      addButton.addEventListener('click', () => handleAddButtonClick(marker, coord));
-    }
-
-    // 등록버튼
-    // document.querySelector('.register-btn').addEventListener('click', function () {
-    //   // showSweetAlert(coord);
-    // });
+  if (addListener != null && addButton != null) {
+    addListenersMap.value.set(targetMarker, addListener);
+    addButton.addEventListener('click', addListener);
   }
+  // drawLine();
+  infoWindow.value.close();
+  prop.changeSelectMarker(false);
+}
 
+/**
+ * 마커 추가 버튼 눌렀을때
+ */
+function handleAddButtonClick(marker, coord) {
+  fixMarker(marker, coord);
+  mapStore.travelList.push({marker, coord});
+}
 
-  function revertMarker(targetMarker) {
+function fixMarker(marker, coord) {
+  marker.setImage(new kakao.maps.MarkerImage(
+      'src/assets/images/pickMarker.png',
+      new kakao.maps.Size(40, 40)
+  ));
 
-    let travelList = mapStore.travelList;
-    mapStore.travelList = travelList.filter(value => value.title !== targetMarker.getTitle());
+  mapStore.fixedMarkers.push(marker);
+  fixedMarkerPositions.value.push(marker.getPosition());
+  handleMarkerClick(marker, coord);
+}
 
-    const markerIndex = mapStore.fixedMarkers.indexOf(targetMarker);
-    if (markerIndex > -1) {
-      mapStore.fixedMarkers.splice(markerIndex, 1); // fixedMarkers 배열에서 제거
-    }
-
-    const positionIndex = fixedMarkerPositions.value.findIndex(pos => arePositionsClose(pos, targetMarker.getPosition()));
-    if (positionIndex > -1) {
-      fixedMarkerPositions.value.splice(positionIndex, 1);
-    }
-    targetMarker.setImage(null); // 마커 기본 이미지로
-
-    // 이벤트 핸들러를 변수로 저장
-    const addListener = () => handleAddButtonClick(targetMarker);
-    const addButton = document.querySelector('.add-marker-btn');
-
-    if (addListenersMap.value.has(targetMarker)) {
-      addListenersMap.value.delete(targetMarker);
-    }
-
-    if (addListener != null && addButton != null) {
-      addListenersMap.value.set(targetMarker, addListener);
-      addButton.addEventListener('click', addListener);
-    }
-    // drawLine();
-    infoWindow.value.close();
-    prop.changeSelectMarker(false);
-  }
-
-  /**
-   * 마커 추가 버튼 눌렀을때
-   */
-  function handleAddButtonClick(marker, coord) {
-    fixMarker(marker, coord);
-    mapStore.travelList.push(coord);
-  }
-
-  function fixMarker(marker, coord) {
-    marker.setTitle(coord.title);
-    marker.setImage(new kakao.maps.MarkerImage(
-        'src/assets/images/pickMarker.png',
-        new kakao.maps.Size(40, 40)
-    ));
-
-    mapStore.fixedMarkers.push(marker);
-    fixedMarkerPositions.value.push(marker.getPosition());
-    handleMarkerClick(marker, coord);
-  }
-
-  function generateInfoWindowContent(coord, isFixed) {
-    return `
+function generateInfoWindowContent(coord, isFixed) {
+  return `
         <div class="info-window-container">
             <div class="info-window-header">
                 <img class="info-window-image" src= "` + coord.firstimage + `" alt="` + coord.title + `"/>
@@ -267,11 +230,53 @@ function callAPI(params, keyword_search) {
             </div>
         </div>
     `;
+}
+
+const arePositionsClose = (position1, position2, threshold = 0.00001) =>
+    Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
+
+/**
+ * 마커 클릭 이벤트
+ */
+function handleMarkerClick(marker, coord) {
+  prop.changeSelectMarker(true);
+
+  mapStore.currentSelectMarker.marker = marker;
+  mapStore.currentSelectMarker.coord = coord;
+  const isFixed = mapStore.fixedMarkers.includes(marker);
+
+  const content = generateInfoWindowContent(coord, isFixed);
+  infoWindow.value.setContent(content);
+  infoWindow.value.open(prop.map, marker);
+  mapStore.infoWindow = infoWindow.value;
+
+  if (isFixed) { // 고정된 마커일 경우
+    const removeButton = document.querySelector('.remove-marker-btn');
+    if (removeListenersMap.value.has(marker)) {
+      removeButton.removeEventListener('click', removeListenersMap.value.get(marker));
+      removeListenersMap.value.delete(marker);
+    }
+
+    removeListenersMap.value.set(marker, () => revertMarker(marker));
+    removeButton.addEventListener('click', () => revertMarker(marker));
+  } else {
+    const addButton = document.querySelector('.add-marker-btn');
+
+    if (addListenersMap.value.has(marker)) {
+      addButton.removeEventListener('click', addListenersMap.value.get(marker));
+      addListenersMap.value.delete(marker);
+    }
+    addListenersMap.value.set(marker, () => handleAddButtonClick(marker, coord));
+    addButton.addEventListener('click', () => handleAddButtonClick(marker, coord));
   }
 
-  const arePositionsClose = (position1, position2, threshold = 0.00001) =>
-      Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
+  // 등록버튼
+  // document.querySelector('.register-btn').addEventListener('click', function () {
+  //   // showSweetAlert(coord);
+  // });
 }
+
+
 
 
 </script>

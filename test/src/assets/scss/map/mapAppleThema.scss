@@ -201,6 +201,27 @@ $gray-light: #e7eaef;
     }
 
   }
+
+
+  > .settings-button {
+    width: 14px;
+    height: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    align-self: center;
+    padding: 8px;
+    margin: 0 4px 2px;
+    border-radius: 100%;
+    transition: background-color 0.5s;
+    //background-image: url('settings-icon.png'); /* 환경설정 아이콘 이미지 URL */
+    background-size: cover;
+
+    &:hover {
+      background-color: #ccc;
+    }
+  }
+
 }
 
 .tabs {

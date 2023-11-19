@@ -62,21 +62,29 @@
     <div class="content">
         <div :class="[active(1), 'tab-content']" >
 
-          <VueDraggableNext id="travelRouteList" v-model="localTravelPlan" @end="handleEnd">
+          <VueDraggableNext id="travelRouteList" v-model="mapStore.travelList">
             <div
                 class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
-                v-for="(item,index) in localTravelPlan"
-                :key="item.id"
+                v-for="(item,index) in mapStore.travelList"
+                :key="item.coord.id"
+                @click="clickSideList(item)"
             >
-              <img :src="item.firstimage" class="travel-item-image" alt="">
-              <span class="travel-item-title">{{ item.title }}</span>
+              <img :src="item.coord.firstimage" class="travel-item-image" alt="">
+              <span class="travel-item-title">{{ item.coord.title }}</span>
               <div class="close-button2" @click="removeFromTravelPlan(index)"></div>
             </div>
           </VueDraggableNext>
 
         </div>
-      <div :class="[active(2), 'tab-content']" >
-        <h1>hi</h1>
+      <div :class="[active(2), 'tab-content']" class="side-list">
+        <div
+            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
+            v-for="(item) in mapStore.currentSideList"
+            :key="item.id"
+        >
+          <img :src="item.firstimage" class="travel-item-image" alt="">
+          <span class="travel-item-title">{{ item.title }}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -93,7 +101,6 @@ import { VueDraggableNext } from 'vue-draggable-next'
 
 const mapStore = useMapStore();
 const currentTabId = ref(1);
-const localTravelPlan = ref([]);
 const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
@@ -109,23 +116,18 @@ function changeTab(id) {
   currentTabId.value = id;
 }
 
-localTravelPlan.value = mapStore.travelList;
 localFixedMarker.value = mapStore.fixedMarkers;
 
-watch(() => mapStore.travelList, (newList) => {
-  localTravelPlan.value = newList;
-}, { deep: true });
+// watch(() => mapStore.travelList, (newList) => {
+//   localTravelPlan.value = newList;
+// }, { deep: true });
 
 watch(() => mapStore.fixedMarkers, (fixedList) => {
   localFixedMarker.value = fixedList;
 });
 
-const handleEnd = () => {
-  mapStore.updateTravelList(localTravelPlan.value);
-};
-
 const removeFromTravelPlan = (index) => {
-  const titleToRemove = localTravelPlan.value[index].title;
+  const titleToRemove = mapStore.travelList[index].coord.title;
 
   for (let i = mapStore.fixedMarkers.length - 1; i >= 0; i--) {
     if (mapStore.fixedMarkers[i].Gb === titleToRemove) {
@@ -138,9 +140,14 @@ const removeFromTravelPlan = (index) => {
     mapStore.infoWindow.close();
   }
 
-  localTravelPlan.value.splice(index, 1);
+  mapStore.travelList.splice(index, 1);
 };
 
+function clickSideList(item){
+
+  mapStore.currentSelectMarker = item;
+
+}
 
 
 </script>
@@ -157,5 +164,8 @@ const removeFromTravelPlan = (index) => {
   height: 100%;
 }
 
+.side-list{
+  overflow: scroll;
+}
 
 </style>
