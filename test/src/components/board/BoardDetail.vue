@@ -12,8 +12,13 @@ const { articleno } = route.params;
 
 const article = ref({});
 
+const props = defineProps([
+  'changeHero'
+])
+
 onMounted(() => {
   getArticle();
+  props.changeHero("Detail","디테일화면입니다.")
 });
 
 const getArticle = () => {

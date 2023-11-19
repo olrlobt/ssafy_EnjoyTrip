@@ -1,11 +1,21 @@
 <script setup>
 import BoardFormItem from "./item/BoardFormItem.vue";
-import TheHeroVue from "../TheHero.vue";
+
+import { onMounted} from "vue";
+
+const props = defineProps([
+  'changeHero'
+])
+
+onMounted(() => {
+  props.changeHero("Modify","수정화면입니다.")
+ 
+});
+
 
 </script>
 
 <template>
-  <!-- <TheHeroVue title="Modify" contents ="수정하는 창입니다." /> -->
   <div class="container">
       <div class="col-lg-10 text-start">
         <BoardFormItem type="modify" />
