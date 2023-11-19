@@ -144,9 +144,7 @@ const removeFromTravelPlan = (index) => {
 };
 
 function clickSideList(item){
-
-  mapStore.currentSelectMarker = item;
-
+  mapStore.currentSelectMarker = {...item};
 }
 
 

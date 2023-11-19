@@ -199,43 +199,6 @@ function revertMarker(targetMarker) {
 }
 
 /**
- * 마커 추가 버튼 눌렀을때
- */
-function handleAddButtonClick(marker, coord) {
-  fixMarker(marker, coord);
-  mapStore.travelList.push({marker, coord});
-}
-
-function fixMarker(marker, coord) {
-  marker.setImage(new kakao.maps.MarkerImage(
-      'src/assets/images/pickMarker.png',
-      new kakao.maps.Size(40, 40)
-  ));
-
-  mapStore.fixedMarkers.push(marker);
-  fixedMarkerPositions.value.push(marker.getPosition());
-  handleMarkerClick(marker, coord);
-}
-
-function generateInfoWindowContent(coord, isFixed) {
-  return `
-        <div class="info-window-container">
-            <div class="info-window-header">
-                <img class="info-window-image" src= "` + coord.firstimage + `" alt="` + coord.title + `"/>
-                <div class="info-window-title">` + coord.title + `</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <button class="button-common ` + (isFixed ? 'remove-marker-btn' : 'add-marker-btn') + `">` + (isFixed ? '삭제' : '추가') + `</button>
-                <button class="button-common register-btn">등록</button>
-            </div>
-        </div>
-    `;
-}
-
-const arePositionsClose = (position1, position2, threshold = 0.00001) =>
-    Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
-
-/**
  * 마커 클릭 이벤트
  */
 function handleMarkerClick(marker, coord) {
@@ -275,6 +238,43 @@ function handleMarkerClick(marker, coord) {
   //   // showSweetAlert(coord);
   // });
 }
+
+/**
+ * 마커 추가 버튼 눌렀을때
+ */
+function handleAddButtonClick(marker, coord) {
+  fixMarker(marker, coord);
+  mapStore.travelList.push({marker, coord});
+}
+
+function fixMarker(marker, coord) {
+  marker.setImage(new kakao.maps.MarkerImage(
+      'src/assets/images/pickMarker.png',
+      new kakao.maps.Size(40, 40)
+  ));
+
+  mapStore.fixedMarkers.push(marker);
+  fixedMarkerPositions.value.push(marker.getPosition());
+  handleMarkerClick(marker, coord);
+}
+
+function generateInfoWindowContent(coord, isFixed) {
+  return `
+        <div class="info-window-container">
+            <div class="info-window-header">
+                <img class="info-window-image" src= "` + coord.firstimage + `" alt="` + coord.title + `"/>
+                <div class="info-window-title">` + coord.title + `</div>
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
+                <button class="button-common ` + (isFixed ? 'remove-marker-btn' : 'add-marker-btn') + `">` + (isFixed ? '삭제' : '추가') + `</button>
+                <button class="button-common register-btn">등록</button>
+            </div>
+        </div>
+    `;
+}
+
+const arePositionsClose = (position1, position2, threshold = 0.00001) =>
+    Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
 
 
 
