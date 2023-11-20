@@ -79,8 +79,8 @@ public class BoardController2 {
         }
     }
 
-    @GetMapping("/view/{articleNo}")
-    public ResponseEntity<?> detail(@PathVariable("articleNo")String articleNo) {
+    @GetMapping("{type}/view/{articleNo}")
+    public ResponseEntity<?> detail(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
         try {
         	System.out.println("articleNo: "+articleNo);
             BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
