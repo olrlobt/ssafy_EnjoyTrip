@@ -2,7 +2,7 @@
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
-import ArticleView from "../../views/ArticleView.vue";
+// import sassStyles from '@/assets/scss/_detail_button.scss'
 
 const route = useRoute();
 const router = useRouter(); 
@@ -61,52 +61,140 @@ function onDeleteArticle() {
     });
 
 }
-
 </script>
 
+
 <template>
-  
-  <div class="container">
-      <div class="col-lg-10 text-start">
-        <div class="row my-2">
-          <h2 class="text-secondary px-5">{{ article.articleNo }}. {{ article.subject }}</h2>
-        </div>
-        <div class="row">
-          <div class="col-md-8">
-            <div class="clearfix align-content-center">
-              <img class="avatar me-2 float-md-start bg-light p-2"
-                src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg" />
-              <p>
-                <span class="fw-bold">{{ article.userId }}</span> <br />
-                <span class="text-secondary fw-light">
-                  {{ article.registerTime }}<br /> 조회 : {{ article.hit }}
-                </span>
-              </p>
-              <div class="col-md-4 align-self-center text-end">댓글 : 17</div>
-              <div class="text-secondary">
-                {{ article.content }}
-              </div>
-              <div class="divider mb-3"></div>
-            </div>
-          </div>
-          <div class="divider mt-3 mb-3"></div>
-          <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-outline-primary mb-3" @click="reply">
-              답글달기
-            </button>
-            <button type="button" class="btn btn-outline-primary mb-3" @click="moveList">
-              글목록
-            </button>
-            <button type="button" class="btn btn-outline-success mb-3 ms-1" @click="moveModify">
-              글수정
-            </button>
-            <button type="button" class="btn btn-outline-danger mb-3 ms-1" @click="onDeleteArticle">
-              글삭제
-            </button>
-          </div>
+  <div class="container mt-5">
+    <!-- User Info and Date -->
+    <div class="dropdown-container">
+      <div class="dropdown">
+        <!-- 이미지를 드롭다운 버튼으로 사용 -->
+        <div class="dropbtn"><img src="@/assets/images/edit_icon.png" alt="드롭다운 아이콘"></div>
+        <div class="dropdown-content">
+          <a href="#" @click="moveModify">글 수정</a>
+          <a href="#" @click="onDeleteArticle">글 삭제</a>
         </div>
       </div>
     </div>
+    <div class="mb-3">
+      <h1 style="font-weight: bold">{{ article.subject }}</h1>
+      <p class="lead">
+        <strong>{{ article.userId }}</strong> | {{ new Date(article.registerTime).toLocaleDateString() }}
+      </p>
+
+      <hr/>
+    </div>
+
+    <!-- Article Content -->
+    <div class="mb-3"  style="min-height: 200px;">
+      <p style="min-height: 500px">{{ article.content }}</p>
+      <hr/>
+    </div>
+
+    <!-- Comment Input -->
+    <div class="mb-3">
+      <input type="text" class="form-control" placeholder="댓글을 입력하세요">
+      <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
+      <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
+      <!--      <button class="btn btn-primary mt-2">댓글 입력</button>-->
+    </div>
+
+    <!-- Comments List -->
+    <div>
+      <p>...댓글 리스트</p>
+      <!-- Replace with actual comments loop -->
+    </div>
+  </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+.container {
+  max-width: 800px;
+  position: relative;
+}
+.dropdown-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 10px; /* Adjust margin as needed */
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+  text-align: right;
+}
+
+/* 드롭다운 버튼 이미지 스타일 */
+.dropbtn img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+  border-radius: 5px;
+  overflow: hidden;
+  right: 0;
+}
+
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+h1 {
+  font-size: 2rem;
+}
+hr {
+  border-top: 1px solid #ccc;
+}
+
+/* 이미지 스타일 */
+//.dropdown-content img {
+//  width: 1%;
+//  height: auto;
+//  border-radius: 5px;
+//  margin-bottom: 10px;
+//}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+
+
+</style>
+
+
+
+
+
+
+
+

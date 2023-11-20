@@ -1,5 +1,6 @@
 <script setup>
-import BoardFormItem from "./item/BoardFormItem.vue";
+// import BoardFormItem from "./item/BoardFormItem.vue";
+import BoardFormItem from "./item/BoardFormItem2.vue";
 import { onMounted} from "vue";
 
 const props = defineProps([
@@ -14,7 +15,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="container">
+  <div class="mb-3">
     <div class="row justify-content-center">
       <div class="col-lg-10 text-start">
         <BoardFormItem type="regist" refNo="refNo"/>
