@@ -3,13 +3,13 @@ import { ref, watch } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { registArticle, getModifyArticle, modifyArticle } from "@/api/board";
 
+
 const router = useRouter();
 const route = useRoute();
 
 const props = defineProps({ type: String });
 const { boardType } = route.params;
 const isUseId = ref(false);
-
 
 
 const { articleno, refNo ,step, depth } = route.query;

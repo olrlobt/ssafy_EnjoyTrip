@@ -23,6 +23,7 @@ public class MessageController extends HttpServlet {
         String path = "";
         if ("home".equals(action)) {
             redirect(request, response, path);
+
         } else if ("login".equals(action)) {
             path = "login.jsp";
             redirect(request, response, path);
