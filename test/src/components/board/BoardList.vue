@@ -6,8 +6,6 @@ import { listArticle } from "@/api/board";
 import VSelect from "@/components/common/VSelect.vue";
 import BoardListItem from "@/components/board/item/BoardListItem.vue";
 import PageNavigation from "@/components/common/PageNavigation.vue";
-import ArticleView from "../../views/ArticleView.vue";
-
 
 const router = useRouter();
 const route = useRoute();
@@ -75,11 +73,6 @@ const onPageChange = (val) => {
 const moveWrite = () => {
   router.push({ name: "article-write" });
 };
-
-const heroProps = ref({
-  title: "List",
-  contents: "상세설명페이지 입니다",
-});
 
 </script>
 
