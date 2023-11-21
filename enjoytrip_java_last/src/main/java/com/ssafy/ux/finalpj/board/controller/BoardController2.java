@@ -34,7 +34,7 @@ public class BoardController2 {
     @GetMapping("/{type}")
     public ResponseEntity<?> list(HttpSession session, @PathVariable("type") String type,
                                   @RequestParam(required = false, defaultValue = "1") int pageNum) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto == null) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
 //        }
@@ -58,7 +58,7 @@ public class BoardController2 {
     }
 
     @PostMapping("/{type}/write")
-    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
+    public ResponseEntity<?> write(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
 //        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto == null) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
@@ -66,7 +66,7 @@ public class BoardController2 {
 //        boardDto.setUserId(memberDto.getUserId());
 //        boardDto.setType(type);
         //임시로 userId, type 변경해주기
-        boardDto.setUserId("user4");
+//        boardDto.setUserId("user4");
         boardDto.setType(type);
         System.out.println(boardDto);
 
