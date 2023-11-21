@@ -15,8 +15,6 @@ function detailArticle(articleno, success, fail) {
 }
 
 function registArticle(article, success, fail) {
-  console.log("boardjs article", article);
-
   local.post(`${url}/notice/write`, JSON.stringify(article)).then(success).catch(fail);
 }
 

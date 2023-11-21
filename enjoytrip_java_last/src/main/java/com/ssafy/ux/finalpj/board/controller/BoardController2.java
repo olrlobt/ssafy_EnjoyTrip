@@ -59,7 +59,7 @@ public class BoardController2 {
 
     @PostMapping("/{type}/write")
     public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
 //        if (memberDto == null) {
 //            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
 //        }
@@ -96,8 +96,8 @@ public class BoardController2 {
         }
     }
 
-    @GetMapping("/modify/{articleNo}")
-    public ResponseEntity<?> getModify( @PathVariable("articleNo")String articleNo) {
+    @GetMapping("{type}/modify/{articleNo}")
+    public ResponseEntity<?> getModify( @PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
     	try {
 //    		System.out.println("articleNo: "+articleNo);
     		BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
@@ -113,8 +113,8 @@ public class BoardController2 {
     	}
     }
 
-    @PutMapping("/modify")
-    public ResponseEntity<?> modify( @RequestBody BoardDto boardDto) {
+    @PutMapping("{type}/modify")
+    public ResponseEntity<?> modify( @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         try {
             boardService.modifyArticle(boardDto);
             return ResponseEntity.ok().body("Article modified successfully.");
