@@ -1,5 +1,5 @@
 <script setup>
-import {ref, onMounted, watch , defineProps} from "vue";
+import {ref, onMounted , defineProps} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import { listArticle } from "@/api/board";
 

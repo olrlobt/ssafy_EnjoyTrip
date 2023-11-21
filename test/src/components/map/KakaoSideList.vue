@@ -1,13 +1,16 @@
 <script setup>
-import {ref, watch } from 'vue';
+import {ref, watch} from 'vue';
 import {useMapStore} from "@/stores/map";
 import {VueDraggableNext} from 'vue-draggable-next'
+import {saveTravelRoute} from '@/api/share'
+import Swal from 'sweetalert2'
 
 /* global kakao */
 const mapStore = useMapStore();
 const currentTabId = ref(1);
 const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
+
 
 const props = defineProps({
   searchKeyword: Function,
@@ -86,9 +89,6 @@ function drawTravelLine() {
   travelLine.value = new kakao.maps.Polyline(polylineOptions);
   travelLine.value.setMap(mapStore.map);
 }
-
-
-
 
 
 function findShortestPathFromStart() {
@@ -188,9 +188,6 @@ function findShortestPathAnyStart() {
 }
 
 
-
-
-
 function toRadians(degrees) {
   return degrees * Math.PI / 180;
 }
@@ -212,6 +209,46 @@ function getDistance(lat1, lon1, lat2, lon2) {
 }
 
 
+const saveMyTravelRoute = () => {
+  console.log(mapStore.travelList);
+
+  const markers = [];
+  mapStore.travelList.forEach(value => {
+    markers.push(value);
+  })
+
+  Swal.fire({
+    title: "경로 제목",
+    input: "text",
+    inputAttributes: {
+      autocapitalize: "off"
+    },
+    showCancelButton: true,
+    confirmButtonText: "저장",
+    showLoaderOnConfirm: true,
+    preConfirm: async (title) => {
+      try {
+        const travelRouteDto = {
+          title : title,
+          markers : markers
+        }
+        return travelRouteDto;
+      } catch (error) {
+        Swal.showValidationMessage(`
+        Request failed: ${error}
+      `);
+      }
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.isConfirmed) {
+      Swal.fire({
+        title: `저장 완료`,
+        icon: "success",
+        timer: 500,
+      });
+    }
+  });}
 
 </script>
 
@@ -306,7 +343,7 @@ function getDistance(lat1, lon1, lat2, lon2) {
           <button class="chrome-style-button">버튼 텍스트</button>
           <div class="slide-menu">
             <!-- 여기에 메뉴 아이템들을 배치합니다 -->
-            <a href="#">메뉴 1</a>
+            <div @click="saveMyTravelRoute">내 경로 저장하기</div>
             <a href="#">메뉴 2</a>
             <a href="#">메뉴 3</a>
             <!-- 추가 메뉴 아이템들 -->

@@ -1,8 +1,7 @@
 package com.ssafy.ux.finalpj.share.model;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class TravelRouteDto {

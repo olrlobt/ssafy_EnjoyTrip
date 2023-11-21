@@ -12,5 +12,5 @@ public class MarkerDto {
     private double mapX;
     private double mapY;
     private int travelRouteNo;
-    private int step;
+    private int step;;
 }

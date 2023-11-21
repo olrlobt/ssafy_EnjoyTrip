@@ -114,7 +114,7 @@ public class BoardController2 {
     }
 
     @PutMapping("{type}/modify")
-    public ResponseEntity<?> modify( @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
+    public ResponseEntity<?> modify(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         try {
             boardService.modifyArticle(boardDto);
             return ResponseEntity.ok().body("Article modified successfully.");

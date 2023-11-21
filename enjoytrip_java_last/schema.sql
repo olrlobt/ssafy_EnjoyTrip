@@ -40,9 +40,9 @@ CREATE TABLE TravelRoute
     `travelRouteNo` INT AUTO_INCREMENT PRIMARY KEY,
     `userId`        VARCHAR(255) NOT NULL,
     `subject`       VARCHAR(255) NOT NULL,
-    `content`       TEXT         NOT NULL,
+    `content`       TEXT         ,
     `hit`           INT          NOT NULL DEFAULT 0,
-    `registerTime`  DATETIME     NOT NULL DEFAULT CURRENT_TIMESTAMP
+    `registerTime`  DATETIME
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE Marker
