@@ -7,7 +7,6 @@
         <div class="button -green"></div>
       </div>
       <div class="tabs-group">
-
         <div class="tabs"  >
           <div
               :class="[active(1), 'tab']"
@@ -48,22 +47,17 @@
       <div style="height: 100%; background-color: #9fcdff; width: 100%; height: 50%; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 
       </div>
-
     </div>
 
 
   </div>
 </template>
 <script setup>
-import { ref,  onMounted,  } from 'vue';
+import { ref  } from 'vue';
 import {useMapStore} from "@/stores/map";
 
 const mapStore = useMapStore();
 const currentTabId = ref(1);
-
-onMounted(() => {
-
-})
 
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
@@ -76,7 +70,7 @@ const props = defineProps({
 
 
 <style lang="scss" scoped>
-@import "src/assets/scss/map/mapAppleThema";
+@import "../../assets/scss/map/mapAppleThema";
 
 .window {
   position: relative;
@@ -84,7 +78,7 @@ const props = defineProps({
   max-width: 600px;
   height: 40vw;
   max-height: 500px;
-
+  z-index: 100;
 }
 
 </style>

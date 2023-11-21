@@ -4,7 +4,18 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="docs: Update Readme.md" />
+    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="docs: Update Readme.md">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/assets/scss/map/mapAppleThema.scss" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/scss/map/mapAppleThema.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/assets/scss/map/mapTravelList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/scss/map/mapTravelList.scss" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMap.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMap.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMarker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMarker.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMarkerPopupBox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMarkerPopupBox.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoSideList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoSideList.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/stores/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/stores/map.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -34,10 +45,14 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/tmdgj/git/enjoytrip_java_last/enjoytrip_java_last/enjoytrip_java_last",
+    "last_opened_file_path": "C:/SSAFY/enjoytrip_java_last/enjoytrip_java_last/test",
     "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
     "spring.configuration.checksum": "7efdf72b134aa0e7613a64befbabf6e5",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\IntelliJ IDEA 2023.1.3\\plugins\\javascript-impl\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -80,6 +95,7 @@
       <workItem from="1699704709431" duration="5201000" />
       <workItem from="1699839158708" duration="320000" />
       <workItem from="1699872998366" duration="555000" />
+      <workItem from="1700522636216" duration="3948000" />
     </task>
     <task id="LOCAL-00001" summary="docs: Update Readme.md">
       <created>1699839283286</created>
