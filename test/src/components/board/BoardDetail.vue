@@ -46,7 +46,8 @@ onMounted(async () => {
     // Viewer 생성
     viewerValid.value = new Viewer({
       el: viewer.value,
-      height: "500px",
+      height: "600px",
+      minHeight:"600px",
       initialEditType: "wysiwyg",
       initialValue: content.value,
     });
@@ -110,9 +111,10 @@ function onDeleteArticle() {
     </div>
 
     <!-- Article Content -->
-    <div class="mb-3"  style="min-height: 200px;">
-      <div ref="viewer"></div>
-<!--      <p style="min-height: 500px">{{ article.content }}</p>-->
+    <div class="mb-3">
+      <div style="min-height: 600px;">
+        <div ref="viewer"></div>
+      </div>
       <hr/>
     </div>
 

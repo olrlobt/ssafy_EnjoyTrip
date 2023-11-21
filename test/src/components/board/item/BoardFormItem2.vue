@@ -12,17 +12,17 @@
     </div>
     <div class="mb-3">
       <label for="subject" class="form-label">제목 : </label>
-      <input type="text" class="form-control" v-model="article.subject" placeholder="제목..." />
+      <input type="text" class="form-control" v-model="article.subject" placeholder="제목..."/>
       <div v-if="subjectErrMsg" class="text-danger">{{ subjectErrMsg }}</div>
     </div>
     <div class="mb-3">
       <label for="content" class="form-label">내용 : </label>
-      <div ref="editor" />
+      <div ref="editor"/>
       <div v-if="contentErrMsg" class="text-danger">{{ contentErrMsg }}</div>
     </div>
     <div class="board-form bnt">
       <div class="col-auto text-center">
-        <button type="submit" class="btn btn-primary mt-2" v-if="type === 'regist'" >
+        <button type="submit" class="btn btn-primary mt-2" v-if="type === 'regist'">
           글작성
         </button>
         <button type="submit" class="btn btn-primary mt-2" v-else>
@@ -40,16 +40,44 @@
 import {onMounted, ref, defineProps, watch} from 'vue';
 import Editor from '@toast-ui/editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
-import { useRoute, useRouter } from 'vue-router';
-import { registArticle, getModifyArticle, modifyArticle } from '@/api/board';
+import {useRoute, useRouter} from 'vue-router';
+import {registArticle, getModifyArticle, modifyArticle} from '@/api/board';
+import {useMemberStore} from "@/stores/member";
+
+const memberStore = useMemberStore();
+const token = sessionStorage.getItem('accessToken');
+
+const memberInfo = ref({
+  userId: "",
+  userName: "",
+  userPwd: "",
+  emailId: "",
+  emailDomain: "",
+});
+
+const getMemberInfo = async () => {
+  try {
+    await memberStore.getUserInfo(token);
+    const userInfo = memberStore.userInfo;
+    console.log(userInfo);
+
+    if (userInfo) {
+      memberInfo.value = userInfo;
+      article.value.userId = memberInfo.value.userId;
+      console.log('MyPage User Info: ', userInfo);
+    }
+  } catch (error) {
+    console.error("마이페이지 중 에러 발생:", error);
+  }
+};
+
 
 const router = useRouter();
 const route = useRoute();
-const props = defineProps({ type: String });
-const { boardType } = route.params;
+const props = defineProps({type: String});
 const isUseId = ref(false);
 
-const { articleno, refNo, step, depth } = route.query;
+const {articleno, refNo, step, depth} = route.query;
 
 const article = ref({
   articleNo: 0,
@@ -67,10 +95,39 @@ const article = ref({
 // const emit = defineEmits(['update:modelValue']);
 const editor = ref();
 const editorValid = ref();
+const articleContent = ref();
 
-// 마운트될 때 Editor 생성
 onMounted(() => {
-   editorValid.value = new Editor({
+  if (props.type === 'modify') {
+    let {articleno} = route.params;
+    console.log(articleno + '번 글을 가져와서 수정할 것입니다.');
+
+    // API 호출
+    getModifyArticle(
+        articleno,
+        ({data}) => {
+          console.log(data.content);
+          article.value = data;
+          articleContent.value = data.content;
+
+          // Create the editor after fetching article content
+          createEditor();
+        },
+        (error) => {
+          console.log(error);
+        }
+    );
+  } else {
+    // If not 'modify', create the editor directly
+    createEditor();
+    getMemberInfo();
+
+
+  }
+});
+
+const createEditor = () => {
+  editorValid.value = new Editor({
     el: editor.value,
     height: '500px',
     //'wysiwyg', 'markdown' 택 1
@@ -78,6 +135,7 @@ onMounted(() => {
     // initialEditType: 'markdown',
     previewStyle: 'vertical',
     initialValue: articleContent.value,
+
     // events: {
     //   change: () => {
     //     // 에디터의 Markdown 내용을 article.content에 할당
@@ -86,28 +144,8 @@ onMounted(() => {
     //   },
     // },
   });
+};
 
-});
-
-const articleContent = ref('');
-if (props.type === 'modify') {
-  let { articleno } = route.params;
-  console.log(articleno + '번글 얻어와서 수정할거야');
-  // API 호출
-  getModifyArticle(
-      articleno,
-      ({ data }) => {
-        console.log(data.content);
-        article.value = data;
-        articleContent.value = data.content;
-      },
-      (error) => {
-        console.log(error);
-      }
-  );
-
-  isUseId.value = true;
-}
 
 const subjectErrMsg = ref('');
 const contentErrMsg = ref('');
@@ -119,24 +157,14 @@ watch(
         subjectErrMsg.value = '제목을 확인해 주세요!!!';
       } else subjectErrMsg.value = '';
     },
-    { immediate: true }
+    {immediate: true}
 );
-watch(
-    () => article.value.content,
-    (value) => {
-      let len = value.length;
-      if (len === 0 || len > 500) {
-        contentErrMsg.value = '내용을 확인해 주세요!!!';
-      } else contentErrMsg.value = '';
-    },
-    { immediate: true }
-);
+
 
 const onSubmit = () => {
   console.log(editor.value);
   // 에디터가 완전히 초기화된 후에만 getHTML에 접근하도록 대기
   editorValid.value.on('load', () => {
-    // 이제 안전하게 getHTML에 접근할 수 있습니다.
     const htmlContent = editorValid.value.getHTML();
     console.log('에디터 HTML 콘텐츠:', htmlContent);
   });
@@ -159,7 +187,7 @@ const writeArticle = () => {
 
   registArticle(
       article.value,
-      ({ data }) => {
+      ({data}) => {
         console.log('write data: ' + data);
         article.value = data;
         moveList();
@@ -175,7 +203,7 @@ const updateArticle = () => {
   // API 호출
   modifyArticle(
       article.value,
-      ({ data }) => {
+      ({data}) => {
         console.log(data);
         article.value = data;
       },
@@ -187,11 +215,11 @@ const updateArticle = () => {
 };
 
 const moveList = () => {
-  router.push({ name: 'article-list' });
+  router.push({name: 'article-list'});
 };
 
 const moveDetail = () => {
-  router.push({ name: 'article-view' });
+  router.push({name: 'article-view'});
 };
 
 

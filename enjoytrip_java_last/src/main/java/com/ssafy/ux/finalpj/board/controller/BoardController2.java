@@ -32,12 +32,8 @@ public class BoardController2 {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<?> list(HttpSession session, @PathVariable("type") String type,
+    public ResponseEntity<?> list(@PathVariable("type") String type,
                                   @RequestParam(required = false, defaultValue = "1") int pageNum) {
-        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//        if (memberDto == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-//        }
         try {
 //            int totalPages = boardService.getTotalPage(type);
             List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
@@ -58,15 +54,7 @@ public class BoardController2 {
     }
 
     @PostMapping("/{type}/write")
-    public ResponseEntity<?> write(HttpSession session, @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
-//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//        if (memberDto == null) {
-//            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You must login first.");
-//        }
-//        boardDto.setUserId(memberDto.getUserId());
-//        boardDto.setType(type);
-        //임시로 userId, type 변경해주기
-        boardDto.setUserId("user4");
+    public ResponseEntity<?> write(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         boardDto.setType(type);
         System.out.println(boardDto);
 
@@ -124,8 +112,8 @@ public class BoardController2 {
         }
     }
 
-    @DeleteMapping("/delete/{articleNo}")
-    public ResponseEntity<?> delete(@PathVariable String articleNo) {
+    @DeleteMapping("{type}/delete/{articleNo}")
+    public ResponseEntity<?> delete(@PathVariable("type") String type, @PathVariable String articleNo) {
         try {
             boardService.deleteArticle(Integer.parseInt(articleNo));
             return ResponseEntity.ok().body("Article deleted successfully.");

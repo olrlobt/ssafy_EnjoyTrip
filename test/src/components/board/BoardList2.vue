@@ -77,24 +77,6 @@ const getArticleList = () => {
       </div>
     </div>
   </div>
-<!--        <table class="table table-hover">-->
-<!--          <thead>-->
-<!--            <tr class="text-center">-->
-<!--              <th scope="col">글번호</th>-->
-<!--              <th scope="col">제목</th>-->
-<!--              <th scope="col">작성자</th>-->
-<!--              <th scope="col">조회수</th>-->
-<!--              <th scope="col">작성일</th>-->
-<!--            </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--            <BoardListItem-->
-<!--              v-for="article in articles"-->
-<!--              :key="article.articleNo"-->
-<!--              :article="article"-->
-<!--            ></BoardListItem>-->
-<!--          </tbody>-->
-<!--        </table>-->
 
 </template>
 
