@@ -81,7 +81,6 @@ function onSubmit() {
 function writeArticle() {
   console.log("글등록하자!!", article.value);
    // API 호출
-
   article.value.ref = article.value.articleNo;
   if(articleno){
     console.log(" 답 글 인 듯 ")

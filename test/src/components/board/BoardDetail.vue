@@ -1,39 +1,60 @@
 <script setup>
+import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
+
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
-// import sassStyles from '@/assets/scss/_detail_button.scss'
 
 const route = useRoute();
 const router = useRouter(); 
 
-// const articleno = ref(route.params.articleno);
 const { articleno } = route.params;
 
 const article = ref({});
 
 const props = defineProps([
   'changeHero'
-])
+]);
 
-onMounted(() => {
-  getArticle();
-  props.changeHero("Detail","디테일화면입니다.")
-});
+const content = ref('');
+const viewer = ref(null);
+const viewerValid = ref(null);
 
-const getArticle = () => {
-  // const { articleno } = route.params;
-  console.log(articleno + "번글 얻으러 가자!!!");
-  // API 호출
-  detailArticle(articleno, ({ data }) => {
-    console.log(data)
-    article.value = data;
-  },
-    (error) => {
-      console.log(error)
+onMounted(async () => {
+  try {
+    const { data } = await new Promise((resolve, reject) => {
+      detailArticle(
+          articleno,
+          (response) => resolve(response),
+          (error) => reject(error)
+      );
     });
 
-};
+    console.log(data);
+
+    // 데이터 처리
+    article.value = data;
+    content.value = data.content;
+    console.log("Data content: ", data.content);
+    console.log("content: ", content.value);
+
+    console.log("article content: " + content.value);
+
+    // 프로퍼티 변경
+    props.changeHero("Detail", "디테일화면입니다.");
+
+    // Viewer 생성
+    viewerValid.value = new Viewer({
+      el: viewer.value,
+      height: "500px",
+      initialEditType: "wysiwyg",
+      initialValue: content.value,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 
 function reply() {
   router.push({ name: "article-reply", query: { articleno: articleno, refNo: article.value.ref, step: article.value.step, depth: article.value.depth } });
@@ -61,6 +82,8 @@ function onDeleteArticle() {
     });
 
 }
+
+
 </script>
 
 
@@ -88,7 +111,8 @@ function onDeleteArticle() {
 
     <!-- Article Content -->
     <div class="mb-3"  style="min-height: 200px;">
-      <p style="min-height: 500px">{{ article.content }}</p>
+      <div ref="viewer"></div>
+<!--      <p style="min-height: 500px">{{ article.content }}</p>-->
       <hr/>
     </div>
 
