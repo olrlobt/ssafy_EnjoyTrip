@@ -4,17 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="docs: Update Readme.md">
+    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="feat: 여행경로 알고리즘 연결 추가">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/assets/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/assets/scss/map/mapAppleThema.scss" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/scss/map/mapAppleThema.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/assets/scss/map/mapTravelList.scss" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/assets/scss/map/mapTravelList.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoDetailPopup.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoDetailPopup.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/enjoytrip_java_last/schema.sql" beforeDir="false" afterPath="$PROJECT_DIR$/enjoytrip_java_last/schema.sql" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/MapHeader.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/MapHeader.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/Navbar.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/Navbar.vue" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/components/board/BoardList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/board/BoardList.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMap.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMap.vue" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMarker.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMarker.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoMarkerPopupBox.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoMarkerPopupBox.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/components/map/KakaoSideList.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/map/KakaoSideList.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/stores/map.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/stores/map.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/router/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/src/views/MapView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/views/MapView.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -43,9 +42,8 @@
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/SSAFY/enjoytrip_java_last/enjoytrip_java_last/test",
+    "last_opened_file_path": "C:/SSAFY/최종관통/enjoytrip_java_last/test/src/components/share",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -58,23 +56,15 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\SSAFY\최종관통\enjoytrip_java_last\test\src\components\share" />
+      <recent name="C:\SSAFY\최종관통\enjoytrip_java_last\test\src\views" />
       <recent name="C:\Users\tmdgj\git\enjoytrip_java_last\enjoytrip_java_last" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\SSAFY\최종관통\enjoytrip_java_last\test\src\assets\css\share" />
     </key>
   </component>
   <component name="RunManager">
-    <configuration default="true" type="JetRunConfigurationType">
-      <module name="enjoytrip_java_last" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <module name="enjoytrip_java_last" />
-      <option name="filePath" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="FinalPjApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="finalpj" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.ssafy.ux.finalpj.FinalPjApplication" />
@@ -95,7 +85,9 @@
       <workItem from="1699704709431" duration="5201000" />
       <workItem from="1699839158708" duration="320000" />
       <workItem from="1699872998366" duration="555000" />
-      <workItem from="1700522636216" duration="3948000" />
+      <workItem from="1700522636216" duration="5091000" />
+      <workItem from="1700530868889" duration="25000" />
+      <workItem from="1700530905657" duration="11646000" />
     </task>
     <task id="LOCAL-00001" summary="docs: Update Readme.md">
       <created>1699839283286</created>
@@ -104,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1699839283286</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="feat: 여행경로 알고리즘 연결 추가">
+      <option name="closed" value="true" />
+      <created>1700528004945</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1700528004945</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -123,6 +123,7 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="docs: Update Readme.md" />
-    <option name="LAST_COMMIT_MESSAGE" value="docs: Update Readme.md" />
+    <MESSAGE value="feat: 여행경로 알고리즘 연결 추가" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 여행경로 알고리즘 연결 추가" />
   </component>
 </project>

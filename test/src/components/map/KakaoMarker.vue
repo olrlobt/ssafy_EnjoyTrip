@@ -238,6 +238,8 @@ mapStore.updateOpenMarkerInfowindow(openMarkerInfowindow);
  * 마커 추가 버튼 눌렀을때
  */
 function handleAddButtonClick(marker, coord) {
+  console.log(marker)
+  console.log(coord)
   fixMarker(marker, coord);
   mapStore.travelList.push({marker, coord});
 }

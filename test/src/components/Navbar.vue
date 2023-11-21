@@ -35,7 +35,7 @@ export default {
           <li class="has-children">
             <RouterLink to="#">Share UX</RouterLink>
             <ul class="dropdown">
-              <li><RouterLink to="#">My Route</RouterLink></li>
+              <li><RouterLink to="/share/travelRoute">My Route</RouterLink></li>
               <li><RouterLink to="#">My Likes</RouterLink></li>
             </ul>
           </li>

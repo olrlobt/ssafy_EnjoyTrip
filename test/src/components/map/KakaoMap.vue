@@ -46,8 +46,7 @@ function initMap() {
   };
 
   mapStore.updateMap(new kakao.maps.Map(container, options));
-  console.log(mapStore.map)
-  // mapStore.map = new kakao.maps.Map(container, options);
+
   customOverlay.value = new kakao.maps.CustomOverlay({});
   kakao.maps.event.addListener(mapStore.map, 'zoom_changed', handleZoomChange);
   readJson(sido);
