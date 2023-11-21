@@ -5,18 +5,20 @@ import KakaoMarkerSearch from "@/components/map/KakaoMarker.vue"
 import KakaoSideListBox from "@/components/map/KakaoSideListBox.vue";
 import {ref, onMounted} from "vue";
 import KakaoMarkerPopupBox from "@/components/map/KakaoMarkerPopupBox.vue";
+import {useMapStore} from "@/stores/map";
 
-
+const mapStore = useMapStore();
 const polygons = ref([]);
 const detailMode = ref(false);
 const {VITE_MAP_SRC} = import.meta.env;
 
 const areas = ref([]);
-const map = ref(null);
 const customOverlay = ref(null);
 const mapLoaded = ref(false);
 const clickMarker = ref(null);
 const selectMarker = ref(false);
+
+
 
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
@@ -28,8 +30,6 @@ onMounted(() => {
     script.src = VITE_MAP_SRC;
     document.head.appendChild(script);
   }
-
-
 })
 
 const clickMarkerMethod = (event) => {
@@ -45,15 +45,17 @@ function initMap() {
     level: 13,
   };
 
-  map.value = new kakao.maps.Map(container, options);
+  mapStore.updateMap(new kakao.maps.Map(container, options));
+
   customOverlay.value = new kakao.maps.CustomOverlay({});
-  kakao.maps.event.addListener(map.value, 'zoom_changed', handleZoomChange);
+  kakao.maps.event.addListener(mapStore.map, 'zoom_changed', handleZoomChange);
   readJson(sido);
   mapLoaded.value = true;
+  mapStore.updateInfoWindow(new kakao.maps.InfoWindow());
 }
 
 function handleZoomChange() {
-  let level = map.value.getLevel();
+  let level = mapStore.map.getLevel();
 
   if (!detailMode.value && level <= 10) {
     detailMode.value = true;
@@ -99,7 +101,7 @@ function readJson(json) {
 
 function displayArea(area) {
   var polygon = new kakao.maps.Polygon({
-    map: map.value, // 다각형을 표시할 지도 객체
+    map: mapStore.map, // 다각형을 표시할 지도 객체
     path: area.path,
     strokeWeight: 2,
     strokeColor: '#004c80',
@@ -115,7 +117,7 @@ function displayArea(area) {
 
     customOverlay.value.setContent('<div class="area">' + area.name + '</div>');
     customOverlay.value.setPosition(mouseEvent.latLng);
-    customOverlay.value.setMap(map.value);
+    customOverlay.value.setMap(mapStore.map);
   });
   kakao.maps.event.addListener(polygon, 'mousemove', (mouseEvent) => {
     customOverlay.value.setPosition(mouseEvent.latLng);
@@ -126,8 +128,8 @@ function displayArea(area) {
   });
   kakao.maps.event.addListener(polygon, 'click', (mouseEvent) => {
     if (!detailMode.value) {
-      map.value.setLevel(10);
-      map.value.panTo(mouseEvent.latLng);
+      mapStore.map.setLevel(10);
+      mapStore.map.panTo(mouseEvent.latLng);
     } else {
 
       if (clickMarker.value) {
@@ -152,10 +154,10 @@ function hideSideList() {
 <template>
 
   <div id="map" style=" position: relative; width: 100%; height: 100vh;">
-    <KakaoMarkerSearch v-if="mapLoaded" :map="map" ref="clickMarker" :changeSelectMarker="changeSelectMarker"/>
+    <KakaoMarkerSearch v-if="mapLoaded" ref="clickMarker" :changeSelectMarker="changeSelectMarker"/>
     <KakaoSideListBox :class="{ 'slide-out': isSlideOut, 'slide-in': !isSlideOut }"
-                   :searchKeyword="clickMarkerMethod"
-                   :hideSideList="hideSideList"/>
+                      :searchKeyword="clickMarkerMethod"
+                      :hideSideList="hideSideList"/>
 
     <KakaoMarkerPopupBox v-if="selectMarker" />
   </div>

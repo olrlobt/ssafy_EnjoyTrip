@@ -2,21 +2,20 @@
   <template></template>
 </template>
 <script setup>
-import {defineProps, ref, watch} from 'vue';
+import {defineProps, ref} from 'vue';
 import {useMapStore} from "@/stores/map";
-
+/* global kakao */
 const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
 const selectedTourismType = ref("");
 const fixedMarkerPositions = ref([]);
 
-/* global kakao */
-const infoWindow = ref(new kakao.maps.InfoWindow());
 // map prop 정의
-let prop = defineProps(['map', 'changeSelectMarker']);
+let prop = defineProps(['changeSelectMarker']);
 
 const addListenersMap = ref(new Map());
 const removeListenersMap = ref(new Map());
+
 
 // 주어진 번호와 해당 번호에 대응하는 지역 코드를 매핑하는 객체
 const regionCodeMapping = {
@@ -55,9 +54,9 @@ const searchKeyword = (event) => {
   }
 }
 
-watch(() => mapStore.fixedMarkers, () => {
-  console.log(mapStore.fixedMarkers)
-});
+// watch(() => mapStore.fixedMarkers, () => {
+//   console.log(mapStore.fixedMarkers)
+// });
 
 
 defineExpose({callAPIWithRegionCode, searchKeyword}); // 부모에 코드 노출
@@ -79,7 +78,7 @@ function callAPIWithRegionCode(originalCode) {
   const regionCode = regionCodeMapping[code];
   if (regionCode) {
     let params = {
-      numOfRows: 60,
+      numOfRows: 100,
       MobileOS: 'ETC',
       MobileApp: 'YourAppName',
       contentTypeId: selectedTourismType.value,
@@ -139,11 +138,11 @@ function getMapCoordinates(data) {
 }
 
 function updateMap(coordinates) {
-  infoWindow.value.close();
+  mapStore.infoWindow.close();
   prop.changeSelectMarker(false);
-  mapStore.currentSideList = coordinates;
 
   for (let coord of coordinates) {
+
     let markerPosition = new kakao.maps.LatLng(coord.mapy, coord.mapx);
 
     if (mapStore.fixedMarkers.some(fixedPosition =>
@@ -154,19 +153,14 @@ function updateMap(coordinates) {
     let marker = new kakao.maps.Marker({
       position: markerPosition,
       title: coord.title,
-      map: prop.map
+      map: mapStore.map
     });
-
     mapStore.markers.push({marker, coord});
     kakao.maps.event.addListener(marker, 'click', ()=> handleMarkerClick(marker, coord));
   }
 }
 
-
-
-
 function revertMarker(targetMarker) {
-
 
   mapStore.removeIndexOfTravelList(targetMarker);
 
@@ -194,7 +188,7 @@ function revertMarker(targetMarker) {
     addButton.addEventListener('click', addListener);
   }
   // drawLine();
-  infoWindow.value.close();
+  mapStore.infoWindow.close();
   prop.changeSelectMarker(false);
 }
 
@@ -206,12 +200,17 @@ function handleMarkerClick(marker, coord) {
 
   mapStore.currentSelectMarker.marker = marker;
   mapStore.currentSelectMarker.coord = coord;
-  const isFixed = mapStore.fixedMarkers.includes(marker);
 
+  openMarkerInfowindow(marker, coord);
+
+}
+
+
+const openMarkerInfowindow = (marker, coord) => {
+  const isFixed = mapStore.fixedMarkers.includes(marker);
   const content = generateInfoWindowContent(coord, isFixed);
-  infoWindow.value.setContent(content);
-  infoWindow.value.open(prop.map, marker);
-  mapStore.infoWindow = infoWindow.value;
+  mapStore.infoWindow.setContent(content);
+  mapStore.infoWindow.open(mapStore.map, marker);
 
   if (isFixed) { // 고정된 마커일 경우
     const removeButton = document.querySelector('.remove-marker-btn');
@@ -232,17 +231,15 @@ function handleMarkerClick(marker, coord) {
     addListenersMap.value.set(marker, () => handleAddButtonClick(marker, coord));
     addButton.addEventListener('click', () => handleAddButtonClick(marker, coord));
   }
-
-  // 등록버튼
-  // document.querySelector('.register-btn').addEventListener('click', function () {
-  //   // showSweetAlert(coord);
-  // });
 }
 
+mapStore.updateOpenMarkerInfowindow(openMarkerInfowindow);
 /**
  * 마커 추가 버튼 눌렀을때
  */
 function handleAddButtonClick(marker, coord) {
+  console.log(marker)
+  console.log(coord)
   fixMarker(marker, coord);
   mapStore.travelList.push({marker, coord});
 }
@@ -277,8 +274,6 @@ const arePositionsClose = (position1, position2, threshold = 0.00001) =>
     Math.abs(position1.La - position2.La) < threshold && Math.abs(position1.Ma - position2.Ma) < threshold;
 
 
-
-
 </script>
 
 
@@ -297,24 +292,24 @@ const arePositionsClose = (position1, position2, threshold = 0.00001) =>
   right: 8px;
 
   &:hover {
-     background-color: #ddd;
-   }
+    background-color: #ddd;
+  }
 
   &::before,
   &::after {
-     content: "";
-     position: absolute;
-     display: block;
-     width: 2px;
-     height: 12px;
-     background-color: #666;
-   }
+    content: "";
+    position: absolute;
+    display: block;
+    width: 2px;
+    height: 12px;
+    background-color: #666;
+  }
 
   &::before {
-     transform: rotate(90deg);
-   }
+    transform: rotate(90deg);
+  }
 }
 
-@import "src/assets/css/map/infowindow";
+@import "../../assets/css/map/infowindow";
 
 </style>

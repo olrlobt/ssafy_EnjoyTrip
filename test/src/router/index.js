@@ -70,6 +70,18 @@ const router = createRouter({
         },
       ],
     },
+    {
+      path: '/share',
+      name: 'travelRoute',
+      component: () => import("@/views/ShareTravelRouteView.vue"),
+      children: [
+        {
+          path: "travelRoute",
+          name: "share-travelRoute",
+          component: () => import("@/components/share/ShareTravelRoute.vue"),
+        }
+        ]
+    },
   ],
 })
 

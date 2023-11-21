@@ -7,14 +7,19 @@ export const useMapStore = defineStore("mapStore", () => {
         marker: null,
         coord : {}
     }); // marker
-    const travelList = ref([]); // coord
+    const travelList = ref([]); // marker, coord
     const fixedMarkers = ref([]); // marker
-    const infoWindow = ref(null);
-    const currentSideList = ref([]); // coord
+    const infoWindow = ref(null); // infoWindow
     const markers = ref([]); // marker, coord
+    const openMarkerInfowindow = ref(null);
+    const map = ref(null); // map
 
     const updateTravelList = (travelPlan) => {
         travelList.value = travelPlan;
+    }
+
+    const updateInfoWindow = (newInfoWindow) => {
+        infoWindow.value = newInfoWindow;
     }
 
     const removeIndexOfTravelList = (targetMarker) => {
@@ -25,15 +30,26 @@ export const useMapStore = defineStore("mapStore", () => {
         }
     };
 
+    const updateOpenMarkerInfowindow = (newOpenMarkerInfowindow) => {
+        openMarkerInfowindow.value = newOpenMarkerInfowindow;
+    }
 
+    const updateMap = (newMap) => {
+        map.value = newMap;
+    }
 
     return {
+        map,
         currentSelectMarker,
         travelList,
         fixedMarkers,
-        currentSideList,
         markers,
+        infoWindow,
+        openMarkerInfowindow,
+        updateOpenMarkerInfowindow,
         updateTravelList,
-        removeIndexOfTravelList
+        removeIndexOfTravelList,
+        updateInfoWindow,
+        updateMap
     };
 });

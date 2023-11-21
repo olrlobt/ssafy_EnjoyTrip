@@ -1,6 +1,6 @@
 <script setup>
 import KakaoMap from "@/components/map/KakaoMap.vue";
-import MapHeader from "@/components/MapHeader.vue"
+import MapHeader from "@/components/map/MapHeader.vue"
 </script>
 
 <template>

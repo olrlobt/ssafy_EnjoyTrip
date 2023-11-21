@@ -8,15 +8,14 @@ const minimizedPosition = ref({ x: 0, y: 0 });
 
 
 onMounted(() => {
-  const popupBoxEl = document.querySelector('.popup-box');
-  const popupBoxRect = popupBoxEl.getBoundingClientRect();
   hideMarkerPopup();
   const minimizeHandleEl = document.querySelector('.minimize-handle');
   if (minimizeHandleEl) {
     const rect = minimizeHandleEl.getBoundingClientRect();
+
     minimizedPosition.value = {
-      x: rect.left - popupBoxRect.left,
-      y: rect.top - popupBoxRect.top
+      x: rect.left ,
+      y: rect.top
     };
   }
 });
@@ -67,7 +66,7 @@ const onDrag = (event) => {
     position.value.x -= dx;
     position.value.y += dy;
     minimizedPosition.value.x -= dx;
-    minimizedPosition.value.y -= dy;
+    minimizedPosition.value.y -= dy * 2;
     // 다음 이벤트를 위해 현재 위치를 시작 위치로 업데이트
     startX = event.clientX;
     startY = event.clientY;
@@ -141,31 +140,7 @@ function hideMarkerPopup() {
   transform: translateY(-50%);
 }
 
-@keyframes minimize {
-  from {
-    transform: translate(0, 0) scale(1);
-  }
-  to {
-    transform: translate(calc(100% - 30px), -50%) scale(0);
-  }
-}
 
-@keyframes maximize {
-  from {
-    transform: translate(calc(100% - 30px), -50%) scale(0);
-  }
-  to {
-    transform: translate(0, 0) scale(1);
-  }
-}
-
-.minimized {
-  animation: minimize 0.3s forwards;
-}
-
-.maximized {
-  animation: maximize 0.3s forwards;
-}
 
 
 </style>

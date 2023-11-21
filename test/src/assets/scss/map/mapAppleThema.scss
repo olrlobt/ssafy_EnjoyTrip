@@ -14,10 +14,9 @@ $gray-light: #e7eaef;
 
 .window {
   position: absolute;
-  z-index: 4;
+  z-index: 11;
 
   border-radius: 8px;
-  overflow: hidden;
   background-color: #fff;
   box-shadow: 4px 8px 20px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -26,14 +25,16 @@ $gray-light: #e7eaef;
   > .content {
     min-height: 0;
     height: 100%;
+    z-index: 11;
   }
 }
+
 
 .head {
   background-color: $gray-dark;
   display: flex;
   overflow: hidden;
-
+  z-index: 11;
   .buttons {
     display: flex;
     align-items: center;
@@ -67,8 +68,9 @@ $gray-light: #e7eaef;
   min-height: 36px;
   display: flex;
   align-items: center;
+  background-color: white;
   border-bottom: 1px solid $gray-dark;
-
+  z-index: 11;
   > .buttons {
     display: flex;
     align-items: center;
@@ -139,7 +141,7 @@ $gray-light: #e7eaef;
   align-items: center;
   padding-top: 8px;
   min-width: 0px;
-
+  z-index: 3;
   > .add-button {
     width: 14px;
     height: 14px;
@@ -338,7 +340,8 @@ $gray-light: #e7eaef;
   padding: 20px;
   height: 100%;
   box-sizing: border-box;
-
+  background: white;
+  z-index: 11;
   &.-active {
     display: block;
   }
