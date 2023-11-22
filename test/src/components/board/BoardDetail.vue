@@ -48,9 +48,11 @@ const getMemberInfo = async () => {
 const content = ref('');
 const viewer = ref(null);
 const viewerValid = ref(null);
+const checked = ref(false);
+
 
 onMounted(async () => {
-  getMemberInfo();
+  await getMemberInfo();
   try {
     const { data } = await new Promise((resolve, reject) => {
       detailArticle(
@@ -65,6 +67,10 @@ onMounted(async () => {
     // 데이터 처리
     article.value = data;
     content.value = data.content;
+
+    if(article.value.userId === memberInfo.value.userId){
+      checked.value = true;
+    }
     console.log("Data content: ", data.content);
     console.log("content: ", content.value);
 
@@ -95,9 +101,11 @@ function moveList() {
   router.push({ name: "article-list" });
 }
 
+
+
 function moveModify() {
   // 사용자 확인.
-  if(article.value.userId === memberInfo.value.userId){
+  if(checked.value){
     router.push({ name: "article-modify", query: { articleno, ...article.value } });
   }
 }
@@ -124,7 +132,7 @@ function onDeleteArticle() {
 <template>
   <div class="container mt-5">
     <!-- User Info and Date -->
-    <div class="dropdown-container">
+    <div class="dropdown-container" v-if="checked">
       <div class="dropdown">
         <!-- 이미지를 드롭다운 버튼으로 사용 -->
         <div class="dropbtn"><img src="@/assets/images/edit_icon.png" alt="드롭다운 아이콘"></div>

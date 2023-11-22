@@ -120,7 +120,7 @@ onMounted(() => {
   } else {
     // If not 'modify', create the editor directly
     createEditor();
-    getMemberInfo();
+
 
 
   }
