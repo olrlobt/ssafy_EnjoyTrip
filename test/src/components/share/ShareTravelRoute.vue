@@ -7,13 +7,16 @@ import {onMounted, ref} from "vue";
 const travelRouteList = ref([]);
 let props = defineProps(['userId']);
 
-onMounted(() => {
+onMounted(async () => {
 
   const travelRouteDto = {
     userId: props.userId
   }
-  getTravelRoute(travelRouteDto, (response) => {
-    travelRouteList.value.push(response);
+
+  await getTravelRoute(travelRouteDto, (response) => {
+    for (let idx = 0; idx < response.data.length; idx++) {
+      travelRouteList.value.push(response.data[idx]);
+    }
   }, (error) => {
     console.error(error);
   });

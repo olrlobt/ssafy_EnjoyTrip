@@ -5,6 +5,7 @@ import {VueDraggableNext} from 'vue-draggable-next'
 import {saveTravelRoute} from '@/api/share'
 import Swal from 'sweetalert2'
 import {useMemberStore} from "@/stores/member";
+import KakaoListItem from "@/components/map/KakaoListItem.vue";
 
 /* global kakao */
 const mapStore = useMapStore();
@@ -334,16 +335,7 @@ const saveMyTravelRoute = () => {
       <div :class="[active(1), 'tab-content']">
 
         <VueDraggableNext id="travelRouteList" v-model="mapStore.travelList">
-          <div
-              class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
-              v-for="(item,index) in mapStore.travelList"
-              :key="item.coord.id"
-              @click="clickSideList(item)"
-          >
-            <img :src="item.coord.firstimage" class="travel-item-image" alt="">
-            <span class="travel-item-title">{{ item.coord.title }}</span>
-            <div class="close-button2" @click="removeFromTravelPlan(index)"></div>
-          </div>
+          <KakaoListItem :item="mapStore.travelList" :click="clickSideList" :removeClick="removeFromTravelPlan"></KakaoListItem>
         </VueDraggableNext>
         <div class="chrome-style-button-container">
           <button class="chrome-style-button">버튼 텍스트</button>
@@ -357,15 +349,7 @@ const saveMyTravelRoute = () => {
         </div>
       </div>
       <div :class="[active(2), 'tab-content']" class="side-list">
-        <div
-            class="list-group-item bg-gray-300 m-1 p-3 rounded-md text-center travel-item"
-            v-for="(item) in mapStore.markers"
-            :key="item.coord.id"
-            @click="clickSideList(item)"
-        >
-          <img :src="item.coord.firstimage" class="travel-item-image" alt="">
-          <span class="travel-item-title">{{ item.coord.title }}</span>
-        </div>
+        <KakaoListItem :item="mapStore.markers" :click="clickSideList"></KakaoListItem>
       </div>
     </div>
   </div>
