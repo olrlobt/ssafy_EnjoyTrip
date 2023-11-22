@@ -7,12 +7,12 @@ import java.util.List;
 
 @Mapper
 public interface CommentMapper {
-    @Insert("INSERT INTO comments (content, articleNo) VALUES (#{content}, #{articleNo})")
+    @Insert("INSERT INTO comments (content, articleNo, userId) VALUES (#{content}, #{articleNo}, #{userId})")
     @Options(useGeneratedKeys = true, keyProperty = "commentNo")
     void addComment(CommentDto commentDto);
 
 
     @Select("SELECT * FROM comments WHERE articleNo = #{articleNo}")
     List<CommentDto> getCommentsForArticle(@Param("articleNo") int articleNo);
-    
+
 }

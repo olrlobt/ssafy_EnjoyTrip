@@ -38,7 +38,6 @@ const getMemberInfo = async () => {
     await memberStore.getUserInfo(token);
     const userInfo = memberStore.userInfo;
     console.log(userInfo);
-
     if (userInfo) {
       memberInfo.value = userInfo;
       article.value.userId = memberInfo.value.userId;
@@ -150,9 +149,10 @@ function onDeleteArticle() {
 
 const write = ref();
 function clickComment() {
+  console.log("member", memberInfo.value.userId);
   const newComment = ref({
     content: write.value,
-    // userId: memberInfo.value.userId,
+    userId: memberInfo.value.userId,
     articleNo: articleno,
   });
 

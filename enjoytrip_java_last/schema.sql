@@ -62,8 +62,10 @@ CREATE TABLE Marker
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE comments (
-                          commentNo INT AUTO_INCREMENT PRIMARY KEY,
-                          content VARCHAR(255) NOT NULL,
-                          articleNo INT NOT NULL,
-                          FOREIGN KEY (articleNo) REFERENCES boards(articleNo)
+  commentNo INT AUTO_INCREMENT PRIMARY KEY,
+  content VARCHAR(255) NOT NULL,
+  articleNo INT NOT NULL,
+  userId varchar(255) NOT NULL,
+  FOREIGN KEY (articleNo) REFERENCES boards(articleNo),
+  FOREIGN KEY (userId) REFERENCES members(userId)
 );
