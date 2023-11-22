@@ -1,5 +1,11 @@
+/*@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&display=swap');*/
+/** {*/
+/*  font-family: 'Black Han Sans', sans-serif;*/
+/*}*/
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&family=Jua&family=Poor+Story&display=swap');
+
 body {
-  font-family: "Inter", sans-serif;
+  /*font-family: "Inter", sans-serif;*/
   line-height: 1.5;
   background: #ffffff;
   overflow-x: hidden;
@@ -54,7 +60,11 @@ a.text-primary:hover {
   color: #1A374D !important; }
 
 h1, .h1, h2, .h2, h3, .h3, h4, .h4 {
-  font-family: "Source Serif Pro", serif; }
+  font-family: Arial, sans-serif;
+}
+/*font-family: Arial, sans-serif;*/
+  /*font-family: "Source Serif Pro", serif;*/
+/*font-family: 'Black Han Sans', sans-serif;*/
 
 .btn {
   padding-top: 12px;

@@ -12,7 +12,7 @@ const memberInfo = ref({
   userName: "",
   userPwd: "",
   emailId: "",
-  emailDomain: "",
+  emailDomain: "선택",
 });
 
 

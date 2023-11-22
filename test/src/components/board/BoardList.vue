@@ -19,13 +19,13 @@ const selectOption = ref([
   { text: "검색조건", value: "" },
   { text: "글번호", value: "articleno" },
   { text: "제목", value: "subject" },
-  { text: "작성자아이디", value: "userid" },
 ]);
 
 const articles = ref([]);
 const currentPage = ref(1);
 const totalPage = ref(0);
 const { VITE_ARTICLE_LIST_SIZE } = import.meta.env;
+
 const param = ref({
   pgno: currentPage.value,
   spp: VITE_ARTICLE_LIST_SIZE,
@@ -38,7 +38,6 @@ const { boardType } = route.params;
 onMounted(() => {
   param.value.boardType = boardType;
   props.changeHero("리스트","헬로")
-  // console.log("mount")
   getArticleList();
 });
 
@@ -46,8 +45,6 @@ const changeKey = (val) => {
   console.log("BoarList에서 선택한 조건 : " + val);
   param.value.key = val;
 };
-
-
 
 const getArticleList = () => {
   console.log("서버에서 글목록 얻어오자!!!", param.value);
@@ -87,17 +84,19 @@ const moveWrite = () => {
               <i class="bi bi-plus-lg"></i> 글쓰기
             </button>
           </div>
-          <div class="col-md-5 offset-md-5">
+          <div class="col-md-7 offset-md-3">
             <form class="d-flex">
               <VSelect :selectOption="selectOption" @onKeySelect="changeKey" class="form-select form-select-sm me-2" />
-              <div class="input-group input-group-sm">
-                <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
-                <button class="btn btn-outline-secondary" type="button" @click="getArticleList">
-                  <i class="bi bi-search"></i>
+              <div class="input-group input-group-lg">
+                <input type="text" class="form-control rounded-start" v-model="param.word" placeholder="검색어..." />
+                <button class="btn btn-outline-secondary rounded-end" type="button" @click="getArticleList">
+                  검색 <i class="bi bi-search"></i>
                 </button>
               </div>
             </form>
           </div>
+
+
         </div>
         <table class="table table-hover">
           <thead class="text-center">

@@ -16,7 +16,7 @@ const memberInfo = ref({
   userName: "",
   userPwd: "",
   emailId: "",
-  emailDomain: "",
+  emailDomain: "선택",
 });
 
 onMounted(() => getMemberInfo());
@@ -120,9 +120,8 @@ function modify() {
                   id="emaildomain"
                   name="emailDomain"
                   aria-label="이메일 도메인 선택"
-                v-model="memberInfo.emailDomain"
-
-                >
+                  v-model="memberInfo.emailDomain"
+                  >
                   <option selected>선택</option>
                   <option value="ssafy.com">ssafy.com</option>
                   <option value="google.com">google.com</option>
