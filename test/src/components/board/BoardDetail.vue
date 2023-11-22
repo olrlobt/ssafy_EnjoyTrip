@@ -4,12 +4,14 @@ import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import { addComment, getCommentsForArticle } from "@/api/comment";
 import {useMemberStore} from "@/stores/member";
+import CommentList from "@/components/comment/CommentList.vue";
 
 const memberStore = useMemberStore();
 
 const route = useRoute();
-const router = useRouter(); 
+const router = useRouter();
 
 const { articleno } = route.params;
 
@@ -28,6 +30,8 @@ const memberInfo = ref({
   emailId: "",
   emailDomain: "",
 });
+
+const comments = ref([]);
 
 const getMemberInfo = async () => {
   try {
@@ -87,10 +91,31 @@ onMounted(async () => {
       initialEditType: "wysiwyg",
       initialValue: content.value,
     });
+
+    await fetchComments();
+
   } catch (error) {
     console.error(error);
   }
 });
+
+const fetchComments = async () => {
+  try {
+    const { data } = await new Promise((resolve, reject) => {
+      getCommentsForArticle(
+          articleno,
+          (response) => resolve(response),
+          (error) => reject(error)
+      );
+    });
+
+    console.log(data);
+
+    comments.value = data;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 
 function reply() {
@@ -111,21 +136,38 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  // const { articleno } = route.params;
   console.log(articleno + "번글 삭제하러 가자!!!");
   // API 호출
   deleteArticle(articleno, ({ data }) => {
-    console.log(data)
-    article.value = data;
-    moveList();
-  },
-    (error) => {
-      console.log(error)
-    });
-
+        console.log(data)
+        article.value = data;
+        moveList();
+      },
+      (error) => {
+        console.log(error)
+      });
 }
 
+const write = ref();
+function clickComment() {
+  const newComment = ref({
+    content: write.value,
+    // userId: memberInfo.value.userId,
+    articleNo: articleno,
+  });
 
+  addComment(
+      newComment.value,
+      (response) => {
+        console.log("Comment added successfully:", response);
+        fetchComments();
+        newComment.value.content = "";
+      },
+      (error) => {
+        console.error("Error adding comment:", error);
+      }
+  );
+}
 </script>
 
 
@@ -161,15 +203,15 @@ function onDeleteArticle() {
 
     <!-- Comment Input -->
     <div class="mb-3">
-      <input type="text" class="form-control" placeholder="댓글을 입력하세요">
+      <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
       <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
-      <!--      <button class="btn btn-primary mt-2">댓글 입력</button>-->
+      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
     </div>
 
     <!-- Comments List -->
     <div>
-      <p>...댓글 리스트</p>
+      <CommentList :comments="comments" />
       <!-- Replace with actual comments loop -->
     </div>
   </div>
@@ -253,8 +295,6 @@ body {
   align-items: center;
   height: 100vh;
 }
-
-
 
 </style>
 

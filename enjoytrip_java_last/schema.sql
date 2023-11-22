@@ -60,3 +60,10 @@ CREATE TABLE Marker
     PRIMARY KEY (`travelRouteNo`, `step`),
     FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute (`travelRouteNo`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE TABLE comments (
+                          commentNo INT AUTO_INCREMENT PRIMARY KEY,
+                          content VARCHAR(255) NOT NULL,
+                          articleNo INT NOT NULL,
+                          FOREIGN KEY (articleNo) REFERENCES boards(articleNo)
+);
