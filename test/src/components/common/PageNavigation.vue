@@ -59,4 +59,15 @@ function onPageChange(pg) {
 a {
   cursor: pointer;
 }
+.page-link {
+  cursor: pointer;
+  color: #555; /* Change the cursor color to gray */
+}
+
+/* Style for the active page */
+.page-item.active .page-link {
+  background-color: #4e555b; /* Change the background color for the active page */
+  border-color: #4e555b; /* Change the border color for the active page */
+  color: #fff; /* Change the text color for the active page */
+}
 </style>
