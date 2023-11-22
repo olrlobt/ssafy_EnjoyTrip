@@ -30,8 +30,6 @@ function deleteArticle(articleno, success, fail) {
   local.delete(`${url}/notice/delete/${articleno}`).then(success).catch(fail);
 }
 
-
-
 export {
   listArticle,
   detailArticle,

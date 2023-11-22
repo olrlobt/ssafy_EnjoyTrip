@@ -17,9 +17,9 @@ const props = defineProps([
 
 const selectOption = ref([
   { text: "검색조건", value: "" },
-  { text: "글번호", value: "article_no" },
+  { text: "글번호", value: "articleno" },
   { text: "제목", value: "subject" },
-  { text: "작성자아이디", value: "user_id" },
+  { text: "작성자아이디", value: "userid" },
 ]);
 
 const articles = ref([]);
@@ -38,7 +38,7 @@ const { boardType } = route.params;
 onMounted(() => {
   param.value.boardType = boardType;
   props.changeHero("리스트","헬로")
-  console.log("mount")
+  // console.log("mount")
   getArticleList();
 });
 
@@ -54,7 +54,7 @@ const getArticleList = () => {
    // API 호출
   listArticle(param.value, ({ data }) => { 
     console.log(data)
-    articles.value = data;
+    articles.value = data.articles;
     currentPage.value = data.currentPage;
     totalPage.value = data.totalPageCount;
   },

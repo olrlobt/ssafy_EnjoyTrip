@@ -9,10 +9,10 @@
         values (#{userId}, #{subject}, #{content}, #{type}, now(), #{ref}, #{step}, #{depth})
     </insert>
 
-<!--    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo">-->
-<!--        insert into boards (userid, subject, content, type, registerTime, ref , step , depth)-->
-<!--        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'), #{ref}, #{step}, #{depth})-->
-<!--    </insert>-->
+    <!--    <insert id="writeArticle" parameterType="boardDto" useGeneratedKeys="true" keyProperty="articleNo">-->
+    <!--        insert into boards (userid, subject, content, type, registerTime, ref , step , depth)-->
+    <!--        values (#{userId}, #{subject}, #{content}, #{type}, FORMATDATETIME(NOW(), 'yyyy-MM-dd HH:mm:ss'), #{ref}, #{step}, #{depth})-->
+    <!--    </insert>-->
 
     <update id="updateRef" parameterType="int">
         update boards set ref = #{articleNo} where articleNo = #{articleNo} and ref = 0
@@ -22,14 +22,17 @@
         UPDATE boards
         SET step = step + 1
         WHERE ref = #{ref}
-        AND step > #{step};
+          AND step > #{step};
     </update>
+    
+
 
     <select id="listArticle" parameterType="map" resultType="boardDto">
         SELECT articleno, userid, subject, content, hit, registerTime, ref, step, depth
         FROM boards
         WHERE type = #{type}
-        ORDER BY ref DESC, step ASC, depth ASC LIMIT #{itemsPerPage}
+        ORDER BY ref DESC, step ASC, depth ASC
+        LIMIT #{startIdx}, #{itemsPerPage}
     </select>
 
     <update id="updateHit" parameterType="int" >
@@ -51,10 +54,10 @@
         WHERE articleNo = #{articleNo}
     </delete>
 
-    <select id="getTotalPage" parameterType="String" resultType="int">
-        SELECT COUNT(*)
+    <select id="getTotalPage" parameterType="map" resultType="int">
+        SELECT count(articleNo)
         FROM boards
-        where type = #{type}
+        WHERE type = #{type}
     </select>
 
     <select id="getArticleDetail" parameterType="int" resultType="boardDto">

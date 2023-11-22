@@ -2,12 +2,13 @@ package com.ssafy.ux.finalpj.board.model.service;
 
 import com.ssafy.ux.finalpj.board.mapper.BoardMapper;
 import com.ssafy.ux.finalpj.board.model.BoardDto;
-import com.ssafy.ux.finalpj.board.model.dao.BoardDao;
-import lombok.RequiredArgsConstructor;
+import com.ssafy.ux.finalpj.board.model.BoardListDto;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class BoardServiceImpl2 implements BoardService {
@@ -33,9 +34,34 @@ public class BoardServiceImpl2 implements BoardService {
         }
     }
 
-    @Override
-    public List<BoardDto> listArticle(String type, int currentPage, int itemsPerPage) throws Exception {
-        return boardMapper.listArticle(type, currentPage, itemsPerPage);
+//    @Override
+//    public List<BoardDto> listArticle(String type, int currentPage, int itemsPerPage) throws Exception {
+//        int startIdx = (currentPage - 1) * itemsPerPage;
+//        Map<String, Object> parameters = new HashMap<>();
+//        parameters.put("type", type);
+//        parameters.put("startIdx", startIdx);
+//        parameters.put("itemsPerPage", itemsPerPage);
+//        return boardMapper.listArticle(parameters);
+//    }
+    public BoardListDto listArticle(String type, int currentPage, int itemsPerPage) throws Exception {
+        int startIdx = currentPage * itemsPerPage - itemsPerPage;
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("type", type);
+        parameters.put("startIdx", startIdx);
+        parameters.put("itemsPerPage", itemsPerPage);
+        List<BoardDto> list = boardMapper.listArticle(parameters);
+//        System.out.println("itemsPerPage: "+ itemsPerPage);
+//        System.out.println("가져온 리스트 사이즈"+list.size());
+
+        int totalArticleCount = boardMapper.getTotalPage(parameters);
+        System.out.println(totalArticleCount);
+        int totalPageCount = (totalArticleCount - 1) / itemsPerPage + 1;
+
+        BoardListDto boardListDto = new BoardListDto();
+        boardListDto.setArticles(list);
+        boardListDto.setCurrentPage(currentPage);
+        boardListDto.setTotalPageCount(totalPageCount);
+        return boardListDto;
     }
 
     @Override
@@ -59,8 +85,11 @@ public class BoardServiceImpl2 implements BoardService {
     }
 
     @Override
-    public int getTotalPage(String type) throws SQLException {
-        return boardMapper.getTotalPage(type);
+    public int getTotalPage(String type, int itemsPerPage) throws SQLException {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("type", type);
+        parameters.put("itemsPerPage", itemsPerPage);
+        return boardMapper.getTotalPage(parameters);
     }
 
     @Override
