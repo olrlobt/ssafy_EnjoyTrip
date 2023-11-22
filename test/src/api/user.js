@@ -2,6 +2,7 @@ import { localAxios } from "@/util/http-commons";
 
 const local = localAxios();
 
+// const url = "http://70.12.60.179:80/user"
 const url = "/user"
 
 function joinUser(member, success, fail) {

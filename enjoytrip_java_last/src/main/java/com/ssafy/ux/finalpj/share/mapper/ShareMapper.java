@@ -10,7 +10,7 @@ import java.util.List;
 @Mapper
 public interface ShareMapper {
 
-    List<TravelRouteDto> list() throws SQLException;
+    List<TravelRouteDto> list(TravelRouteDto travelRouteDto) throws SQLException;
     void writeTravelRoute(TravelRouteDto travelRouteDto) throws SQLException;
     void writeMarker(MarkerDto markerDto) throws SQLException;
     void delete() throws SQLException;

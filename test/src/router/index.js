@@ -85,6 +85,7 @@ const router = createRouter({
     {
       path: '/:userId',
       name: 'userId',
+      props: true,
       component: () => import("@/views/ShareTravelRouteView.vue"),
       children: [
         {

@@ -10,7 +10,7 @@
         <div class="col-lg-7">
           <div class="intro-wrap">
             <h1 class="mb-5">
-              <span class="d-block">UX</span>: 너와의 경험<span class="typed-words"></span>
+              <span class="d-block">UX</span>: <span>너와</span>의 경험<span class="typed-words"></span>
             </h1>
 
             <div class="row">
