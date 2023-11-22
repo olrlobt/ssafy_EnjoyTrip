@@ -3,6 +3,8 @@ package com.ssafy.ux.finalpj.board.mapper;
 import com.ssafy.ux.finalpj.board.model.BoardDto;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.ibatis.annotations.Mapper;
 
 
@@ -15,7 +17,7 @@ public interface BoardMapper {
 
     void updateStep(BoardDto boardDto) throws  SQLException;
 
-    List<BoardDto> listArticle(String type, int currentPage, int itemsPerPage) throws SQLException;
+    List<BoardDto> listArticle(Map<String, Object> parameters);
 
     BoardDto getArticle(int articleNo) throws SQLException;
 
@@ -25,7 +27,7 @@ public interface BoardMapper {
 
     void deleteArticle(int articleNO) throws SQLException;
 
-    int getTotalPage(String type) throws SQLException;
+    int getTotalPage(Map<String, Object> parameters);
 
     BoardDto getArticleDetail(int articleNo) throws SQLException;
 }

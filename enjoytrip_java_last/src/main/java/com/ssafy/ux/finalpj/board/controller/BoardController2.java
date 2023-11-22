@@ -1,6 +1,7 @@
 package com.ssafy.ux.finalpj.board.controller;
 
 import com.ssafy.ux.finalpj.board.model.BoardDto;
+import com.ssafy.ux.finalpj.board.model.BoardListDto;
 import com.ssafy.ux.finalpj.board.model.service.BoardService;
 import com.ssafy.ux.finalpj.member.model.MemberDto;
 import java.util.List;
@@ -33,10 +34,9 @@ public class BoardController2 {
 
     @GetMapping("/{type}")
     public ResponseEntity<?> list(@PathVariable("type") String type,
-                                  @RequestParam(required = false, defaultValue = "1") int pageNum) {
+                                  @RequestParam(required = false, defaultValue = "1") int pgno) {
         try {
-//            int totalPages = boardService.getTotalPage(type);
-            List<BoardDto> list = boardService.listArticle(type, pageNum, 10);
+            BoardListDto list = boardService.listArticle(type, pgno, 5);
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {
             log.error("Error getting articles list", e);
@@ -70,7 +70,7 @@ public class BoardController2 {
     @GetMapping("{type}/view/{articleNo}")
     public ResponseEntity<?> detail(@PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
         try {
-        	System.out.println("articleNo: "+articleNo);
+            System.out.println("articleNo: "+articleNo);
             BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
 
             if (article == null) {
@@ -86,23 +86,23 @@ public class BoardController2 {
 
     @GetMapping("{type}/modify/{articleNo}")
     public ResponseEntity<?> getModify( @PathVariable("type") String type, @PathVariable("articleNo")String articleNo) {
-    	try {
+        try {
 //    		System.out.println("articleNo: "+articleNo);
-    		BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
-    		
-    		if (article == null) {
-    			return ResponseEntity.notFound().build();
-    		}
-    		
-    		return ResponseEntity.ok().body(article);
-    	} catch (Exception e) {
-    		log.error("Error during article modification", e);
-    		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
-    	}
+            BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
+
+            if (article == null) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok().body(article);
+        } catch (Exception e) {
+            log.error("Error during article modification", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
+        }
     }
 
     @PutMapping("{type}/modify")
-    public ResponseEntity<?> modify(@PathVariable("type") String type, @RequestBody BoardDto boardDto) {
+    public ResponseEntity<?> modify( @PathVariable("type") String type, @RequestBody BoardDto boardDto) {
         try {
             boardService.modifyArticle(boardDto);
             return ResponseEntity.ok().body("Article modified successfully.");
