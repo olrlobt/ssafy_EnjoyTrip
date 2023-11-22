@@ -114,7 +114,6 @@ router.beforeEach((to, from, next) => {
 // sessionStorage에서 토큰이 있는지 여부를 확인하여 로그인 상태를 반환
 function isLoggedIn() {
   const token = sessionStorage.getItem('accessToken')
-  
   // sessionStorage에 토큰이 있는지 여부에 따라 로그인 상태를 결정
   return token !== null && token !== undefined
 }

@@ -4,6 +4,9 @@ import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { detailArticle, deleteArticle } from "@/api/board";
+import {useMemberStore} from "@/stores/member";
+
+const memberStore = useMemberStore();
 
 const route = useRoute();
 const router = useRouter(); 
@@ -16,11 +19,38 @@ const props = defineProps([
   'changeHero'
 ]);
 
+const token = sessionStorage.getItem('accessToken');
+
+const memberInfo = ref({
+  userId: "",
+  userName: "",
+  userPwd: "",
+  emailId: "",
+  emailDomain: "",
+});
+
+const getMemberInfo = async () => {
+  try {
+    await memberStore.getUserInfo(token);
+    const userInfo = memberStore.userInfo;
+    console.log(userInfo);
+
+    if (userInfo) {
+      memberInfo.value = userInfo;
+      article.value.userId = memberInfo.value.userId;
+      console.log('MyPage User Info: ', userInfo);
+    }
+  } catch (error) {
+    console.error("마이페이지 중 에러 발생:", error);
+  }
+};
+
 const content = ref('');
 const viewer = ref(null);
 const viewerValid = ref(null);
 
 onMounted(async () => {
+  getMemberInfo();
   try {
     const { data } = await new Promise((resolve, reject) => {
       detailArticle(
@@ -66,7 +96,10 @@ function moveList() {
 }
 
 function moveModify() {
-  router.push({ name: "article-modify", query: { articleno, ...article.value } });
+  // 사용자 확인.
+  if(article.value.userId === memberInfo.value.userId){
+    router.push({ name: "article-modify", query: { articleno, ...article.value } });
+  }
 }
 
 function onDeleteArticle() {
