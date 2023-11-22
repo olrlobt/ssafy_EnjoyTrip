@@ -4,7 +4,7 @@ import com.ssafy.ux.finalpj.board.model.BoardDto;
 import com.ssafy.ux.finalpj.board.model.BoardListDto;
 import com.ssafy.ux.finalpj.board.model.service.BoardService;
 import com.ssafy.ux.finalpj.member.model.MemberDto;
-import java.util.List;
+
 import javax.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @Slf4j
 @RestController
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -34,9 +36,11 @@ public class BoardController2 {
 
     @GetMapping("/{type}")
     public ResponseEntity<?> list(@PathVariable("type") String type,
-                                  @RequestParam(required = false, defaultValue = "1") int pgno) {
+                                  @RequestParam(required = false, defaultValue = "1") int pgno, @RequestParam Map<String, String> params) {
         try {
-            BoardListDto list = boardService.listArticle(type, pgno, 5);
+//            System.out.println(params);
+//            BoardListDto list = boardService.listArticle(type, pgno, 5);
+            BoardListDto list = boardService.listArticle(params);
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {
             log.error("Error getting articles list", e);
@@ -122,6 +126,8 @@ public class BoardController2 {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article deletion.");
         }
     }
+
+
 
 
 }

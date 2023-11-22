@@ -43,24 +43,55 @@ public class BoardServiceImpl2 implements BoardService {
 //        parameters.put("itemsPerPage", itemsPerPage);
 //        return boardMapper.listArticle(parameters);
 //    }
-    public BoardListDto listArticle(String type, int currentPage, int itemsPerPage) throws Exception {
-        int startIdx = currentPage * itemsPerPage - itemsPerPage;
-        Map<String, Object> parameters = new HashMap<>();
-        parameters.put("type", type);
-        parameters.put("startIdx", startIdx);
-        parameters.put("itemsPerPage", itemsPerPage);
-        List<BoardDto> list = boardMapper.listArticle(parameters);
-//        System.out.println("itemsPerPage: "+ itemsPerPage);
-//        System.out.println("가져온 리스트 사이즈"+list.size());
+//    public BoardListDto listArticle(String type, int currentPage, int itemsPerPage) throws Exception {
+//        int startIdx = currentPage * itemsPerPage - itemsPerPage;
+//        Map<String, Object> parameters = new HashMap<>();
+//        parameters.put("type", type);
+//        parameters.put("startIdx", startIdx);
+//        parameters.put("itemsPerPage", itemsPerPage);
+//        List<BoardDto> list = boardMapper.listArticle(parameters);
+////        System.out.println("itemsPerPage: "+ itemsPerPage);
+////        System.out.println("가져온 리스트 사이즈"+list.size());
+//
+//        int totalArticleCount = boardMapper.getTotalPage(parameters);
+//        System.out.println(totalArticleCount);
+//        int totalPageCount = (totalArticleCount - 1) / itemsPerPage + 1;
+//
+//        BoardListDto boardListDto = new BoardListDto();
+//        boardListDto.setArticles(list);
+//        boardListDto.setCurrentPage(currentPage);
+//        boardListDto.setTotalPageCount(totalPageCount);
+//        return boardListDto;
+//    }
 
-        int totalArticleCount = boardMapper.getTotalPage(parameters);
-        System.out.println(totalArticleCount);
-        int totalPageCount = (totalArticleCount - 1) / itemsPerPage + 1;
+    @Override
+    public BoardListDto listArticle(Map<String, String> map) throws Exception {
+        Map<String, Object> param = new HashMap<String, Object>();
+        param.put("word", map.get("word") == null ? "" : map.get("word"));
+//        System.out.println(map.get("boardType"));
+        int currentPage = Integer.parseInt(map.get("pgno") == null ? "1" : map.get("pgno"));
+        int sizePerPage = Integer.parseInt(map.get("spp") == null ? "20" : map.get("spp"));
+        int start = currentPage * sizePerPage - sizePerPage;
+        param.put("type", map.get("boardType"));
+        param.put("start", start);
+        param.put("listsize", sizePerPage);
+
+        String key = map.get("key");
+        param.put("key", key == null ? "" : key);
+        if ("userid".equals(key))
+            param.put("key", key == null ? "" : "b.userid");
+        List<BoardDto> list = boardMapper.listArticle(param);
+
+        if ("userid".equals(key))
+            param.put("key", key == null ? "" : "userid");
+        int totalArticleCount = boardMapper.getTotalPage(param);
+        int totalPageCount = (totalArticleCount - 1) / sizePerPage + 1;
 
         BoardListDto boardListDto = new BoardListDto();
         boardListDto.setArticles(list);
         boardListDto.setCurrentPage(currentPage);
         boardListDto.setTotalPageCount(totalPageCount);
+
         return boardListDto;
     }
 

@@ -24,16 +24,51 @@
         WHERE ref = #{ref}
           AND step > #{step};
     </update>
-    
 
 
-    <select id="listArticle" parameterType="map" resultType="boardDto">
-        SELECT articleno, userid, subject, content, hit, registerTime, ref, step, depth
-        FROM boards
-        WHERE type = #{type}
-        ORDER BY ref DESC, step ASC, depth ASC
-        LIMIT #{startIdx}, #{itemsPerPage}
+
+<!--    <select id="listArticle" parameterType="map" resultType="boardDto">-->
+<!--        SELECT articleno, userid, subject, content, hit, registerTime, ref, step, depth-->
+<!--        FROM boards-->
+<!--        WHERE type = #{type}-->
+<!--        ORDER BY ref DESC, step ASC, depth ASC-->
+<!--        LIMIT #{startIdx}, #{itemsPerPage}-->
+<!--    </select>-->
+    <resultMap id="article" type="BoardDto">
+        <result column="articleNo" property="articleNo"/>
+        <result column="userId" property="userId"/>
+        <result column="userName" property="userName"/>
+        <result column="subject" property="subject"/>
+        <result column="content" property="content"/>
+        <result column="hit" property="hit"/>
+        <result column="registerTime" property="registerTime"/>
+        <result column="type" property="type"/>
+        <result column="ref" property="ref"/>
+        <result column="step" property="step"/>
+        <result column="depth" property="depth"/>
+    </resultMap>
+
+    <sql id="search">
+        <if test="word != null and word != ''">
+            <if test="key == 'subject'">
+                and subject like concat('%', #{word}, '%')
+            </if>
+            <if test="key != 'subject'">
+                and ${key} = #{word}
+            </if>
+        </if>
+    </sql>
+
+    <select id="listArticle" parameterType="map" resultMap="article">
+        select b.articleno, b.userId, b.subject, b.content, b.hit, b.registerTime, m.username
+        from boards b, members m
+        where b.userId = m.userId
+        and type = #{type}
+        <include refid="search"></include>
+        order by b.articleNo desc
+        limit #{start}, #{listsize}
     </select>
+
 
     <update id="updateHit" parameterType="int" >
         update boards
@@ -58,6 +93,7 @@
         SELECT count(articleNo)
         FROM boards
         WHERE type = #{type}
+        <include refid="search"></include>
     </select>
 
     <select id="getArticleDetail" parameterType="int" resultType="boardDto">

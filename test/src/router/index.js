@@ -57,11 +57,13 @@ const router = createRouter({
           path: "write",
           name: "article-write",
           component: () => import("@/components/board/BoardWrite.vue"),
+          meta: { requiresAuth: true } ,
         },
         {
           path: "modify/:articleno",
           name: "article-modify",
           component: () => import("@/components/board/BoardModify.vue"),
+          meta: { requiresAuth: true } ,
         },
         {
           path: "reply",
