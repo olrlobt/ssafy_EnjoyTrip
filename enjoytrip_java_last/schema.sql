@@ -43,7 +43,8 @@ CREATE TABLE TravelRoute
     `subject`       VARCHAR(255) NOT NULL,
     `content`       TEXT         ,
     `hit`           INT          NOT NULL DEFAULT 0,
-    `registerTime`  DATETIME
+    `registerTime`  DATETIME,
+    FOREIGN KEY (`userId`) REFERENCES `members` (`userId`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE Marker

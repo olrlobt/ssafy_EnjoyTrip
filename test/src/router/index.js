@@ -82,6 +82,19 @@ const router = createRouter({
         }
         ]
     },
+    {
+      path: '/:userId',
+      name: 'userId',
+      component: () => import("@/views/ShareTravelRouteView.vue"),
+      children: [
+        {
+          path: "travelRoute",
+          name: "user-travelRoute",
+          component: () => import("@/components/share/ShareTravelRoute.vue"),
+        }
+      ]
+    },
+
   ],
 })
 

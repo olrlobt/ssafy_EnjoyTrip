@@ -45,7 +45,7 @@ function logout() {
             <RouterLink to="">MyPage</RouterLink>
             <ul class="dropdown">
               <li><RouterLink to="/user/modify">회원수정</RouterLink></li>
-              <!-- <li><RouterLink to="/user/like">나만의 경험</RouterLink></li> -->
+              <li><RouterLink :to="`/${memberStore.userInfo.userId}/travelRoute`">나의 여행경로</RouterLink></li>
               <!-- <li><RouterLink to="/user/like">나만의 핫플레이스</RouterLink></li> -->
             </ul>
           </li>
