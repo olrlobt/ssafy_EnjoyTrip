@@ -5,7 +5,7 @@
 <mapper namespace="com.ssafy.ux.finalpj.share.mapper.ShareMapper">
 
     <select id="list" resultType="travelRouteDto" resultMap="travelListResultMap" >
-        SELECT t.travelRouteNo , t.userid, t.subject, t.content, t.hit, t.registerTime
+        SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime
             m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title
         FROM TravelRoute t
         LEFT JOIN Marker m
@@ -14,7 +14,7 @@
     
     <resultMap id="travelListResultMap" type="travelRouteDto">
         <result column="TRAVELROUTENO" property="travelRouteNo" />
-        <result column="USERID" property="userid" />
+        <result column="USERID" property="userId" />
         <result column="SUBJECT" property="subject" />
         <result column="CONTENT" property="content" />
         <result column="HIT" property="hit" />
@@ -23,21 +23,21 @@
             <result column="ADDR1" property="addr1" />
             <result column="AREACODE" property="areacode" />
             <result column="FIRSTIMAGE" property="firstimage" />
-            <result column="MAPX" property="mapX" />
-            <result column="MAPY" property="mapY" />
+            <result column="MAPX" property="mapx" />
+            <result column="MAPY" property="mapy" />
             <result column="TITLE" property="title" />
         </collection>
     </resultMap>
 
     
     <insert id="writeTravelRoute" parameterType="travelRouteDto" useGeneratedKeys="true" keyProperty="travelRouteNo" >
-        INSERT INTO TravelRoute (userid, subject, content, hit, registerTime)
-        VALUES ( #{userid}, #{subject}, #{content}, #{hit}, now())
+        INSERT INTO TravelRoute (userId, subject, content, hit, registerTime)
+        VALUES ( #{userId}, #{subject}, #{content}, #{hit}, now())
     </insert>
 
     <insert id="writeMarker" parameterType="markerDto">
-        INSERT INTO Marker ( addr1, areacode, firstimage, mapX, mapY, title)
-        VALUES (#{addr1}, #{areacode}, #{firstimage}, #{mapX}, #{mapY}, #{title})
+        INSERT INTO Marker ( addr1, areacode, firstimage, mapX, mapY, title , travelRouteNo, step)
+        VALUES (#{addr1}, #{areacode}, #{firstimage}, #{mapx}, #{mapy}, #{title} , #{travelRouteNo}, #{step})
     </insert>
     
     

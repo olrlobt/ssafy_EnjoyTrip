@@ -25,7 +25,7 @@ const login = async () => {
   console.log("loginUser: " + loginUser.value.userId);
   try {
     // userLogin 메서드가 Promise를 반환하도록 가정합니다.
-    await userLogin(loginUser.value);
+    await memberStore.userLogin(loginUser.value);
 
     let token = sessionStorage.getItem("accessToken");
     console.log("111. ", token);
@@ -34,14 +34,8 @@ const login = async () => {
     if (isLogin.value) {
       console.log("로그인 성공아닌가???");
       console.log("token" + token);
-      getUserInfo(token);
-      
-      router.push("/").then(()=>{
-        // 페이지 새로 고침
-        window.location.reload();
-      });
-
-      console.log("가나욤")
+      await memberStore.getUserInfo(token);
+      await router.push("/");
     }
   } catch (error) {
     console.error("로그인 중 에러 발생:", error);

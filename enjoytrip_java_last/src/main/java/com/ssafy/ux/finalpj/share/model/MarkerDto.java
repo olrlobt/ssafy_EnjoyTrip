@@ -9,8 +9,8 @@ public class MarkerDto {
     private int areacode;
     private String firstimage;
     private String title;
-    private double mapX;
-    private double mapY;
+    private double mapx;
+    private double mapy;
     private int travelRouteNo;
     private int step;;
 }

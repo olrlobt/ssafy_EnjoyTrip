@@ -34,6 +34,7 @@ public class ShareController {
 
     @PostMapping("/write")
     public void write(@RequestBody TravelRouteDto travelRouteDto) throws SQLException {
+        log.info("경로 저장");
         service.write(travelRouteDto);
     }
 

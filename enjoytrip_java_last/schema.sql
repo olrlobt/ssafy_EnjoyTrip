@@ -13,6 +13,7 @@ CREATE TABLE `members`
     `emailId`     VARCHAR(255) NOT NULL,
     `emailDomain` VARCHAR(255) NOT NULL,
     `joinDate`    DATETIME     NOT NULL,
+    `token`       VARCHAR(1000),
     PRIMARY KEY (`userId`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

@@ -4,6 +4,7 @@
 <script setup>
 import {defineProps, ref} from 'vue';
 import {useMapStore} from "@/stores/map";
+import {useMemberStore} from "@/stores/member";
 /* global kakao */
 const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
