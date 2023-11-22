@@ -4,10 +4,10 @@
 let props = defineProps(['item', 'click', 'removeClick']);
 
 const clickList = (item) => {
-
   props.click(item);
-
 }
+
+console.log(props.item)
 
 </script>
 <template>

@@ -94,8 +94,15 @@ const router = createRouter({
           path: "travelRoute",
           name: "user-travelRoute",
           component: () => import("@/components/share/ShareTravelRoute.vue"),
+        },
+        {
+          path: "detail/:travelRouteNo",
+          name: "travel-detail",
+          props: true,
+          component: () => import("@/components/share/ShareTravelRouteDetail.vue"),
         }
       ]
+
     },
 
   ],
