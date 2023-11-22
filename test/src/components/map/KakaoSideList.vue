@@ -4,9 +4,11 @@ import {useMapStore} from "@/stores/map";
 import {VueDraggableNext} from 'vue-draggable-next'
 import {saveTravelRoute} from '@/api/share'
 import Swal from 'sweetalert2'
+import {useMemberStore} from "@/stores/member";
 
 /* global kakao */
 const mapStore = useMapStore();
+const memberStore = useMemberStore();
 const currentTabId = ref(1);
 const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
@@ -214,7 +216,7 @@ const saveMyTravelRoute = () => {
 
   const markers = [];
   mapStore.travelList.forEach(value => {
-    markers.push(value);
+    markers.push(value.coord);
   })
 
   Swal.fire({
@@ -224,15 +226,19 @@ const saveMyTravelRoute = () => {
       autocapitalize: "off"
     },
     showCancelButton: true,
+    cancelButtonText : "취소",
     confirmButtonText: "저장",
     showLoaderOnConfirm: true,
     preConfirm: async (title) => {
       try {
+        console.log(memberStore.userInfo)
         const travelRouteDto = {
-          title : title,
+          subject : title,
+          userId: memberStore.userInfo.userId,
           markers : markers
         }
-        return travelRouteDto;
+        saveTravelRoute(travelRouteDto);
+
       } catch (error) {
         Swal.showValidationMessage(`
         Request failed: ${error}

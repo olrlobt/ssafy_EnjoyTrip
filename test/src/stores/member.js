@@ -9,7 +9,7 @@ export const useMemberStore = defineStore("memberStore", () => {
 
   const isLogin = ref(false);
   const isLoginError = ref(false);
-  const userInfo = ref(null);
+  const userInfo = ref({});
   const isValidToken = ref(false);
 
   const userLogin = async (loginUser) => {
@@ -76,7 +76,7 @@ export const useMemberStore = defineStore("memberStore", () => {
       const data = await findByIdPromise(decodeToken.userId);
       userInfo.value = data;
       console.log("3. getUserInfo data >> ", data);
-  
+      console.log("3. userInfo.value data >> ", userInfo.value);
     } catch (error) {
       console.error(
         "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",

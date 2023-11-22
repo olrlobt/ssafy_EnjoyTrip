@@ -1,23 +1,17 @@
-<script>
-export default {
-  computed: {
-    isLoggedIn() {
-      const token = sessionStorage.getItem('accessToken');
-      const result = token !== null && token !== undefined;
-      console.log('isLoggedIn:', result);
-      return result;
-    },
-  },
-  methods: {
-    logout() {
-      sessionStorage.removeItem('accessToken');
-      sessionStorage.removeItem('refreshToken');
-      this.$router.push('/').then(()=>{
-        window.location.reload();
-      });
-    },
-  },
-};
+<script setup>
+
+import {useMemberStore} from "@/stores/member";
+
+const memberStore = useMemberStore();
+
+
+function logout() {
+     sessionStorage.removeItem('accessToken');
+     sessionStorage.removeItem('refreshToken');
+     window.location.reload();
+}
+
+
 </script>
 
 
@@ -47,7 +41,7 @@ export default {
               <li><RouterLink to="/article/qna">Q&A</RouterLink></li>
             </ul>
           </li>
-          <li class="has-children menu-item2"  v-if="isLoggedIn">
+          <li class="has-children menu-item2"  v-if="memberStore.isLogin">
             <RouterLink to="">MyPage</RouterLink>
             <ul class="dropdown">
               <li><RouterLink to="/user/modify">회원수정</RouterLink></li>
@@ -58,14 +52,14 @@ export default {
 
           <!-- <li><RouterLink to="/user/login">Login / Sign up</RouterLink></li> -->
           <li>
-          <router-link to="/user/login" v-if="!isLoggedIn">Login</router-link>
-          <router-link to="/user/logout" v-if="isLoggedIn" @click="logout">Logout</router-link>
+          <router-link to="/user/login" v-if="!memberStore.isLogin">Login</router-link>
+
 
           
           <!-- <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link> -->
           
         </li>
-
+          <li v-if="memberStore.isLogin" @click="logout">Logout</li>
 
 
           <!--          <li class="has-children">-->

@@ -2,6 +2,7 @@ package com.ssafy.ux.finalpj.share.model.service;
 
 
 import com.ssafy.ux.finalpj.share.mapper.ShareMapper;
+import com.ssafy.ux.finalpj.share.model.MarkerDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +23,14 @@ public class ShareService {
     }
 
     public void write(TravelRouteDto travelRouteDto) throws SQLException {
-        mapper.write(travelRouteDto);
+        mapper.writeTravelRoute(travelRouteDto);
+        int size = travelRouteDto.getMarkers().size();
+        for (int step = 0; step < size; step++) {
+            MarkerDto marker = travelRouteDto.getMarkers().get(step);
+            marker.setTravelRouteNo(travelRouteDto.getTravelRouteNo());
+            marker.setStep(step);
+            mapper.writeMarker(marker);
+        }
     }
 
     public void delete() throws SQLException {
