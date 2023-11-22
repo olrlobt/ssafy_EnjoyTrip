@@ -84,17 +84,19 @@ const moveWrite = () => {
               <i class="bi bi-plus-lg"></i> 글쓰기
             </button>
           </div>
-          <div class="col-md-5 offset-md-5">
+          <div class="col-md-7 offset-md-3">
             <form class="d-flex">
               <VSelect :selectOption="selectOption" @onKeySelect="changeKey" class="form-select form-select-sm me-2" />
-              <div class="input-group input-group-sm">
-                <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
-                <button class="btn btn-outline-secondary" type="button" @click="getArticleList">검색
-                  <i class="bi bi-search"></i>
+              <div class="input-group input-group-lg">
+                <input type="text" class="form-control rounded-start" v-model="param.word" placeholder="검색어..." />
+                <button class="btn btn-outline-secondary rounded-end" type="button" @click="getArticleList">
+                  검색 <i class="bi bi-search"></i>
                 </button>
               </div>
             </form>
           </div>
+
+
         </div>
         <table class="table table-hover">
           <thead class="text-center">
