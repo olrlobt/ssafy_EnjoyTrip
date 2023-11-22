@@ -28,8 +28,8 @@ public class ShareController {
     }
 
     @GetMapping("/list")
-    public List<TravelRouteDto> list() throws SQLException {
-        return service.list();
+    public List<TravelRouteDto> list(@RequestBody(required = false) TravelRouteDto travelRouteDto) throws SQLException {
+        return service.list(travelRouteDto);
     }
 
     @PostMapping("/write")

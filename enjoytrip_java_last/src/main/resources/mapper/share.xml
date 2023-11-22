@@ -4,12 +4,16 @@
 
 <mapper namespace="com.ssafy.ux.finalpj.share.mapper.ShareMapper">
 
-    <select id="list" resultType="travelRouteDto" resultMap="travelListResultMap" >
-        SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime
-            m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title
+    <select id="list" parameterType="travelRouteDto" resultType="travelRouteDto" resultMap="travelListResultMap" >
+        SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime,m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title
         FROM TravelRoute t
         LEFT JOIN Marker m
-        ON travelRouteNo = m.travelRouteNo
+        ON t.travelRouteNo = m.travelRouteNo
+        <where>
+            <if test="userId != null">
+                AND t.userId = #{userId}
+            </if>
+        </where>
     </select>
     
     <resultMap id="travelListResultMap" type="travelRouteDto">

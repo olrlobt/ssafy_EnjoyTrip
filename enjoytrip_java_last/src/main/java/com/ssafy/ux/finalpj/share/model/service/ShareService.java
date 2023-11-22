@@ -18,8 +18,8 @@ public class ShareService {
         this.mapper = mapper;
     }
 
-    public List<TravelRouteDto> list() throws SQLException {
-        return mapper.list();
+    public List<TravelRouteDto> list(TravelRouteDto travelRouteDto) throws SQLException {
+        return mapper.list(travelRouteDto);
     }
 
     public void write(TravelRouteDto travelRouteDto) throws SQLException {
