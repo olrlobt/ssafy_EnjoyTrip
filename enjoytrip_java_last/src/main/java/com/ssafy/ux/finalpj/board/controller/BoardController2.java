@@ -76,7 +76,7 @@ public class BoardController2 {
         try {
             System.out.println("articleNo: "+articleNo);
             BoardDto article = boardService.getArticleDetail(Integer.parseInt(articleNo));
-
+            boardService.updateHit(Integer.parseInt(articleNo));
             if (article == null) {
                 return ResponseEntity.notFound().build();
             }
