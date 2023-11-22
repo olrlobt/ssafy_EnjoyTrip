@@ -1,4 +1,8 @@
 <script setup>
+import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
+
+const props = defineProps(['travelRoute']);
+
 
 
 </script>
@@ -7,14 +11,12 @@
   <div class="col mb-5">
     <div class="card h-100">
       <!-- Product image-->
-      <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
-      <!-- Product details-->
+      <ShareTravelRouteCardMap :markers="props.travelRoute.markers"
+              style="width: 100% ; height: 100%; min-height: 300px "></ShareTravelRouteCardMap>
       <div class="card-body p-4">
         <div class="text-center">
-          <!-- Product name-->
-          <h5 class="fw-bolder">강릉</h5>
-          <!-- Product price-->
-          강릉 -> 춘천
+          <h5 class="fw-bolder">{{props.travelRoute.subject}}</h5>
+          {{ props.travelRoute.registerTime }}
         </div>
       </div>
       <!-- Product actions-->
