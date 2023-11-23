@@ -38,7 +38,6 @@ public class CommentController {
     public ResponseEntity<?> getCommentsForArticle(@PathVariable("articleNo") String articleNo) {
         try {
             List<CommentDto> comments = commentService.getCommentsForArticle(Integer.parseInt(articleNo));
-
             return ResponseEntity.ok().body(comments);
         } catch (Exception e) {
             log.error("Error getting comments for article", e);

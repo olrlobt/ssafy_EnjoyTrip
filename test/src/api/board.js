@@ -7,7 +7,7 @@ const url = "/article"
 
 function listArticle(param, success, fail) {
   console.log("param", param)
-  local.get(`${url}/notice`, { params: param }).then(success).catch(fail);
+  local.get(`${url}/${param.boardType}`, { params: param }).then(success).catch(fail);
 }
 
 function detailArticle(articleno, success, fail) {
@@ -15,7 +15,8 @@ function detailArticle(articleno, success, fail) {
 }
 
 function registArticle(article, success, fail) {
-  local.post(`${url}/notice/write`, JSON.stringify(article)).then(success).catch(fail);
+  console.log("article registArticle.js: ", article.type)
+  local.post(`${url}/${article.type}/write`, JSON.stringify(article)).then(success).catch(fail);
 }
 
 function getModifyArticle(articleno, success, fail) {

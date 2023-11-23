@@ -72,9 +72,10 @@ const getMemberInfo = async () => {
 };
 
 
+
 const router = useRouter();
 const route = useRoute();
-const props = defineProps({type: String});
+const props = defineProps({type: String, boardType: String});
 const isUseId = ref(false);
 
 const {articleno, refNo, step, depth} = route.query;
@@ -87,10 +88,12 @@ const article = ref({
   userName: '',
   hit: 0,
   registerTime: '',
+  type:'',
   ref: 0,
   step: 0,
   depth: 0,
 });
+
 
 // const emit = defineEmits(['update:modelValue']);
 const editor = ref();
@@ -98,6 +101,7 @@ const editorValid = ref();
 const articleContent = ref();
 
 onMounted(() => {
+  getMemberInfo();
   if (props.type === 'modify') {
     let {articleno} = route.params;
     console.log(articleno + '번 글을 가져와서 수정할 것입니다.');
@@ -110,7 +114,6 @@ onMounted(() => {
           article.value = data;
           articleContent.value = data.content;
 
-          // Create the editor after fetching article content
           createEditor();
         },
         (error) => {
@@ -118,10 +121,8 @@ onMounted(() => {
         }
     );
   } else {
-    // If not 'modify', create the editor directly
+
     createEditor();
-
-
 
   }
 });
@@ -136,13 +137,6 @@ const createEditor = () => {
     previewStyle: 'vertical',
     initialValue: articleContent.value,
 
-    // events: {
-    //   change: () => {
-    //     // 에디터의 Markdown 내용을 article.content에 할당
-    //     article.value.content = editorValid.value.getHTML();
-    //     emit('update:modelValue', article.value.content); // optional: 다른 컴포넌트로 내용을 전달할 수 있도록 emit
-    //   },
-    // },
   });
 };
 
@@ -170,6 +164,8 @@ const onSubmit = () => {
   });
   article.value.content = editorValid.value.getHTML();
 
+  console.log('write data: ' + props.boardType);
+  article.value.type = props.boardType;
   props.type === 'regist' ? writeArticle() : updateArticle();
 
 };
@@ -185,11 +181,12 @@ const writeArticle = () => {
     article.value.depth = parseInt(depth);
   }
 
+  console.log('write data: ' + article.value);
   registArticle(
       article.value,
       ({data}) => {
-        console.log('write data: ' + data);
         article.value = data;
+        console.log("registArticle:",article.value);
         moveList();
       },
       (error) => {

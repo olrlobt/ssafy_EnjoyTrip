@@ -1,13 +1,4 @@
 <script>
-// export default {
-//     props: {
-//         type: {     
-//             type: String,
-//             default: 'default type' 
-//         }
-//     }
-// }
-
 export default {
     props: ['title', 'contents'],
     setup() {

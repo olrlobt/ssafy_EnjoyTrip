@@ -35,11 +35,8 @@ public class BoardController2 {
     }
 
     @GetMapping("/{type}")
-    public ResponseEntity<?> list(@PathVariable("type") String type,
-                                  @RequestParam(required = false, defaultValue = "1") int pgno, @RequestParam Map<String, String> params) {
+    public ResponseEntity<?> list(@RequestParam(required = false, defaultValue = "1") int pgno, @RequestParam Map<String, String> params) {
         try {
-//            System.out.println(params);
-//            BoardListDto list = boardService.listArticle(type, pgno, 5);
             BoardListDto list = boardService.listArticle(params);
             return ResponseEntity.ok().body(list);
         } catch (Exception e) {

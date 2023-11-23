@@ -56,6 +56,7 @@ const router = createRouter({
         {
           path: "write",
           name: "article-write",
+          props : true,
           component: () => import("@/components/board/BoardWrite.vue"),
           meta: { requiresAuth: true } ,
         },

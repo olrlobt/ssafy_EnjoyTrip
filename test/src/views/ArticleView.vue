@@ -4,6 +4,8 @@ import { ref } from "vue";
 const title = ref("게시판");
 const contents = ref("");
 
+let props = defineProps(['boardType']);
+console.log(props.boardType)
 const changeHero = (title1, contents2) => {
   title.value = title1;
   contents.value = contents2;
@@ -14,7 +16,7 @@ const changeHero = (title1, contents2) => {
 <template>
   <TheHero :title="title" :contents="contents"/>
   <div class="container text-center mt-3">
-    <router-view :changeHero="changeHero" :key="$route.path"></router-view>
+    <router-view :changeHero="changeHero" :key="$route.path" :boardType="props.boardType"></router-view>
   </div>
 </template> 
 

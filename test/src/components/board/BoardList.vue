@@ -37,6 +37,7 @@ const { boardType } = route.params;
 
 onMounted(() => {
   param.value.boardType = boardType;
+  console.log("boardType : " + boardType);
   props.changeHero("리스트","헬로")
   getArticleList();
 });
@@ -68,8 +69,10 @@ const onPageChange = (val) => {
 };
 
 const moveWrite = () => {
-  router.push({ name: "article-write" });
+  console.log(param.value.boardType);
+  router.push({ name: "article-write" , params : {boardType : boardType}  });
 };
+
 
 </script>
 
