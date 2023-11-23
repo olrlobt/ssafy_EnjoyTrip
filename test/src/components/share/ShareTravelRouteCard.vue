@@ -2,17 +2,33 @@
 import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
 import { useRouter } from "vue-router";
 import {useShareStore} from "@/stores/share";
+import {updateHit} from "@/api/share";
 const props = defineProps(['travelRoute', 'userId']);
 const router = useRouter();
 const shareStore = useShareStore();
 
-const showMyTravelDetail = () => {
-
-  router.push({
-    path : "detail",
-    params: { travelRouteNo: props.travelRoute.travelRouteNo , userId: props.userId }
-  });
-  shareStore.travelRoute = props.travelRoute;
+// const showMyTravelDetail = () => {
+//   //hit 올리기
+//
+//   router.push({
+//     path : "detail",
+//     params: { travelRouteNo: props.travelRoute.travelRouteNo , userId: props.userId }
+//   });
+//   shareStore.travelRoute = props.travelRoute;
+// }
+const showMyTravelDetail = async() => {
+  //hit 올리기
+  try {
+    // hit 올리기
+    await updateHit(props.travelRoute.travelRouteNo);
+    router.push({
+      path: "detail",
+      params: { travelRouteNo: props.travelRoute.travelRouteNo, userId: props.userId }
+    });
+    shareStore.travelRoute = props.travelRoute;
+  } catch (error) {
+    console.error('Hit를 올리고 상세 페이지로 이동하는 중 에러 발생:', error);
+  }
 }
 
 </script>

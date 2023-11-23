@@ -5,6 +5,8 @@ import com.ssafy.ux.finalpj.share.model.SharedTravelRouteDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
 import com.ssafy.ux.finalpj.share.model.service.ShareService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.SQLException;
@@ -54,7 +56,19 @@ public class ShareController {
 
     @GetMapping("/listTop6TravelRoute")
     public List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException{
+        List<SharedTravelRouteDto> list = service.listTop6TravelRoute();
+        System.out.println(list);
         return service.listTop6TravelRoute();
+    }
+
+    @PutMapping("/updatehit")
+    public ResponseEntity<?> UpdateHit(@RequestBody String travelRouteNo) {
+        try {
+            service.updateHit(Integer.parseInt(travelRouteNo));
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 }

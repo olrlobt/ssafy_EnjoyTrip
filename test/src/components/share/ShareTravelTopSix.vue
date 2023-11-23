@@ -1,25 +1,46 @@
 <template>
-  <div v-for="(share) in shareStore.share" :key="share.id" class="share-item">
-    <div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1">
-      <div class="feature-1 d-md-flex">
-        <div class="align-self-center">
-          <span class="flaticon-house display-4 text-primary"></span>
-          <h3>Beautiful Condo</h3>
-          <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-        </div>
+  <div class="custom-card">
+    <div class="custom-card-body">
+      <span class="flaticon-house display-4 text-primary"></span>
+      <h3>{{ props.travelRoute.subject }}</h3>
+      <div class="additional-info">
+        <p>User ID: {{ props.travelRoute.userId }}</p>
+        <p>Hit: {{ props.travelRoute.hit }}</p>
       </div>
+      <!-- 추가적인 내용이 있다면 여기에 추가 -->
     </div>
   </div>
 </template>
 
 <script setup>
-import {storeToRefs} from "pinia";
-import {useShareStore} from "@/stores/share";
-const { shareInfo } = storeToRefs(useShareStore);
-
-
+const props = defineProps(['travelRoute']);
+// console.log(props.travelRoute)
 </script>
 
 <style scoped>
-/* 서비스 섹션에 대한 CSS 스타일 */
+.custom-card {
+  width: 100%;
+  max-width: 500px; /* 원하는 최대 가로 폭 지정 */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.custom-card-body {
+  padding: 20px;
+  text-align: center;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+  overflow: hidden;
+  text-overflow: ellipsis; /* 텍스트가 넘칠 경우 생략 부호(...) 표시 */
+}
+
+.custom-card-body h3 {
+  margin-top: 10px;
+}
+
+.custom-card-body p {
+  margin-bottom: 10px;
+}
 </style>

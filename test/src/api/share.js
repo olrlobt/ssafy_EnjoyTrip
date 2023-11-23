@@ -25,6 +25,26 @@ function getSharedTravelRoute(success, fail) {
     local.get(`${url}/listSharedTravelRoute`).then(success).catch(fail);
 }
 
+async function listTop6TravelRoute() {
+    try {
+        console.log("들어옴");
+        const response = await local.get(`${url}/listTop6TravelRoute`);
+        return response.data;
+    } catch (error) {
+        console.error('Error in listTop6TravelRoute:', error);
+        throw error;
+    }
+}
+
+async function updateHit(travelRouteNo) {
+    try {
+        await local.put(`${url}/updatehit`, JSON.stringify(travelRouteNo));
+    } catch (error) {
+        console.error('Error in updateHit:', error);
+        throw error;
+    }
+}
+
 
 export {
     saveTravelRoute,
@@ -32,5 +52,6 @@ export {
     deleteTravelRoute,
     shareTravelRoute,
     getSharedTravelRoute,
-
+    listTop6TravelRoute,
+    updateHit,
 };

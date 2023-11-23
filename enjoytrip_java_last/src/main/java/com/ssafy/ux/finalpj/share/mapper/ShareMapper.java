@@ -23,7 +23,6 @@ public interface ShareMapper {
 
 
     //TOP6 List
-    @Select("select * TravelRoute order by hit desc limit 6")
     List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException;
 
     @Update("update TravelRoute set hit = hit+1 where travelRouteNo = #{travelRouteNo}")
