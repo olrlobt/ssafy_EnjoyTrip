@@ -32,9 +32,7 @@ const memberInfo = ref({
   emailDomain: "",
 });
 
-// const comments = ref([]);
 const commentStore = useCommentStore();
-const comments = commentStore.comments;
 
 const getMemberInfo = async () => {
   try {
@@ -105,8 +103,7 @@ const fetchComments = async () => {
           (error) => reject(error)
       );
     });
-
-    comments.value = data;
+    commentStore.comments = data;
   } catch (error) {
     console.error(error);
   }
@@ -144,7 +141,6 @@ function onDeleteArticle() {
 const write = ref();
 function clickComment() {
 
-  //writewritewritewritewritewritewritewrite
   const newComment = {
     content: write.value,
     userId: memberInfo.value.userId,
@@ -154,12 +150,10 @@ function clickComment() {
   commentStore.comments.push(newComment);
   console.log("------ add" + commentStore.comments);
   addComment(
-      newComment.value,
+      newComment,
       (response) => {
         console.log("Comment added successfully:", response);
         fetchComments();
-        newComment.value.content = "";
-        write.value="";
       },
       (error) => {
         console.error("Error adding comment:", error);
@@ -208,7 +202,7 @@ function clickComment() {
 
     <!-- Comments List -->
     <div>
-      <CommentList :comments="comments" />
+      <CommentList  />
       <!-- Replace with actual comments loop -->
     </div>
   </div>

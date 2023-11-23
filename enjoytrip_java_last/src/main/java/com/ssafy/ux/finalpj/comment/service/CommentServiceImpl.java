@@ -17,11 +17,13 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto addComment(CommentDto commentDto) {
         commentMapper.addComment(commentDto);
+        System.out.println("commentDto = " + commentDto.toString());
         return commentDto;
     }
 
     @Override
     public List<CommentDto> getCommentsForArticle(int articleNo) {
+        commentMapper.getCommentsForArticle(articleNo).forEach(System.out::println);
         return commentMapper.getCommentsForArticle(articleNo);
     }
 

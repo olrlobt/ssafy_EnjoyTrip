@@ -4,8 +4,9 @@
 
 <mapper namespace="com.ssafy.ux.finalpj.share.mapper.ShareMapper">
 
-    <select id="list" parameterType="String" resultType="travelRouteDto" resultMap="travelListResultMap" >
-        SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime,m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title, m.step
+    <select id="list" parameterType="String" resultType="travelRouteDto" resultMap="travelListResultMap">
+        SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime,m.addr1, m.areacode,
+        m.firstimage, m.mapX, m.mapY, m.title, m.step
         FROM TravelRoute t
         LEFT JOIN Marker m
         ON t.travelRouteNo = m.travelRouteNo
@@ -15,62 +16,82 @@
             </if>
         </where>
     </select>
-    
+
     <resultMap id="travelListResultMap" type="travelRouteDto">
-        <result column="TRAVELROUTENO" property="travelRouteNo" />
-        <result column="USERID" property="userId" />
-        <result column="SUBJECT" property="subject" />
-        <result column="CONTENT" property="content" />
-        <result column="HIT" property="hit" />
-        <result column="REGISTERTIME" property="registerTime" />
+        <result column="TRAVELROUTENO" property="travelRouteNo"/>
+        <result column="USERID" property="userId"/>
+        <result column="SUBJECT" property="subject"/>
+        <result column="CONTENT" property="content"/>
+        <result column="HIT" property="hit"/>
+        <result column="REGISTERTIME" property="registerTime"/>
         <collection property="markers" ofType="markerDto">
-            <result column="ADDR1" property="addr1" />
-            <result column="AREACODE" property="areacode" />
-            <result column="FIRSTIMAGE" property="firstimage" />
-            <result column="MAPX" property="mapx" />
-            <result column="MAPY" property="mapy" />
-            <result column="TITLE" property="title" />
-            <result column="STEP" property="step" />
+            <result column="ADDR1" property="addr1"/>
+            <result column="AREACODE" property="areacode"/>
+            <result column="FIRSTIMAGE" property="firstimage"/>
+            <result column="MAPX" property="mapx"/>
+            <result column="MAPY" property="mapy"/>
+            <result column="TITLE" property="title"/>
+            <result column="STEP" property="step"/>
         </collection>
     </resultMap>
-    
-    <insert id="writeTravelRoute" parameterType="travelRouteDto" useGeneratedKeys="true" keyProperty="travelRouteNo" >
+
+    <insert id="writeTravelRoute" parameterType="travelRouteDto" useGeneratedKeys="true" keyProperty="travelRouteNo">
         INSERT INTO TravelRoute (userId, subject, content, hit, registerTime)
-        VALUES ( #{userId}, #{subject}, #{content}, #{hit}, now())
+        VALUES (#{userId}, #{subject}, #{content}, #{hit}, DATE_FORMAT(NOW(), '%y/%m/%d %H:%i'))
     </insert>
 
+<!--    <insert id="writeTravelRoute" parameterType="travelRouteDto" useGeneratedKeys="true" keyProperty="travelRouteNo">-->
+<!--        INSERT INTO TravelRoute (userId, subject, content, hit, registerTime)-->
+<!--        VALUES (#{userId}, #{subject}, #{content}, #{hit}, FORMATDATETIME(CURRENT_TIMESTAMP(), 'yy/MM/dd HH:mm'))-->
+<!--    </insert>-->
+
     <insert id="writeMarker" parameterType="markerDto">
-        INSERT INTO Marker ( addr1, areacode, firstimage, mapX, mapY, title , travelRouteNo, step)
-        VALUES (#{addr1}, #{areacode}, #{firstimage}, #{mapx}, #{mapy}, #{title} , #{travelRouteNo}, #{step})
+        INSERT INTO Marker (addr1, areacode, firstimage, mapX, mapY, title, travelRouteNo, step)
+        VALUES (#{addr1}, #{areacode}, #{firstimage}, #{mapx}, #{mapy}, #{title}, #{travelRouteNo}, #{step})
     </insert>
 
     <delete id="delete">
-        DELETE FROM TravelRoute
+        DELETE
+        FROM TravelRoute
         WHERE travelRouteNo = #{travelRouteNo}
     </delete>
 
     <insert id="writeSharedTravelRoute" parameterType="travelRouteDto">
         INSERT INTO sharedTravelRoute (travelRouteNo, title, content)
-        VALUES ( #{travelRouteNo}, #{subject}, #{content})
+        VALUES (#{travelRouteNo}, #{subject}, #{content})
     </insert>
 
     <update id="update" parameterType="travelRouteDto">
         UPDATE TravelRoute
-        SET subject = #{subject}, content = #{content}
+        SET subject = #{subject},
+            content = #{content}
         WHERE travelRouteNo = #{travelRouteNo};
     </update>
 
-    <select id="listSharedTravelRoute" resultType="sharedTravelRouteDto" resultMap="listSharedTravelRouteMap" >
-        SELECT s.sharedTravelRouteNo, t.travelRouteNo , t.userId, s.title as subject, s.content, t.hit, t.registerTime,m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title, m.step
+    <select id="listSharedTravelRoute" resultType="sharedTravelRouteDto" resultMap="listSharedTravelRouteMap">
+        SELECT s.sharedTravelRouteNo,
+               t.travelRouteNo,
+               t.userId,
+               s.title as subject,
+               s.content,
+               t.hit,
+               t.registerTime,
+               m.addr1,
+               m.areacode,
+               m.firstimage,
+               m.mapX,
+               m.mapY,
+               m.title,
+               m.step
         FROM sharedTravelRoute s
-        LEFT JOIN TravelRoute t
-        ON s.travelRouteNo = t.travelRouteNo
-        LEFT JOIN Marker m
-        ON t.travelRouteNo = m.travelRouteNo
+                 LEFT JOIN TravelRoute t
+                           ON s.travelRouteNo = t.travelRouteNo
+                 LEFT JOIN Marker m
+                           ON t.travelRouteNo = m.travelRouteNo
     </select>
 
     <resultMap id="listSharedTravelRouteMap" type="sharedTravelRouteDto" extends="travelListResultMap">
-        <result column="SHAREDTRAVELROUTENO" property="sharedTravelRouteNo" />
+        <result column="SHAREDTRAVELROUTENO" property="sharedTravelRouteNo"/>
     </resultMap>
 
 </mapper>
