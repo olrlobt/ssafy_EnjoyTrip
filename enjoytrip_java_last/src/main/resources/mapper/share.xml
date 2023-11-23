@@ -94,4 +94,11 @@
         <result column="SHAREDTRAVELROUTENO" property="sharedTravelRouteNo"/>
     </resultMap>
 
+    <select id="listTop6TravelRoute" resultType="SharedTravelRouteDto">
+        SELECT *
+        FROM TravelRoute
+        ORDER BY hit DESC
+        LIMIT 6;
+    </select>
+
 </mapper>
