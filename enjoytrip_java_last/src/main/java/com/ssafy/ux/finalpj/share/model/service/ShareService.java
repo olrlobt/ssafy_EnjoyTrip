@@ -56,5 +56,8 @@ public class ShareService {
         return mapper.listSharedTravelRoute();
     }
 
+    public List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException {
+        return mapper.listTop6TravelRoute();
+    }
 
 }

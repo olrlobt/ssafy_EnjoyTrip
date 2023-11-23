@@ -53,4 +53,9 @@ public class ShareController {
         return service.listSharedTravelRoute();
     }
 
+    @GetMapping("/listTop6TravelRoute")
+    public List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException{
+        return service.listTop6TravelRoute();
+    }
+
 }

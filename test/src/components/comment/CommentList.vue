@@ -2,7 +2,6 @@
   <div v-for="(comment,index) in commentStore.comments" :key="comment.id" class="comment-item">
     <div class="comment-card">
       <div class="comment-header">
-        <!--        {{comment}}-->
         <span class="user-id">{{ maskUserId(comment.userId) }}</span>
         <span class="edit-delete-icons" v-if="checked(comment.userId)">
           <span class="edit-icon" @click="editComment(comment)">✎</span>
@@ -26,15 +25,14 @@
 <script setup>
 import {storeToRefs} from "pinia";
 import {useMemberStore} from "@/stores/member";
-import {computed, ref} from "vue";
-import {deleteComment, getCommentsForArticle, modifyComment} from "@/api/comment";
+import {ref} from "vue";
+import {deleteComment, modifyComment} from "@/api/comment";
 import {useCommentStore} from "@/stores/comment";
 
 // const router = useRouter();
 const memberStore = useMemberStore();
 const isChanging = ref(false); // 수정 중인지 판단.
 const write = ref("");
-
 
 const {userInfo} = storeToRefs(memberStore);
 
@@ -46,7 +44,6 @@ const newComment = ref({
 });
 
 const commentStore = useCommentStore();
-
 
 // const newComment = ref(props);
 console.log(newComment.value);

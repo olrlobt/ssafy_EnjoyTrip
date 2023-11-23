@@ -16,41 +16,7 @@
           </div>
         </div>
 
-        <div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-1">
-          <div class="feature-1 d-md-flex">
-            <div class="align-self-center">
-              <span class="flaticon-house display-4 text-primary"></span>
-              <h3>Beautiful Condo</h3>
-              <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-            </div>
-          </div>
-
-          <div class="feature-1">
-            <div class="align-self-center">
-              <span class="flaticon-restaurant display-4 text-primary"></span>
-              <h3>Restaurants & Cafe</h3>
-              <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-            </div>
-          </div>
-        </div>
-
-        <div class="col-6 col-sm-6 col-lg-4 feature-1-wrap d-md-flex flex-md-column order-lg-3">
-          <div class="feature-1 d-md-flex">
-            <div class="align-self-center">
-              <span class="flaticon-mail display-4 text-primary"></span>
-              <h3>Easy to Connect</h3>
-              <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-            </div>
-          </div>
-
-          <div class="feature-1 d-md-flex">
-            <div class="align-self-center">
-              <span class="flaticon-phone-call display-4 text-primary"></span>
-              <h3>24/7 Support</h3>
-              <p class="mb-0">Even the all-powerful Pointing has no control about the blind texts.</p>
-            </div>
-          </div>
-        </div>
+        // 여기에 Top6
       </div>
     </div>
   </div>

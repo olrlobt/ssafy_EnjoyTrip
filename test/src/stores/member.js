@@ -68,6 +68,7 @@ export const useMemberStore = defineStore("memberStore", () => {
 
       const data = await findByIdPromise(decodeToken.userId);
       userInfo.value = data;
+      isLogin.value = true; // 로그인 상태를 true로 설정
     } catch (error) {
       console.error(
         "getUserInfo() error code [토큰 만료되어 사용 불가능.] ::: ",

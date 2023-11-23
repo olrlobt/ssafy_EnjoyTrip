@@ -4,6 +4,7 @@ import com.ssafy.ux.finalpj.share.model.MarkerDto;
 import com.ssafy.ux.finalpj.share.model.SharedTravelRouteDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
 import java.sql.SQLException;
@@ -19,6 +20,11 @@ public interface ShareMapper {
     void update(TravelRouteDto travelRouteDto) throws SQLException;
     void writeSharedTravelRoute(TravelRouteDto travelRouteDto) throws SQLException;
     List<SharedTravelRouteDto> listSharedTravelRoute() throws SQLException;
+
+
+    //TOP6 List
+    @Select("select * TravelRoute order by hit desc limit 6")
+    List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException;
 
     @Update("update TravelRoute set hit = hit+1 where travelRouteNo = #{travelRouteNo}")
     void updateHit(int travelRouteNo) throws SQLException;
