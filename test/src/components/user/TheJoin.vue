@@ -37,7 +37,8 @@ function join() {
       <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
-          <form @submit.prevent="onSubmit">
+          <div class="join-container" style="margin-bottom: 100px">
+            <form @submit.prevent="onSubmit">
             <div class="mb-3">
               <label for="username" class="form-label">이름 : </label>
               <input
@@ -103,19 +104,57 @@ function join() {
                 </select>
               </div>
             </div>
-    
-            <div class="col-auto text-center">
-              <button type="button" @click = join() id="btn-join" class="btn btn-outline-primary mb-3" >
-                회원가입
-              </button>
-              <button type="button" @click = reset() class="btn btn-outline-success mb-3" >초기화</button>
-            </div>
-          </form>
+
+              <div class="col-auto text-center">
+                <button type="button" @click="join()" id="btn-join" class="btn btn-primary">회원가입</button>
+                <button type="button" @click="reset()" class="btn btn-secondary">초기화</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
 </template>
 
 <style scoped>
+.join-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
 
+.form-field {
+  margin-bottom: 20px;
+}
+
+.form-control, .btn, .form-select {
+  font-size: 1.1em;
+  border-radius: 5px;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin-right: 15px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.form-buttons {
+  text-align: center;
+}
+
+.input-group-text {
+  border-radius: 5px 0 0 5px;
+}
+
+.form-select {
+  border-radius: 0 5px 5px 0;
+}
 </style>

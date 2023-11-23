@@ -28,7 +28,7 @@
           <div class="arrow -forward"></div>
         </div>
       </div>
-      <input class="search" type="text" />
+      <input class="search" type="text" :value="mapStore.currentSelectMarker.coord.title " />
     </div>
 
     <div class="content" style=" padding: 20px;">
@@ -36,10 +36,10 @@
         <img
             :src="mapStore.currentSelectMarker.coord.firstimage"
             :alt="mapStore.currentSelectMarker.coord.title"
-            style="width: 150px; height: 150px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
+            style="width: 250px; height: 250px; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);"
         />
         <div style="margin-left: 20px; max-width: 60%; ">
-          <strong style="font-size: 1.2rem; color: #333;">{{ mapStore.currentSelectMarker.coord.title }}</strong><br/>
+          <span style="font-size: 1.1rem; color: #333;">주소지 :</span><br/>
           <span style="font-size: 0.9rem; color: #666;">{{ mapStore.currentSelectMarker.coord.addr1 }}</span>
         </div>
       </div>
@@ -70,7 +70,7 @@ const props = defineProps({
 
 
 <style lang="scss" scoped>
-@import "../../assets/scss/map/mapAppleThema";
+
 
 .window {
   position: relative;
@@ -79,6 +79,14 @@ const props = defineProps({
   height: 40vw;
   max-height: 500px;
   z-index: 100;
+  overflow: hidden;
 }
 
+.search {
+  height: 40px !important;
+  font-size: 1.2rem !important;
+  font-weight: bold;
+}
+
+@import "../../assets/scss/map/mapAppleThema";
 </style>

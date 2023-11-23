@@ -256,15 +256,17 @@ function fixMarker(marker, coord) {
 
 function generateInfoWindowContent(coord, isFixed) {
   return `
+
         <div class="info-window-container">
-            <div class="info-window-header">
-                <img class="info-window-image" src= "` + coord.firstimage + `" alt="` + coord.title + `"/>
-                <div class="info-window-title">` + coord.title + `</div>
-            </div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
-                <button class="button-common ` + (isFixed ? 'remove-marker-btn' : 'add-marker-btn') + `">` + (isFixed ? '삭제' : '추가') + `</button>
-                <button class="button-common register-btn">등록</button>
-            </div>
+          <div class="info-window-header">
+            <img class="info-window-image" src="` + coord.firstimage + `"/>
+            <div class="info-window-title">` + coord.title + `</div>
+          </div>
+          <div class="info-window-footer">
+            <button class="button-common ` + (isFixed ? 'remove-marker-btn' : 'add-marker-btn') + `"">
+              ` + (isFixed ? '삭제' : '추가') + `
+            </button>
+          </div>
         </div>
     `;
 }

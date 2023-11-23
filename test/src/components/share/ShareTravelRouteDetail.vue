@@ -83,14 +83,10 @@ const bringTravelRouteBtn = () => {
   console.log("가져오기")
   // shareStore.travelRoute
 
-
-
-
 }
 
 </script>
 <template>
-
   <div class="container">
     <div class="card">
       <div class="card-title">{{ shareStore.travelRoute.subject }}</div>
@@ -102,83 +98,71 @@ const bringTravelRouteBtn = () => {
             v-if="isMount"
             :markers="shareStore.travelRoute.markers"
             class="w-100 h-100"
-            style="min-height: 500px;"
+            style="min-height: 500px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"
         />
       </div>
       <div class="travel-list">
-        <KakaoListItem v-if="isMount" :item="travelList"></KakaoListItem>
+        <KakaoListItem v-if="isMount" :item="travelList" style="margin-top: 20px;"></KakaoListItem>
       </div>
     </div>
+
     <div class="board">
-      <div class="card" v-if="!props.userId">
-        <p class="card-text" >{{ shareStore.travelRoute.content }}</p>
-        <p class="card-text"><small class="text-muted">작성자:{{ shareStore.travelRoute.userId }}</small></p>
+      <div class="card" v-if="!props.userId" style="margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+        <p class="card-text"><small class="text-muted">작성자: {{ shareStore.travelRoute.userId }}</small></p>
+        <p class="card-text">{{ shareStore.travelRoute.content }}</p>
       </div>
     </div>
-    <div class="buttons">
-      <button v-if="props.userId" @click="shareTravelRouteBtn">공유하기</button>
-      <button v-if="props.userId" @click="bringTravelRouteBtn">가져오기</button>
-      <button v-if="props.userId" @click="deleteTravelRouteBtn">삭제하기</button>
+
+    <div class="buttons" style="margin-top: 20px;">
+      <button v-if="props.userId" @click="shareTravelRouteBtn" class="btn btn-primary">공유하기</button>
+      <button @click="bringTravelRouteBtn" class="btn btn-secondary">가져오기</button>
+      <button @click="deleteTravelRouteBtn" class="btn btn-danger">삭제하기</button>
     </div>
   </div>
-
 </template>
-
-<style>
-
-body {
-  font-family: Arial, sans-serif;
-}
-
+<style scoped>
 .container {
-  width: 80%;
-  margin: auto;
+  display: flex;
+  max-width: 1000px !important;
+  flex-direction: column;
   padding: 20px;
 }
 
 .map-list-container {
-  display: flex;
-  justify-content: space-between;
-  margin-bottom: 20px;
-}
-
-.map, .travel-list {
-  border: 1px solid #ddd;
-  padding: 10px;
+  display: flex; /* Flex 컨테이너로 설정 */
+  flex-grow: 1;
 }
 
 .map {
-  width: 60%;
-  min-height: 500px;
+  flex: 1.5; /* 두 컴포넌트가 동일한 비율로 공간을 차지하도록 설정 */
 }
 
 .travel-list {
-  width: 35%;
+  flex: 1; /* 두 컴포넌트가 동일한 비율로 공간을 차지하도록 설정 */
 }
 
-.board .card {
-  border: 1px solid #ddd;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.buttons {
-  text-align: center;
-}
-
-button {
-  margin: 5px;
-  padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
-  border: none;
+.card {
+  background: white;
+  padding: 15px;
   border-radius: 5px;
-  cursor: pointer;
+  margin-bottom: 20px;
+  padding : 30px;
 }
 
-button:hover {
-  background-color: #0056b3;
+.card-title {
+  font-size: 24px;
+  font-weight: bold;
+  padding-left: 30px;
+  padding-right: 30px;
 }
 
+.card-text {
 
+
+}
+
+.btn {
+  margin-right: 10px;
+  padding: 10px 20px;
+}
 </style>

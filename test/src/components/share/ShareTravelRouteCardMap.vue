@@ -23,6 +23,10 @@ function initMap() {
   const options = {
     center: new kakao.maps.LatLng(35.566826, 128.0786567),
     level: 6,
+    draggable: false,
+    disableDoubleClick : false,
+    disableDoubleClickZoom : false,
+    keyboardShortcuts : false,
   };
 
    map.value = new kakao.maps.Map(mapCard.value, options);

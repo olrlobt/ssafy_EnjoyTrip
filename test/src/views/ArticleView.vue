@@ -24,6 +24,8 @@ const changeHero = (title1, contents2) => {
 mark.sky {
   background: linear-gradient(to top, #54fff9 20%, transparent 30%);
 }
+
+
 </style>
 
 <!--   <TheHeroVue title="Write" contents ="쓰기 창입니다." />

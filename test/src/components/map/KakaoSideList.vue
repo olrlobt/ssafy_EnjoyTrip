@@ -10,7 +10,7 @@ import KakaoListItem from "@/components/map/KakaoListItem.vue";
 /* global kakao */
 const mapStore = useMapStore();
 const memberStore = useMemberStore();
-const currentTabId = ref(1);
+const currentTabId = ref(2);
 const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
@@ -288,7 +288,7 @@ const clearMyTravelRoute = () => {
               :class="[active(1), 'tab']"
               @mousedown="changeTab(1)"
           >
-            <span class="text">여행경로</span>
+            <span class="text" style="font-size: 13px">여행경로</span>
             <div
                 class="close-button"
             ></div>
@@ -298,7 +298,7 @@ const clearMyTravelRoute = () => {
               :class="[active(2), 'tab']"
               @mousedown="changeTab(2)"
           >
-            <span class="text"> 관광리스트</span>
+            <span class="text" style="font-size: 13px"> 관광리스트</span>
             <div
                 class="close-button"
             ></div>
@@ -377,7 +377,6 @@ const clearMyTravelRoute = () => {
 
 .window {
   width: 100%;
-  max-width: 350px;
   max-height: 100%;
   height: 100%;
   z-index: 4;
