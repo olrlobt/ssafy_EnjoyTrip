@@ -1,8 +1,6 @@
 <script setup>
 import {useMemberStore} from "@/stores/member";
-
 const memberStore = useMemberStore();
-
 
 function logout() {
      sessionStorage.removeItem('accessToken');
@@ -15,7 +13,7 @@ function logout() {
 
 
 <template>
-  <!-- <div>{{ isLoggedIn }}</div> -->
+<!--  <div>{{ memberStore.isLogin }}</div>-->
   <nav class="site-nav">
     <div class="container">
       <div class="site-navigation">

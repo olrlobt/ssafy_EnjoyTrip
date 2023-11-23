@@ -3,7 +3,8 @@ defineProps({ article: Object });
 </script>
 
 <template>
-  <tr class="text-center">
+<!--  {{article}}-->
+  <tr :style="{ marginLeft: `${article.depth * 20}px` }" class="text-center" >
     <th scope="row">{{ article.articleNo }}</th>
     <td class="text-start">
       <router-link
@@ -22,5 +23,14 @@ defineProps({ article: Object });
 <style scoped>
 a {
   text-decoration: none;
+}
+/* 추가한 부분 */
+.text-center {
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.text-center:hover {
+  background-color: #f2f2f2;
 }
 </style>

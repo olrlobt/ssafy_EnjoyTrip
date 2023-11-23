@@ -15,4 +15,9 @@ public interface CommentMapper {
     @Select("SELECT * FROM comments WHERE articleNo = #{articleNo}")
     List<CommentDto> getCommentsForArticle(@Param("articleNo") int articleNo);
 
+    @Update("UPDATE comments set content = #{content} where commentNo = #{commentNo}")
+    void modifyComment(CommentDto commentDto);
+
+    @Delete("DELETE FROM comments where commentNo = #{commentNo}")
+    void deleteComment(int commentNo);
 }

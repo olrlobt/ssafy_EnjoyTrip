@@ -10,24 +10,25 @@ import { useMemberStore } from "@/stores/member";
 const router = useRouter();
 const memberStore = useMemberStore();
 
-const { isLogin } = storeToRefs(memberStore);
-const { userLogin, getUserInfo } = memberStore;
+const { isLogin, userInfo } = storeToRefs(memberStore);
 // const { changeMenuState } = useMenuStore();
 
 const loginUser = ref({
   userId: "",
   userPwd: "",
 });
-
-
 const login = async () => {
+
   try {
     // userLogin 메서드가 Promise를 반환하도록 가정합니다.
     await memberStore.userLogin(loginUser.value);
 
     let token = sessionStorage.getItem("accessToken");
-
     if (isLogin.value) {
+
+      // console.log("token" + token);
+      console.log("userInfo:" + userInfo.value.userId);
+
       await memberStore.getUserInfo(token);
       await router.push("/");
     }

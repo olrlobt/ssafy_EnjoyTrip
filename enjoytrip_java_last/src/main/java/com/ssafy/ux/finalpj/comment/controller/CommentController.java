@@ -1,5 +1,6 @@
 package com.ssafy.ux.finalpj.comment.controller;
 
+import com.ssafy.ux.finalpj.board.model.BoardDto;
 import com.ssafy.ux.finalpj.comment.model.CommentDto;
 import com.ssafy.ux.finalpj.comment.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
@@ -43,4 +44,28 @@ public class CommentController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error getting comments for article.");
         }
     }
+
+    @PutMapping("/modify")
+    public ResponseEntity<?> modifyComment(@RequestBody CommentDto commentDto) {
+        try {
+            commentService.modifyComment(commentDto);
+            return ResponseEntity.ok().body("Comment modified successfully.");
+        } catch (Exception e) {
+            log.error("Error during comment modification", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article modification.");
+        }
+    }
+
+    @DeleteMapping("/delete/{commentNo}")
+    public ResponseEntity<?> deleteComment(@PathVariable("commentNo") String commentNo) {
+        try {
+            System.out.println(commentNo);
+            commentService.deleteComment(Integer.parseInt(commentNo));
+            return ResponseEntity.ok().body("Comment deleted successfully.");
+        } catch (Exception e) {
+            log.error("Error during comment deletion", e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error during article deletion.");
+        }
+    }
+
 }

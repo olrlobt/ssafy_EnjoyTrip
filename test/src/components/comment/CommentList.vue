@@ -1,21 +1,150 @@
 <template>
-  <div v-for="comment in comments" :key="comment.id" class="comment-item">
-  <div class="comment-card">
-    <div class="comment-header">{{ maskUserId(comment.userId) }}</div>
-    <div class="comment-content">
-      {{ comment.content }}
+  <div v-for="(comment,index) in commentStore.comments" :key="comment.id" class="comment-item">
+    <div class="comment-card">
+      <div class="comment-header">
+        <!--        {{comment}}-->
+        <span class="user-id">{{ maskUserId(comment.userId) }}</span>
+        <span class="edit-delete-icons" v-if="checked(comment.userId)">
+          <span class="edit-icon" @click="editComment(comment)">✎</span>
+          <span class="delete-icon" @click="deleteButton(comment,index)">❌</span>
+        </span>
+      </div>
+      <div class="comment-divider"></div>
+      <div v-if="!isChanging" class="comment-content">
+        {{ comment.content }}
+      </div>
+      <div v-if="isChanging" class="comment-content">
+        <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
+        <button class="btn btn-primary mt-2" @click="clickComment(comment)">댓글 입력</button>
+      </div>
     </div>
+    <div class="comment-divider"></div>
   </div>
-  </div>
-
 </template>
 
+
 <script setup>
-defineProps(['comments']);
+import {storeToRefs} from "pinia";
+import {useMemberStore} from "@/stores/member";
+import {computed, ref} from "vue";
+import {deleteComment, getCommentsForArticle, modifyComment} from "@/api/comment";
+import {useCommentStore} from "@/stores/comment";
+
+// const router = useRouter();
+const memberStore = useMemberStore();
+const isChanging = ref(false); // 수정 중인지 판단.
+const write = ref("");
+
+
+const {userInfo} = storeToRefs(memberStore);
+
+const newComment = ref({
+  content: write.value, //얘랑
+  userId: "",
+  articleNo: "",
+  commentNo: "", //얜 필수
+});
+
+const commentStore = useCommentStore();
+
+
+// const newComment = ref(props);
+console.log(newComment.value);
+
+
+// const updatedComments = computed(() => {
+//   // 수정된 댓글을 포함하는 새로운 배열 반환
+//   return props.comments.map(comment => {
+//     // 현재 수정 중인 댓글인지 확인
+//     if (comment.commentNo === newComment.value.commentNo) {
+//       // 수정된 댓글 반환
+//       return { ...comment, content: newComment.value.content };
+//     }
+//     // 원래 댓글 반환
+//     return comment;
+//   });
+// });
+
 const maskUserId = (userId) => {
   // 앞의 두 글자를 남기고 나머지 부분을 *로 바꾸어 반환
   return userId ? userId.slice(0, 2) + '*'.repeat(userId.length - 2) : '';
 };
+
+const checked = (id) => {
+  if (id === userInfo.value.userId) { // comment id 와 현재 로그인 사용자가 같다면
+    return true;
+  }
+}
+
+function clickComment(comment) {
+  newComment.value.content = write.value; //얘랑
+  newComment.value.userId = comment.userId;
+  newComment.value.articleNo = comment.articleNo;
+  newComment.value.commentNo = comment.commentNo; //얜 필수
+  comment.content = write.value;
+  console.log("newComment", newComment.value);
+  modifyComment(
+      newComment.value,
+      (response) => {
+        console.log("Comment modify successfully:", response);
+        isChanging.value = !isChanging.value;
+
+      },
+      (error) => {
+        console.error("Error modify comment:", error);
+      }
+  );
+
+
+}
+
+
+const editComment = (comment) => { //userId, commentNo
+                                   // 수정 로직을 여기에 추가
+  console.log(comment);
+  isChanging.value = !isChanging.value;
+  // 수정하로 가기
+  write.value = comment.content;
+  console.log("editComment:" + write.value);
+};
+
+// const fetchComments = async () => {
+//   try {
+//     const { data } = await new Promise((resolve, reject) => {
+//       getCommentsForArticle(
+//           newComment.value.articleNo,
+//           (response) => resolve(response),
+//           (error) => reject(error)
+//       );
+//     });
+//
+//     newComment.value = data;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+const deleteButton =  (comment,index) => {
+  // 삭제 로직을 여기에 추가
+  console.log('Delete comment with ID:', comment.commentNo);
+  deleteComment(
+      comment.commentNo,
+      () => {
+        console.log("------ delete before" + commentStore.comments.length)
+        if (index !== -1) {
+          commentStore.comments.splice(index, 1);
+        }
+        console.log("------ delete" + commentStore.comments.length)
+      },
+      (error) => {
+        console.error("Error delete comment:", error);
+      }
+  );
+  // 로컬에서 삭제된 댓글을 갱신
+
+  // updatedComments.value = updatedComments.value.filter(comment => comment.commentNo !== commentNo);
+};
+
 
 </script>
 
@@ -31,17 +160,52 @@ const maskUserId = (userId) => {
   margin-bottom: 16px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 .comment-header {
   font-size: 14px;
   font-weight: bold;
   color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* 추가된 라인 */
 }
+
+.user-id {
+  flex-grow: 1; /* 추가된 라인 */
+}
+
+.comment-divider {
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
 
 .comment-content {
   margin-top: 8px;
   font-size: 16px;
   color: #555;
+}
+
+.comment-divider {
+  border-top: 1px solid #ddd;
+  margin: 10px 0;
+}
+
+.edit-delete-icons {
+  display: flex;
+  align-items: center; /* 추가된 라인 */
+}
+
+.edit-icon,
+.delete-icon {
+  cursor: pointer;
+  margin-left: 10px;
+  color: #3498db;
+}
+
+.delete-icon {
+  color: #e74c3c;
 }
 </style>

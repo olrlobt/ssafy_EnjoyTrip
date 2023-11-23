@@ -4,6 +4,7 @@ import { defineStore } from "pinia";
 import { jwtDecode } from "jwt-decode";
 
 import { userConfirm, findById, tokenRegeneration, logout } from "@/api/user";
+import {httpStatusCode} from "@/util/http-status";
 export const useMemberStore = defineStore("memberStore", () => {
   const router = useRouter();
 
@@ -94,7 +95,7 @@ export const useMemberStore = defineStore("memberStore", () => {
           // 다시 로그인 전 DB에 저장된 RefreshToken 제거.
           await logout(
             userInfo.value.userid,
-            (response) => {
+            () => {
               alert("RefreshToken 기간 만료!!! 다시 로그인해 주세요.");
               isLogin.value = false;
               userInfo.value = null;

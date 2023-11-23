@@ -25,4 +25,14 @@ public class CommentServiceImpl implements CommentService {
         return commentMapper.getCommentsForArticle(articleNo);
     }
 
+    @Override
+    public void modifyComment(CommentDto commentDto) throws Exception {
+        commentMapper.modifyComment(commentDto);
+    }
+
+    @Override
+    public void deleteComment(int commentNo) throws Exception {
+        commentMapper.deleteComment(commentNo);
+    }
+
 }
