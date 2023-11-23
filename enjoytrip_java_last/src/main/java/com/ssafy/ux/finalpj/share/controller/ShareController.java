@@ -17,7 +17,6 @@ import java.util.List;
 public class ShareController {
 
     private ShareService service;
-
     public ShareController(ShareService service) {
         this.service = service;
     }
