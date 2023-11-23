@@ -7,6 +7,7 @@ import { detailArticle, deleteArticle } from "@/api/board";
 import { addComment, getCommentsForArticle } from "@/api/comment";
 import {useMemberStore} from "@/stores/member";
 import CommentList from "@/components/comment/CommentList.vue";
+import {useCommentStore} from "@/stores/comment";
 
 const memberStore = useMemberStore();
 
@@ -31,7 +32,9 @@ const memberInfo = ref({
   emailDomain: "",
 });
 
-const comments = ref([]);
+// const comments = ref([]);
+const commentStore = useCommentStore();
+const comments = commentStore.comments;
 
 const getMemberInfo = async () => {
   try {
@@ -70,7 +73,7 @@ onMounted(async () => {
     article.value = data;
     content.value = data.content;
 
-    if(article.value.userId === memberInfo.value.userId){
+    if(article.value.userId === memberStore.userInfo.userId){
       checked.value = true;
     }
 
@@ -140,12 +143,16 @@ function onDeleteArticle() {
 
 const write = ref();
 function clickComment() {
-  const newComment = ref({
+
+  //writewritewritewritewritewritewritewrite
+  const newComment = {
     content: write.value,
     userId: memberInfo.value.userId,
     articleNo: articleno,
-  });
+  };
 
+  commentStore.comments.push(newComment);
+  console.log("------ add" + commentStore.comments);
   addComment(
       newComment.value,
       (response) => {

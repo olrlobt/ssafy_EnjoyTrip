@@ -15,6 +15,19 @@ function getCommentsForArticle(articleNo, success, fail) {
         .then(success)
         .catch(fail);
 }
+
+function modifyComment(comment, success, fail){
+    local.put(`${url}/modify`, JSON.stringify(comment))
+        .then(success)
+        .catch(fail);
+}
+
+function deleteComment(commentNo, success, fail) {
+    console.log("deleteComment:", commentNo);
+    local.delete(`${url}/delete/${commentNo}`)
+        .then(success)
+        .catch(fail);
+}
 export {
-  addComment, getCommentsForArticle,
+  addComment, getCommentsForArticle, modifyComment, deleteComment,
 };
