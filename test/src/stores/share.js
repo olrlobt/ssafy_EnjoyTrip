@@ -6,7 +6,6 @@ export const useShareStore = defineStore("shareStore", () => {
 
     const travelRoute = ref({});
 
-
     return {
         travelRoute
     };
