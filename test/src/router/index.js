@@ -25,8 +25,8 @@ const router = createRouter({
     {
       path: '/map',
       name: 'map',
+      param: true,
       component: MapView,
-      
     },
     {
       path: '/user/modify',

@@ -2,9 +2,8 @@
   <template></template>
 </template>
 <script setup>
-import {defineProps, ref} from 'vue';
+import {defineProps, onMounted, ref} from 'vue';
 import {useMapStore} from "@/stores/map";
-import {useMemberStore} from "@/stores/member";
 /* global kakao */
 const mapStore = useMapStore();
 const {VITE_TRAVEL_API_KEY} = import.meta.env;
@@ -16,6 +15,33 @@ let prop = defineProps(['changeSelectMarker']);
 
 const addListenersMap = ref(new Map());
 const removeListenersMap = ref(new Map());
+
+
+onMounted( ()=> {
+
+  mapStore.markers.splice(0, mapStore.markers.length);
+  if(mapStore.coord){
+    mapStore.coord.forEach(value => mapStore.travelList.push({coord: value}));
+    mapStore.coord.splice(0, mapStore.coord.length);
+  }
+  if(mapStore.travelList){
+    const coordinates = [];
+    mapStore.travelList.forEach(value => coordinates.push(value.coord));
+    mapStore.travelList.splice(0, mapStore.travelList.length);
+    console.log(coordinates)
+    updateMap(coordinates);
+
+    for (let idx = 0; idx < mapStore.markers.length; idx++) {
+        mapStore.travelList.push({
+          marker: mapStore.markers[idx].marker,
+          coord: coordinates[idx]
+        })
+        fixMarker(mapStore.markers[idx].marker,coordinates[idx])
+    }
+  }
+
+  console.log("mount")
+})
 
 
 // 주어진 번호와 해당 번호에 대응하는 지역 코드를 매핑하는 객체
@@ -167,7 +193,7 @@ function revertMarker(targetMarker) {
 
   const markerIndex = mapStore.fixedMarkers.indexOf(targetMarker);
   if (markerIndex > -1) {
-    mapStore.fixedMarkers.splice(markerIndex, 1); // fixedMarkers 배열에서 제거
+    mapStore.fixedMarkers.splice(markerIndex, 1);
   }
 
   const positionIndex = fixedMarkerPositions.value.findIndex(pos => arePositionsClose(pos, targetMarker.getPosition()));

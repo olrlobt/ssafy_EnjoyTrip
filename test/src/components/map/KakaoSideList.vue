@@ -437,10 +437,11 @@ const clearMyTravelRoute = () => {
   color: black;
   text-decoration: none;
   border-bottom: 1px solid #eee;
+  cursor: pointer;
 }
 
 .slide-menu a:hover {
-  background-color: #f0f0f0;
+  background-color: #FFFFFF;
 }
 
 

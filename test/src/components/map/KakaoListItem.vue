@@ -7,8 +7,6 @@ const clickList = (item) => {
   props.click(item);
 }
 
-console.log(props.item)
-
 </script>
 <template>
 
