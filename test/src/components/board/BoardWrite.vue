@@ -10,7 +10,7 @@ const props = defineProps([
 
 
 onMounted(() => {
-  props.changeHero("쓰기","방가방가")
+  props.changeHero("글쓰기","🔅글쓰는 공간입니다 욕 또는 비속어는 삼가해주세요🔅")
 });
 
 </script>

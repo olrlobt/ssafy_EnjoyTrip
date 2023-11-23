@@ -1,9 +1,9 @@
 <template>
   <form @submit.prevent="onSubmit">
     <div class="mb-3">
-      <label for="userid" class="form-label">작성자 ID : </label>
+<!--      <label for="userid" class="form-label">작성자 ID : </label>-->
       <input
-          type="text"
+          type="hidden"
           class="form-control"
           v-model="article.userId"
           :disabled="isUseId"
