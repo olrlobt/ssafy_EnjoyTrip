@@ -3,6 +3,7 @@ package com.ssafy.ux.finalpj.share.model.service;
 
 import com.ssafy.ux.finalpj.share.mapper.ShareMapper;
 import com.ssafy.ux.finalpj.share.model.MarkerDto;
+import com.ssafy.ux.finalpj.share.model.SharedTravelRouteDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
 import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Service;
@@ -19,8 +20,8 @@ public class ShareService {
         this.mapper = mapper;
     }
 
-    public List<TravelRouteDto> list(TravelRouteDto travelRouteDto) throws SQLException {
-        return mapper.list(travelRouteDto);
+    public List<TravelRouteDto> list(String userId) throws SQLException {
+        return mapper.list(userId);
     }
 
     public void write(TravelRouteDto travelRouteDto) throws SQLException {
@@ -34,15 +35,26 @@ public class ShareService {
         }
     }
 
-    public void delete() throws SQLException {
-        mapper.delete();
+    public void delete(int travelRouteNo) throws SQLException {
+        mapper.delete(travelRouteNo);
     }
 
-    public void update() throws SQLException {
-        mapper.update();
+    public void update(TravelRouteDto travelRouteDto) throws SQLException {
+        mapper.update(travelRouteDto);
     }
+
 
     public void updateHit(int travelRouteNo) throws SQLException{
         mapper.updateHit(travelRouteNo);
     }
+
+    public void writeSharedTravelRoute(TravelRouteDto travelRouteDto) throws SQLException {
+        mapper.writeSharedTravelRoute(travelRouteDto);
+    }
+
+    public List<SharedTravelRouteDto> listSharedTravelRoute() throws SQLException {
+        return mapper.listSharedTravelRoute();
+    }
+
+
 }

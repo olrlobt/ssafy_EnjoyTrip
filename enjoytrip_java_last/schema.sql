@@ -41,7 +41,7 @@ CREATE TABLE TravelRoute
     `travelRouteNo` INT AUTO_INCREMENT PRIMARY KEY,
     `userId`        VARCHAR(255) NOT NULL,
     `subject`       VARCHAR(255) NOT NULL,
-    `content`       TEXT         ,
+    `content`       TEXT,
     `hit`           INT          NOT NULL DEFAULT 0,
     `registerTime`  DATETIME,
     FOREIGN KEY (`userId`) REFERENCES `members` (`userId`)
@@ -58,7 +58,7 @@ CREATE TABLE Marker
     `travelRouteNo` INT          NOT NULL,
     `step`          INT          NOT NULL,
     PRIMARY KEY (`travelRouteNo`, `step`),
-    FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute (`travelRouteNo`)
+    FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute (`travelRouteNo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 CREATE TABLE comments (

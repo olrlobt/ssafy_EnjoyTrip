@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../../assets/css/share/shareTravelList.css">
 <script setup>
 import ShareTravelRouteCard from "@/components/share/ShareTravelRouteCard.vue";
-import {getTravelRoute} from "@/api/share"
+import {getSharedTravelRoute, getTravelRoute} from "@/api/share"
 import {onMounted, ref} from "vue";
 
 const travelRouteList = ref([]);
@@ -9,19 +9,26 @@ let props = defineProps(['userId']);
 
 onMounted(async () => {
 
-  const travelRouteDto = {
-    userId: props.userId
+  if(props.userId){
+    await getTravelRoute(props.userId, (response) => {
+      for (let idx = 0; idx < response.data.length; idx++) {
+        travelRouteList.value.push(response.data[idx]);
+      }
+    }, (error) => {
+      console.error(error);
+    });
+  }else{
+
+    await getSharedTravelRoute( (response) => {
+      for (let idx = 0; idx < response.data.length; idx++) {
+        travelRouteList.value.push(response.data[idx]);
+      }
+    }, (error) => {
+      console.error(error);
+    });
   }
 
-  await getTravelRoute(travelRouteDto, (response) => {
-    for (let idx = 0; idx < response.data.length; idx++) {
-      travelRouteList.value.push(response.data[idx]);
-    }
-  }, (error) => {
-    console.error(error);
-  });
-
-  console.log("travel route page" + travelRouteList.value.length)
+  console.log(travelRouteList.value)
 })
 
 
@@ -34,7 +41,7 @@ onMounted(async () => {
       <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
 
         <template v-for="travelRoute in travelRouteList" :key="travelRoute.travelRouteNo">
-          <ShareTravelRouteCard :travelRoute="travelRoute">
+          <ShareTravelRouteCard :travelRoute="travelRoute" :userId="props.userId">
           </ShareTravelRouteCard>
         </template>
 

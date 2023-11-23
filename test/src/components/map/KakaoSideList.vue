@@ -252,10 +252,24 @@ const saveMyTravelRoute = () => {
       Swal.fire({
         title: `저장 완료`,
         icon: "success",
-        timer: 500,
+        timer: 700,
       });
     }
   });}
+
+
+
+const clearMyTravelRoute = () => {
+  mapStore.travelList.splice(0, mapStore.travelList.length);
+
+  for (let i = mapStore.fixedMarkers.length - 1; i >= 0; i--) {
+      mapStore.fixedMarkers[i].setImage(null);
+  }
+  mapStore.fixedMarkers.splice(0, mapStore.fixedMarkers.length);
+  mapStore.infoWindow.close();
+}
+
+
 
 </script>
 
@@ -301,11 +315,11 @@ const saveMyTravelRoute = () => {
 
       </div>
     </div>
-    <div class="side-menu" :class="{ 'show-menu': isOpen }">
-      <div> === 정렬 ===</div>
-      <div @click="findShortestPathFromStart"> 출발지 기준 최단거리로 정렬하기</div>
-      <div @click="findShortestRoundTrip"> 출발지에서 출발지까지 최단거리로 정렬하기</div>
-      <div @click="findShortestPathAnyStart"> 전체 중 최단 거리로 정렬하기</div>
+    <div class="side-menu" :class="{ 'show-menu': isOpen }" >
+      <div style="background-color: #f9f9f9; font-weight: bold; font-size: medium;" >  정렬 알고리즘 </div>
+      <div @click="findShortestPathFromStart" style="background-color: #fff; font-size: small;"> 출발지 기준 최단거리</div>
+      <div @click="findShortestRoundTrip" style="background-color: #fff; font-size: small;"> 출발지에서 출발지까지 최단거리</div>
+      <div @click="findShortestPathAnyStart" style="background-color: #fff; font-size: small;"> 전체 중 최단 거리</div>
     </div>
 
     <div v-if="currentTabId == 2" class="menu">
@@ -338,12 +352,11 @@ const saveMyTravelRoute = () => {
           <KakaoListItem :item="mapStore.travelList" :click="clickSideList" :removeClick="removeFromTravelPlan"></KakaoListItem>
         </VueDraggableNext>
         <div class="chrome-style-button-container">
-          <button class="chrome-style-button">버튼 텍스트</button>
+          <button class="chrome-style-button">여행 경로</button>
           <div class="slide-menu">
             <!-- 여기에 메뉴 아이템들을 배치합니다 -->
-            <div @click="saveMyTravelRoute">내 경로 저장하기</div>
-            <a href="#">메뉴 2</a>
-            <a href="#">메뉴 3</a>
+            <a @click="saveMyTravelRoute">내 경로 저장하기</a>
+            <a @click="clearMyTravelRoute">초기화</a>
             <!-- 추가 메뉴 아이템들 -->
           </div>
         </div>

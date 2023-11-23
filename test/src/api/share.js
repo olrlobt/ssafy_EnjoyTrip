@@ -6,17 +6,31 @@ const local = localAxios();
 const url = "/share"
 
 function saveTravelRoute(travelRouteDto, success, fail) {
-    console.log("saveTravelRoute" + travelRouteDto);
-    console.log(travelRouteDto);
     local.post(`${url}/write`, travelRouteDto).then(success).catch(fail);
 }
 
-async function getTravelRoute(travelRouteDto, success, fail) {
-    await local.get(`${url}/list`, travelRouteDto).then(success).catch(fail);
+async function getTravelRoute(userId, success, fail) {
+    await local.get(`${url}/list/${userId}`).then(success).catch(fail);
+}
+
+function deleteTravelRoute(travelRouteNo, success, fail) {
+    local.delete(`${url}/delete/${travelRouteNo}`).then(success).catch(fail);
+}
+
+function shareTravelRoute(sharedTravelRouteDto, success, fail) {
+    local.post(`${url}/writeShared`, sharedTravelRouteDto).then(success).catch(fail);
+}
+
+function getSharedTravelRoute(success, fail) {
+    local.get(`${url}/listSharedTravelRoute`).then(success).catch(fail);
 }
 
 
 export {
     saveTravelRoute,
     getTravelRoute,
+    deleteTravelRoute,
+    shareTravelRoute,
+    getSharedTravelRoute,
+
 };

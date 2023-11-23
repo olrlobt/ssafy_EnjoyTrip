@@ -4,19 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="feat: 여행경로 알고리즘 연결 추가">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/controller/ShareController.java" beforeDir="false" afterPath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/controller/ShareController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/mapper/ShareMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/mapper/ShareMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/model/service/ShareService.java" beforeDir="false" afterPath="$PROJECT_DIR$/enjoytrip_java_last/src/main/java/com/ssafy/ux/finalpj/share/model/service/ShareService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/enjoytrip_java_last/src/main/resources/mapper/share.xml" beforeDir="false" afterPath="$PROJECT_DIR$/enjoytrip_java_last/src/main/resources/mapper/share.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/api/share.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/api/share.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/api/user.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/api/user.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/components/HeroSection.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/HeroSection.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/components/share/ShareTravelRoute.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/components/share/ShareTravelRoute.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/router/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/router/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test/src/views/ShareTravelRouteView.vue" beforeDir="false" afterPath="$PROJECT_DIR$/test/src/views/ShareTravelRouteView.vue" afterDir="false" />
-    </list>
+    <list default="true" id="694a63a7-9bd3-44a6-b432-2bb195f6cc53" name="Changes" comment="feat: 여행경로 페이지, 나의 여행경로 페이지 분리" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -91,7 +79,7 @@
       <workItem from="1700530868889" duration="25000" />
       <workItem from="1700530905657" duration="11648000" />
       <workItem from="1700608285446" duration="3450000" />
-      <workItem from="1700611949323" duration="17206000" />
+      <workItem from="1700611949323" duration="17265000" />
     </task>
     <task id="LOCAL-00001" summary="docs: Update Readme.md">
       <created>1699839283286</created>
@@ -108,7 +96,15 @@
       <option name="project" value="LOCAL" />
       <updated>1700528004945</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="feat: 여행경로 페이지, 나의 여행경로 페이지 분리">
+      <option name="closed" value="true" />
+      <created>1700643070933</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700643070933</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -128,6 +124,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="docs: Update Readme.md" />
     <MESSAGE value="feat: 여행경로 알고리즘 연결 추가" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: 여행경로 알고리즘 연결 추가" />
+    <MESSAGE value="feat: 여행경로 페이지, 나의 여행경로 페이지 분리" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: 여행경로 페이지, 나의 여행경로 페이지 분리" />
   </component>
 </project>

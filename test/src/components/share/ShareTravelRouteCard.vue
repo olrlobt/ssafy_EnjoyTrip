@@ -2,16 +2,15 @@
 import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
 import { useRouter } from "vue-router";
 import {useShareStore} from "@/stores/share";
-const props = defineProps(['travelRoute']);
-
+const props = defineProps(['travelRoute', 'userId']);
 const router = useRouter();
 const shareStore = useShareStore();
 
-
 const showMyTravelDetail = () => {
+
   router.push({
-    name: "travel-detail",
-    params: { travelRouteNo: props.travelRoute.travelRouteNo }
+    path : "detail",
+    params: { travelRouteNo: props.travelRoute.travelRouteNo , userId: props.userId }
   });
   shareStore.travelRoute = props.travelRoute;
 }
