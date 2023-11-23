@@ -61,27 +61,11 @@ CREATE TABLE Marker
     FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute (`travelRouteNo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-
-
-CREATE TABLE comments
-(
-    commentNo INT AUTO_INCREMENT PRIMARY KEY,
-    content   VARCHAR(255) NOT NULL,
-    articleNo INT          NOT NULL,
-    userId    varchar(255) NOT NULL,
-    FOREIGN KEY (articleNo) REFERENCES boards (articleNo),
-    FOREIGN KEY (userId) REFERENCES members (userId)
+CREATE TABLE comments (
+  commentNo INT AUTO_INCREMENT PRIMARY KEY,
+  content VARCHAR(255) NOT NULL,
+  articleNo INT NOT NULL,
+  userId varchar(255) NOT NULL,
+  FOREIGN KEY (articleNo) REFERENCES boards(articleNo) ON DELETE CASCADE,
+  FOREIGN KEY (userId) REFERENCES members(userId) ON DELETE CASCADE
 );
-
-
-CREATE TABLE sharedTravelRoute
-(
-    `sharedTravelRouteNo` INT auto_increment NOT NULL ,
-    `travelRouteNo` INT NOT NULL,
-    `title`         VARCHAR(255) NOT NULL,
-    `content`       TEXT,
-    `likes`         INT NOT NULL DEFAULT 0,
-    PRIMARY KEY (`sharedTravelRouteNo`),
-    FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute(`travelRouteNo`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
