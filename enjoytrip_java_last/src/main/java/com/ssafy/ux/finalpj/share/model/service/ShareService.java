@@ -4,6 +4,7 @@ package com.ssafy.ux.finalpj.share.model.service;
 import com.ssafy.ux.finalpj.share.mapper.ShareMapper;
 import com.ssafy.ux.finalpj.share.model.MarkerDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
+import org.apache.ibatis.jdbc.SQL;
 import org.springframework.stereotype.Service;
 
 import java.sql.SQLException;
@@ -39,5 +40,9 @@ public class ShareService {
 
     public void update() throws SQLException {
         mapper.update();
+    }
+
+    public void updateHit(int travelRouteNo) throws SQLException{
+        mapper.updateHit(travelRouteNo);
     }
 }
