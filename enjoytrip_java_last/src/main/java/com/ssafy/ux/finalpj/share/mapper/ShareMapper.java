@@ -1,6 +1,7 @@
 package com.ssafy.ux.finalpj.share.mapper;
 
 import com.ssafy.ux.finalpj.share.model.MarkerDto;
+import com.ssafy.ux.finalpj.share.model.SharedTravelRouteDto;
 import com.ssafy.ux.finalpj.share.model.TravelRouteDto;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -10,10 +11,12 @@ import java.util.List;
 @Mapper
 public interface ShareMapper {
 
-    List<TravelRouteDto> list(TravelRouteDto travelRouteDto) throws SQLException;
+    List<TravelRouteDto> list(String userId) throws SQLException;
     void writeTravelRoute(TravelRouteDto travelRouteDto) throws SQLException;
     void writeMarker(MarkerDto markerDto) throws SQLException;
-    void delete() throws SQLException;
-    void update() throws SQLException;
+    void delete(int travelRouteNo) throws SQLException;
+    void update(TravelRouteDto travelRouteDto) throws SQLException;
+    void writeSharedTravelRoute(TravelRouteDto travelRouteDto) throws SQLException;
+    List<SharedTravelRouteDto> listSharedTravelRoute() throws SQLException;
 
 }

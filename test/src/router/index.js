@@ -82,6 +82,12 @@ const router = createRouter({
           path: "travelRoute",
           name: "share-travelRoute",
           component: () => import("@/components/share/ShareTravelRoute.vue"),
+        },
+        {
+          path: "detail",
+          name: "share-travel-detail",
+          props: true,
+          component: () => import("@/components/share/ShareTravelRouteDetail.vue"),
         }
         ]
     },
@@ -94,11 +100,12 @@ const router = createRouter({
         {
           path: "travelRoute",
           name: "user-travelRoute",
+          props: true,
           component: () => import("@/components/share/ShareTravelRoute.vue"),
         },
         {
-          path: "detail/:travelRouteNo",
-          name: "travel-detail",
+          path: "detail",
+          name: "user-travel-detail",
           props: true,
           component: () => import("@/components/share/ShareTravelRouteDetail.vue"),
         }

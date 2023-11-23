@@ -4,13 +4,13 @@
 
 <mapper namespace="com.ssafy.ux.finalpj.share.mapper.ShareMapper">
 
-    <select id="list" parameterType="travelRouteDto" resultType="travelRouteDto" resultMap="travelListResultMap" >
+    <select id="list" parameterType="String" resultType="travelRouteDto" resultMap="travelListResultMap" >
         SELECT t.travelRouteNo , t.userId, t.subject, t.content, t.hit, t.registerTime,m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title, m.step
         FROM TravelRoute t
         LEFT JOIN Marker m
         ON t.travelRouteNo = m.travelRouteNo
         <where>
-            <if test="userId != null">
+            <if test="userId != 'undefined'">
                 AND t.userId = #{userId}
             </if>
         </where>
@@ -33,7 +33,6 @@
             <result column="STEP" property="step" />
         </collection>
     </resultMap>
-
     
     <insert id="writeTravelRoute" parameterType="travelRouteDto" useGeneratedKeys="true" keyProperty="travelRouteNo" >
         INSERT INTO TravelRoute (userId, subject, content, hit, registerTime)
@@ -44,6 +43,34 @@
         INSERT INTO Marker ( addr1, areacode, firstimage, mapX, mapY, title , travelRouteNo, step)
         VALUES (#{addr1}, #{areacode}, #{firstimage}, #{mapx}, #{mapy}, #{title} , #{travelRouteNo}, #{step})
     </insert>
-    
-    
+
+    <delete id="delete">
+        DELETE FROM TravelRoute
+        WHERE travelRouteNo = #{travelRouteNo}
+    </delete>
+
+    <insert id="writeSharedTravelRoute" parameterType="travelRouteDto">
+        INSERT INTO sharedTravelRoute (travelRouteNo, title, content)
+        VALUES ( #{travelRouteNo}, #{subject}, #{content})
+    </insert>
+
+    <update id="update" parameterType="travelRouteDto">
+        UPDATE TravelRoute
+        SET subject = #{subject}, content = #{content}
+        WHERE travelRouteNo = #{travelRouteNo};
+    </update>
+
+    <select id="listSharedTravelRoute" resultType="sharedTravelRouteDto" resultMap="listSharedTravelRouteMap" >
+        SELECT s.sharedTravelRouteNo, t.travelRouteNo , t.userId, s.title as subject, s.content, t.hit, t.registerTime,m.addr1, m.areacode, m.firstimage, m.mapX, m.mapY, m.title, m.step
+        FROM sharedTravelRoute s
+        LEFT JOIN TravelRoute t
+        ON s.travelRouteNo = t.travelRouteNo
+        LEFT JOIN Marker m
+        ON t.travelRouteNo = m.travelRouteNo
+    </select>
+
+    <resultMap id="listSharedTravelRouteMap" type="sharedTravelRouteDto" extends="travelListResultMap">
+        <result column="SHAREDTRAVELROUTENO" property="sharedTravelRouteNo" />
+    </resultMap>
+
 </mapper>

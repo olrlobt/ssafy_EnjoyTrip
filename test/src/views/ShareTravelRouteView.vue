@@ -11,13 +11,12 @@ const changeHero = (title1, contents2) => {
 }
 
 
-
 </script>
 <template>
 
   <div>
     <TheHero :title="title" :contents="contents"/>
-    <router-view :changeHero="changeHero" :key="$route.path"></router-view>
+    <router-view :changeHero="changeHero" :key="$route.path" ></router-view>
   </div>
 
 </template>

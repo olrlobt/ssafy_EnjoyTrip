@@ -252,7 +252,7 @@ const saveMyTravelRoute = () => {
       Swal.fire({
         title: `저장 완료`,
         icon: "success",
-        timer: 500,
+        timer: 700,
       });
     }
   });}
