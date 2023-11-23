@@ -1,7 +1,7 @@
 <script setup>
 import sido from "@/assets/json/sido.json";
 import sig from "@/assets/json/sig.json";
-import KakaoMarkerSearch from "@/components/map/KakaoMarker.vue"
+import KakaoMarker from "@/components/map/KakaoMarker.vue"
 import KakaoSideListBox from "@/components/map/KakaoSideListBox.vue";
 import {ref, onMounted} from "vue";
 import KakaoMarkerPopupBox from "@/components/map/KakaoMarkerPopupBox.vue";
@@ -19,7 +19,6 @@ const clickMarker = ref(null);
 const selectMarker = ref(false);
 
 
-
 onMounted(() => {
   if (window.kakao && window.kakao.maps) {
     initMap();
@@ -30,6 +29,7 @@ onMounted(() => {
     script.src = VITE_MAP_SRC;
     document.head.appendChild(script);
   }
+
 })
 
 const clickMarkerMethod = (event) => {
@@ -154,7 +154,7 @@ function hideSideList() {
 <template>
 
   <div id="map" style=" position: relative; width: 100%; height: 100vh;">
-    <KakaoMarkerSearch v-if="mapLoaded" ref="clickMarker" :changeSelectMarker="changeSelectMarker"/>
+    <KakaoMarker v-if="mapLoaded" ref="clickMarker" :changeSelectMarker="changeSelectMarker"/>
     <KakaoSideListBox :class="{ 'slide-out': isSlideOut, 'slide-in': !isSlideOut }"
                       :searchKeyword="clickMarkerMethod"
                       :hideSideList="hideSideList"/>

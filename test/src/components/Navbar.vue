@@ -56,7 +56,7 @@ function logout() {
           <!-- <router-link to="/user/mypage" v-if="isLoggedIn">My Page</router-link> -->
           
         </li>
-          <li v-if="memberStore.isLogin" @click="logout">Logout</li>
+          <li v-if="memberStore.isLogin" @click="logout" style="color: #cce0dc; margin-left: 15px; cursor: pointer">Logout</li>
 
 
           <!--          <li class="has-children">-->

@@ -6,6 +6,7 @@ import {useShareStore} from "@/stores/share";
 import {deleteTravelRoute, shareTravelRoute} from "@/api/share";
 import router from "@/router";
 import Swal from "sweetalert2";
+import {useMapStore} from "@/stores/map";
 
 const shareStore = useShareStore();
 
@@ -80,7 +81,9 @@ const shareTravelRouteBtn = () => {
 
 
 const bringTravelRouteBtn = () => {
-  console.log("가져오기")
+  useMapStore().coord = shareStore.travelRoute.markers;
+  router.push({name : "map"});
+
   // shareStore.travelRoute
 
 }
