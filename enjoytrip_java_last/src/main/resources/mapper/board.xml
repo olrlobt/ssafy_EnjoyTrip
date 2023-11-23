@@ -60,7 +60,7 @@
     </sql>
 
     <select id="listArticle" parameterType="map" resultMap="article">
-        select b.articleno, b.userId, b.subject, b.content, b.hit, b.registerTime, m.username
+        select b.articleno, b.userId, b.subject, b.content, b.hit, b.registerTime, m.username, b.type, b.ref, b.step, b.depth
         from boards b, members m
         where b.userId = m.userId
         and type = #{type}
