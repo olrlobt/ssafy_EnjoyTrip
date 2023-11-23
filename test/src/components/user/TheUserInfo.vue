@@ -1,7 +1,6 @@
 <script setup>
 import TheHeroVue from "../TheHero.vue";
 import { ref, onMounted} from "vue";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { useMemberStore } from "@/stores/member";
 import { modifyUser } from "@/api/user.js";
@@ -63,7 +62,8 @@ function modify() {
         <!-- {{ userInfo.userName }} -->
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
-          <form @submit.prevent="onSubmit">
+          <div class="form-container" >
+            <form @submit.prevent="onSubmit">
             <div class="mb-3">
               <label for="username" class="form-label">이름 : </label>
               <input
@@ -130,18 +130,49 @@ function modify() {
                 </select>
               </div>
             </div>
-    
+
             <div class="col-auto text-center">
-              <button type="button" @click = modify() id="btn-modify" class="btn btn-outline-primary mb-3" >
-                수정하기
-              </button>
+              <button type="button" @click="modify()" id="btn-modify" class="btn btn-primary">수정하기</button>
             </div>
           </form>
+          </div>
         </div>
       </div>
     </div>
 </template>
 
 <style scoped>
+.form-container {
+  max-width: 500px;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  margin-bottom: 100px;
+}
 
+.form-control, .form-select {
+  border-radius: 5px;
+  margin-bottom: 15px;
+}
+
+.btn {
+  padding: 10px 20px;
+  margin-top: 10px;
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.input-group-text {
+  border-radius: 5px 0 0 5px;
+}
+
+.form-select {
+  border-radius: 0 5px 5px 0;
+}
 </style>

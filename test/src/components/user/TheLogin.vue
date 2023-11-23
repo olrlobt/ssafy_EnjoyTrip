@@ -45,51 +45,30 @@ const join = () => {
 
 <template>
   <TheHeroVue title="Login" contents ="로그인 창입니다." />
-    <div class="container">
+    <div class="container" style="margin-bottom: 100px;">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">
-          <form id="form-login" method="POST" action="">
-          	<input type="hidden" name="action" value="login">
-            <div class="mb-3">
-              <label for="userid" class="form-label">아이디 : </label>
-              <input
-                type="text"
-                class="form-control"
-                v-model="loginUser.userId"
-                id="userid"
-                name="userid"
-                placeholder="아이디..."
-              />
-            </div>
-            <div class="mb-3">
-              <label for="userpwd" class="form-label">비밀번호 : </label>
-              <input
-                type="password"
-                class="form-control"
-                v-model="loginUser.userPwd"
-                id="userpwd"
-                name="userpwd"
-                placeholder="비밀번호..."
-              />
-            </div>
-
-            <div class="form-check mb-3 float-end">
-              <input
-                class="form-check-input"
-                type="checkbox"
-                value="ok"
-                id="saveid"
-                name="saveid"
-              />
-              <label class="form-check-label" for="saveid"> 아이디저장 </label>
-            </div>
-
-
-            <div class="col-auto text-center">
-              <button type="button" @click="login" id="btn-login" class="btn btn-outline-primary mb-3">로그인</button>
-              <button type="button" @click="join" id="btn-mv-join" class="btn btn-outline-success mb-3">회원가입</button>
-            </div>
-          </form>
+          <div class="login-container">
+            <form id="form-login" method="POST" action="">
+              <input type="hidden" name="action" value="login">
+              <div class="form-field">
+                <label for="userid" class="form-label">아이디 :</label>
+                <input type="text" class="form-control" v-model="loginUser.userId" id="userid" name="userid" placeholder="아이디..." />
+              </div>
+              <div class="form-field">
+                <label for="userpwd" class="form-label">비밀번호 :</label>
+                <input type="password" class="form-control" v-model="loginUser.userPwd" id="userpwd" name="userpwd" placeholder="비밀번호..." />
+              </div>
+              <div class="form-check form-field">
+                <input class="form-check-input" type="checkbox" value="ok" id="saveid" name="saveid" />
+                <label class="form-check-label" for="saveid">아이디 저장</label>
+              </div>
+              <div class="form-buttons">
+                <button type="button" @click="login" id="btn-login" class="btn btn-primary">로그인</button>
+                <button type="button" @click="join" id="btn-mv-join" class="btn btn-secondary">회원가입</button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -99,5 +78,36 @@ const join = () => {
 <!-- <provide :checkLoggedIn="checkLoggedIn" /> -->
 
 <style scoped>
+.login-container {
+  max-width: 500px; /* 컨테이너의 최대 너비 증가 */
+  margin: auto;
+  padding: 30px; /* 내부 패딩 증가 */
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
 
+.form-field {
+  margin-bottom: 20px; /* 각 필드의 여백 증가 */
+}
+
+.form-control, .btn {
+  font-size: 1.1em; /* 폰트 크기 증가 */
+  border-radius: 5px;
+}
+
+.btn {
+  padding: 10px 20px; /* 버튼의 패딩 증가 */
+  margin-right: 15px; /* 버튼 사이의 간격 증가 */
+  transition: all 0.3s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+.form-buttons {
+  text-align: center;
+}
 </style>

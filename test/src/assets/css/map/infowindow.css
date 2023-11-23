@@ -1,12 +1,24 @@
 
 
 /* 기본 스타일 */
+/*.info-window-container {*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*    width: 150%;*/
+/*    padding: 10px;*/
+/*    align-items: start;*/
+/*    background-color: white;*/
+/*    border-radius: 8px;*/
+/*    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);*/
+/*    font-family: 'Arial', sans-serif;*/
+/*    transform: translateX(-10%) translateY(-1%);*/
+
+/*}*/
 .info-window-container {
     display: flex;
     flex-direction: column;
+    width: 200px;
     padding: 10px;
-    align-items: start;
-    max-width: 300px;
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -15,28 +27,32 @@
 
 .info-window-header {
     display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
 .info-window-image {
-    width: 60px;
-    height: 60px;
-    margin-right: 10px;
-    object-fit: cover;
-    border-radius: 10px;
+    width: 100%;
+    height: auto;
+    border-radius: 5px;
 }
 
 .info-window-title {
-    font-size: 0.9rem;
     font-weight: bold;
+    margin-top: 5px;
+}
+
+.info-window-footer {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
 }
 
 .button-common {
     padding: 5px 10px;
-    border: none;
     border-radius: 5px;
+    border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
 }
 
 .add-marker-btn {
@@ -47,13 +63,4 @@
 .remove-marker-btn {
     background-color: #f44336;
     color: white;
-}
-
-.register-btn {
-    background-color: #008CBA;
-    color: white;
-}
-
-.button-common:hover {
-    opacity: 0.8;
 }

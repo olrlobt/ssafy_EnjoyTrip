@@ -25,7 +25,7 @@ const props = defineProps({
   top: 0px;
   left: 0px;
   width: 100%;
-  max-width: 350px;
+  max-width: 400px;
   max-height: 100%;
   height: 100%;
   transform: translateX(-100%);

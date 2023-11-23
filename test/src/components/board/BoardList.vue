@@ -105,7 +105,7 @@ const moveWrite = () => {
             <th scope="col">작성일</th>
           </tr>
           </thead>
-          <tbody>
+          <tbody >
           <BoardListItem
               v-for="article in articles"
               :key="article.articleNo"
@@ -125,6 +125,8 @@ const moveWrite = () => {
 </template>
 
 <style scoped>
-/* 여기에 필요한 추가 스타일을 정의하세요 */
+
+table{
+}
 </style>
 

@@ -28,12 +28,10 @@ const checked = (id) => {
 
 function clickComment(comment) {
   comment.content = write.value;
-  console.log(comment.commentNo)
 
   modifyComment(
       comment,
       (response) => {
-        console.log("Comment modify successfully:", response);
         isChanging.value = !isChanging.value;
       },
       (error) => {
@@ -46,33 +44,23 @@ function clickComment(comment) {
 
 
 const editComment = (comment) => { //userId, commentNo
-  // 수정 로직을 여기에 추가
-  console.log(comment);
   isChanging.value = !isChanging.value;
-  // 수정하로 가기
   write.value = comment.content;
   console.log("editComment:" + write.value);
 };
 
 const deleteButton =  (comment,index) => {
-  // 삭제 로직을 여기에 추가
-  console.log('Delete comment with ID:', comment.commentNo);
   deleteComment(
       comment.commentNo,
       () => {
-        console.log("------ delete before" + commentStore.comments.length)
         if (index !== -1) {
           commentStore.comments.splice(index, 1);
         }
-        console.log("------ delete" + commentStore.comments.length)
       },
       (error) => {
         console.error("Error delete comment:", error);
       }
   );
-  // 로컬에서 삭제된 댓글을 갱신
-
-  // updatedComments.value = updatedComments.value.filter(comment => comment.commentNo !== commentNo);
 };
 
 </script>

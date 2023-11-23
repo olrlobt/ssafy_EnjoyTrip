@@ -33,27 +33,49 @@ const showMyTravelDetail = async() => {
 
 </script>
 <template>
-
   <div class="col mb-5">
-    <div class="card h-100">
+    <div class="card h-100" @click="showMyTravelDetail">
       <!-- Product image-->
-      <ShareTravelRouteCardMap :markers="props.travelRoute.markers"
-                               style="width: 100% ; height: 100%; min-height: 300px "></ShareTravelRouteCardMap>
-      <div class="card-body p-4">
-        <div class="text-center">
-          <h5 class="fw-bolder">{{ props.travelRoute.subject }}</h5>
-          {{ props.travelRoute.registerTime }}
-        </div>
+      <div class="card-img-top">
+        <ShareTravelRouteCardMap
+            :markers="props.travelRoute.markers"
+            style="width: 100%; height: 100%; min-height: 300px;"
+        ></ShareTravelRouteCardMap>
       </div>
-      <!-- Product actions-->
-      <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-        <button class="text-center" @click="showMyTravelDetail">자세히 보기</button>
+      <!-- Card Body -->
+      <div class="card-body">
+        <div class="text-center">
+          <h5 class="card-title">{{ props.travelRoute.subject }}</h5>
+          <p class="card-text">{{ props.travelRoute.registerTime }}</p>
+        </div>
       </div>
     </div>
   </div>
-
 </template>
-<style>
+<style scoped>
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease-in-out;
+}
 
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
 
-</style>
+.card-img-top {
+  overflow: hidden;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-title {
+  font-size: 1.2em;
+  font-weight: bold;
+}
+
+.card-text {
+  font-size: 0.9em;
+  color: #666;
+}</style>
