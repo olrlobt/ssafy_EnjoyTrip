@@ -152,6 +152,7 @@ function clickComment() {
         console.log("Comment added successfully:", response);
         fetchComments();
         newComment.value.content = "";
+        write.value="";
       },
       (error) => {
         console.error("Error adding comment:", error);

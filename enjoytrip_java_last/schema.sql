@@ -66,6 +66,6 @@ CREATE TABLE comments (
   content VARCHAR(255) NOT NULL,
   articleNo INT NOT NULL,
   userId varchar(255) NOT NULL,
-  FOREIGN KEY (articleNo) REFERENCES boards(articleNo),
-  FOREIGN KEY (userId) REFERENCES members(userId)
+  FOREIGN KEY (articleNo) REFERENCES boards(articleNo) ON DELETE CASCADE,
+  FOREIGN KEY (userId) REFERENCES members(userId) ON DELETE CASCADE
 );
