@@ -48,6 +48,7 @@ public class CommentController {
     @PutMapping("/modify")
     public ResponseEntity<?> modifyComment(@RequestBody CommentDto commentDto) {
         try {
+            log.info(commentDto.toString());
             commentService.modifyComment(commentDto);
             return ResponseEntity.ok().body("Comment modified successfully.");
         } catch (Exception e) {
