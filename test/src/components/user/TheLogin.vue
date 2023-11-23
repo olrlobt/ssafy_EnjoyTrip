@@ -21,19 +21,13 @@ const loginUser = ref({
 
 
 const login = async () => {
-  console.log("login ing!!!! !!!");
-  console.log("loginUser: " + loginUser.value.userId);
   try {
     // userLogin 메서드가 Promise를 반환하도록 가정합니다.
     await memberStore.userLogin(loginUser.value);
 
     let token = sessionStorage.getItem("accessToken");
-    console.log("111. ", token);
-    console.log("isLogin: ", isLogin);
 
     if (isLogin.value) {
-      console.log("로그인 성공아닌가???");
-      console.log("token" + token);
       await memberStore.getUserInfo(token);
       await router.push("/");
     }

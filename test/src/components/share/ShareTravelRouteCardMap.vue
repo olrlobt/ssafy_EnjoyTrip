@@ -33,26 +33,29 @@ function initMap() {
 function setMapBounds() {
   let bounds = new kakao.maps.LatLngBounds();
 
-  props.markers.forEach(marker => {
+  if(props.markers){
+    props.markers.forEach(marker => {
 
-    let markerPosition = new kakao.maps.LatLng(marker.mapy, marker.mapx);
+      let markerPosition = new kakao.maps.LatLng(marker.mapy, marker.mapx);
 
-    new kakao.maps.Marker({
-      position: markerPosition,
-      title: marker.title,
-      map: map.value
+      new kakao.maps.Marker({
+        position: markerPosition,
+        title: marker.title,
+        map: map.value
+      });
+      bounds.extend(new kakao.maps.LatLng(marker.mapy, marker.mapx));
     });
-    bounds.extend(new kakao.maps.LatLng(marker.mapy, marker.mapx));
-  });
 
-  map.value.setBounds(bounds);
-  drawTravelLine();
+    map.value.setBounds(bounds);
+    drawTravelLine();
+  }
 }
 
 
 
 function drawTravelLine() {
   const linePath = [];
+
   props.markers.forEach(item => {
     linePath.push(new kakao.maps.LatLng(item.mapy, item.mapx));
   });

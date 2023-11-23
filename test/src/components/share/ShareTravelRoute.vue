@@ -12,16 +12,15 @@ onMounted(async () => {
   const travelRouteDto = {
     userId: props.userId
   }
-
-  await getTravelRoute(travelRouteDto, (response) => {
+  console.log(travelRouteDto)
+  console.log(props.userId)
+  await getTravelRoute(props.userId, (response) => {
     for (let idx = 0; idx < response.data.length; idx++) {
       travelRouteList.value.push(response.data[idx]);
     }
   }, (error) => {
     console.error(error);
   });
-
-  console.log("travel route page" + travelRouteList.value.length)
 })
 
 
