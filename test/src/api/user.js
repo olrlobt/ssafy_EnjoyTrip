@@ -6,12 +6,10 @@ const local = localAxios();
 const url = "/user"
 
 function joinUser(member, success, fail) {
-    console.log("userjoin.js", member);
     local.post(`${url}/join`, JSON.stringify(member)).then(success).catch(fail);
 }
 
 async function userConfirm(param, success, fail) {
-    console.log("param", param);
     await local.post(`${url}/login`, param).then(success).catch(fail);
     console.log("userConfirm ok");
   }
@@ -31,7 +29,6 @@ async function userConfirm(param, success, fail) {
 }
   
 function modifyUser(member, success, fail) { 
-  // console("user.jsmodifyUser", member);
   local.put(`${url}/modify`, JSON.stringify(member)).then(success).catch(fail);
 }
 

@@ -1,19 +1,16 @@
 <script setup>
 // import BoardFormItem from "./item/BoardFormItem.vue";
-import BoardFormItem from "./item/BoardFormItem2.vue";
-import {onMounted, ref} from "vue";
+import BoardFormItem from "./item/BoardFormItem.vue";
+import {onMounted} from "vue";
 
 const props = defineProps([
   'changeHero',
   'boardType'
 ])
 
-const board = ref("");
 
 onMounted(() => {
   props.changeHero("쓰기","방가방가")
-  board.value = props.boardType;
-  console.log(board.value)
 });
 
 </script>

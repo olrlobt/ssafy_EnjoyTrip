@@ -5,7 +5,6 @@ const local = localAxios(); // axios instance
 const url = "/comments";
 
 function addComment(comment, success, fail) {
-    console.log("param", comment);
     local.post(`${url}/add`, JSON.stringify(comment))
         .then(success)
         .catch(fail);

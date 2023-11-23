@@ -1,6 +1,6 @@
 <script setup>
 import TheHeroVue from "../TheHero.vue";
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { joinUser } from "@/api/user.js";
 

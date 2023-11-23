@@ -1,218 +1,192 @@
-//package com.ssafy.ux.finalpj.member.controller;
-//
-//import com.ssafy.ux.finalpj.member.model.MemberDto;
-//import com.ssafy.ux.finalpj.member.model.service.MemberService;
-//import com.ssafy.ux.finalpj.member.model.service.MemberServiceImpl;
-//
-//import javax.servlet.RequestDispatcher;
-//import javax.servlet.ServletException;
-//import javax.servlet.annotation.WebServlet;
-//import javax.servlet.http.*;
-//import java.io.IOException;
-//
-//@WebServlet("/user")
-//public class MemberController extends HttpServlet {
-//	private static final long serialVersionUID = 1L;
-//
-//	private MemberService memberService;
-//
-//	public void init() {
-//		memberService = MemberServiceImpl.getMemberService();
-//	}
-//
-//	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.getSession().removeAttribute("msg");
-//		String action = request.getParameter("action");
-//
-//		String path = "";
-//		if ("mvjoin".equals(action)) {
-//			path = "/user/join.jsp";
-//			redirect(request, response, path);
-//		} else if ("join".equals(action)) {
-//			path = join(request, response);
-//			redirect(request, response, path);
-//		} else if ("mvlogin".equals(action)) {
-//			path = "/user/login.jsp";
-//			redirect(request, response, path);
-//		} else if ("login".equals(action)) {
-//			path = login(request, response);
-//			redirect(request, response, path);
-//		} else if ("logout".equals(action)) {
-//			path = logout(request, response);
-//			redirect(request, response, path);
-//		} else if ("modify".equals(action)) {
-//			path = modify(request, response);
-//			redirect(request, response, path);
-//		} else if ("modifyPass".equals(action)) {
-//			path = modifyPass(request, response);
-//			redirect(request, response, path);
-//		} else if("withdraw".equals(action)) {
-//			path = withdraw(request, response);
-//			if(path.equals("/user/login.jsp")) redirect(request, response, path);
-//		}else if("idcheck".equals(action)) {
-//			String checkid = request.getParameter("checkid");
-//			System.out.println("checkid >>>>> " + checkid);
-//			int cnt = 1;
-//			try {
-//				cnt = memberService.idCheck(checkid);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				cnt = 1;
-//			}
-////			CSV
-//			response.setContentType("text/plain;charset=utf-8");
-//			response.getWriter().print(checkid + "," + cnt);
-//		}else {
-//			redirect(request, response, path);
-//		}
-//	}
-//
-//	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		request.setCharacterEncoding("utf-8");
-//		doGet(request, response);
-//	}
-//
-//	private void forward(HttpServletRequest request, HttpServletResponse response, String path)
-//			throws ServletException, IOException {
-//		RequestDispatcher dispatcher = request.getRequestDispatcher(path);
-//		dispatcher.forward(request, response);
-//	}
-//
-//	private void redirect(HttpServletRequest request, HttpServletResponse response, String path) throws IOException {
-//		response.sendRedirect(request.getContextPath() + path);
-//	}
-//
-//	private String join(HttpServletRequest request, HttpServletResponse response) {
-//		MemberDto memberDto = new MemberDto();
-//		memberDto.setUserName(request.getParameter("username"));
-//		memberDto.setUserId(request.getParameter("userid"));
-//		memberDto.setUserPwd(request.getParameter("userpwd"));
-//		if(!request.getParameter("emailid").isEmpty()) {
-//			memberDto.setEmailId(request.getParameter("emailid"));
-//			memberDto.setEmailDomain(request.getParameter("emaildomain"));
-//		}
-//		try {
-//			memberService.joinMember(memberDto);
-//			request.getSession().setAttribute("info", "회원가입을 축하합니다.");
-//			return "/user/login.jsp";
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			request.getSession().setAttribute("msg", "회원가입 중 에러가 발생 다시 진행해주세요.");
-//			return "";
-//		}
-//	}
-//
-//	private String login(HttpServletRequest request, HttpServletResponse response) {
-//		String userId = request.getParameter("userid");
-//		String userPwd = request.getParameter("userpwd");
-//		try {
-//			MemberDto memberDto = memberService.loginMember(userId, userPwd);
-//			if(memberDto != null) { // 로그인 성공
-////				session 설정
-//				HttpSession session = request.getSession();
-//				session.setAttribute("userinfo", memberDto);
-////				cookie 설정
-//				String idsave = request.getParameter("saveid");
-//				if("ok".equals(idsave)) { //아이디 저장을 체크 했다면.
-//					Cookie cookie = new Cookie("ssafy_id", userId);
-//					cookie.setPath(request.getContextPath());
-//					cookie.setMaxAge(60 * 60 * 24 * 365 * 40); //40년간 저장.
-//					response.addCookie(cookie);
-//				} else { //아이디 저장을 해제 했다면.
-//					Cookie cookies[] = request.getCookies();
-//					if(cookies != null) {
-//						for(Cookie cookie : cookies) {
-//							if("ssafy_id".equals(cookie.getName())) {
-//								cookie.setMaxAge(0);
-//								response.addCookie(cookie);
-//								break;
-//							}
-//						}
-//					}
-//				}
-//				return "/index.jsp";
-//			} else {
-//				request.getSession().setAttribute("msg", "아이디 또는 비밀번호 확인 후 다시 로그인하세요.");
-//				return "/user/login.jsp";
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "";
-//		}
-//	}
-//
-//	private String logout(HttpServletRequest request, HttpServletResponse response) {
-//		HttpSession session = request.getSession();
-//		session.invalidate();
-//		return "/index.jsp";
-//	}
-//
-//	private String modify(HttpServletRequest request, HttpServletResponse response) {
-//		HttpSession session = request.getSession();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		if(memberDto != null) {
-//			String userId = memberDto.getUserId();
-//			memberDto.setUserName(request.getParameter("username"));
-//			memberDto.setUserId(request.getParameter("userid"));
-//			if(!request.getParameter("emailid").isEmpty()) {
-//				memberDto.setEmailId(request.getParameter("emailid"));
-//				memberDto.setEmailDomain(request.getParameter("emaildomain"));
-//			}
-//			try {
-//				memberService.modifyMember(memberDto, userId);
-//				session.setAttribute("userinfo", memberDto);
-//				session.setAttribute("info", "회원정보 수정 성공");
-//				return "";
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				session.setAttribute("msg", "회원정보 수정 중 문제가 발생했습니다 재시도 해주세요.");
-//				return "";
-//			}
-//
-//		} else
-//			return "/user/login.jsp";
-//	}
-//	private String modifyPass(HttpServletRequest request, HttpServletResponse response) {
-//		HttpSession session = request.getSession();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		if(memberDto != null) {
-//			String password = request.getParameter("userpwd");
-//			try {
-//				memberService.modifyMemberPass(memberDto.getUserId(), password);
-//				String msg = "다시 로그인해주세요.";
-//				return homeWithMsg(request, response, msg);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				session.setAttribute("msg", "비밀번호 수정 중 문제가 발생했습니다 재시도 해주세요.");
-//				return "";
-//			}
-//
-//		} else
-//			return "/user/login.jsp";
-//	}
-//
-//	private String withdraw(HttpServletRequest request, HttpServletResponse response) {
-//		HttpSession session = request.getSession();
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		if(memberDto != null) {
-//			try {
-//				memberService.withdraw(memberDto.getUserId());
-//				return logout(request, response);
-//			} catch (Exception e) {
-//				e.printStackTrace();
-//				session.setAttribute("msg", "회원 탈퇴 중 문제가 발생했습니다 재시도 해주세요.");
-//				return "";
-//			}
-//
-//		} else
-//			return "/user/login.jsp";
-//	}
-//
-//	private String homeWithMsg(HttpServletRequest request, HttpServletResponse response, String msg) {
-//		HttpSession session = request.getSession();
-//		session.removeAttribute("userinfo");
-//		session.setAttribute("info", msg);
-//		return "";
-//	}
-//
-//}
+package com.ssafy.ux.finalpj.member.controller;
+
+import com.ssafy.ux.finalpj.member.model.MemberDto;
+import com.ssafy.ux.finalpj.member.model.service.MemberService;
+import com.ssafy.ux.finalpj.util.JWTUtil;
+
+import lombok.extern.slf4j.Slf4j;
+
+import javax.servlet.http.*;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.RestController;
+
+@Slf4j
+@RestController
+@RequestMapping("/user")
+@CrossOrigin(origins = "*", allowedHeaders = "*")
+public class MemberController extends HttpServlet {
+    private static final long serialVersionUID = 1L;
+
+    private MemberService memberService;
+    private JWTUtil jwtUtil;
+
+    public MemberController(MemberService memberService, JWTUtil jwtUtil) {
+        super();
+        this.memberService = memberService;
+        this.jwtUtil = jwtUtil;
+    }
+
+    @PostMapping("/join")
+    public ResponseEntity<?> join(@RequestBody MemberDto memberDto) {
+        try {
+        	System.out.println("join_memberDto: " + memberDto);
+            memberService.joinMember(memberDto);
+            return ResponseEntity.status(HttpStatus.CREATED).body("회원 가입에 성공하였습니다.");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("회원 가입 중 에러가 발생했습니다: " + e.getMessage());
+        }
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@RequestBody MemberDto getmemberDto,
+                                   @RequestParam(name = "saveid", required = false) String saveid,
+                                   HttpSession session,
+                                   HttpServletResponse response) {
+    	
+    	Map<String, Object> resultMap = new HashMap<String, Object>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+//		System.out.println(getmemberDto);
+
+        try {
+            MemberDto loginUser = memberService.loginMember(getmemberDto);
+            System.out.println(loginUser);
+            if (loginUser != null) { //여기서부터 고칠 것
+            	//jwt
+            	String accessToken = jwtUtil.createAccessToken(loginUser.getUserId());
+				String refreshToken = jwtUtil.createRefreshToken(loginUser.getUserId());
+				log.debug("access token : {}", accessToken);
+				log.debug("refresh token : {}", refreshToken);
+				
+				System.out.println("access TOKEN: " + accessToken);
+
+//				발급받은 refresh token을 DB에 저장.
+				memberService.saveRefreshToken(loginUser.getUserId(), refreshToken);
+				
+//				JSON으로 token 전달.
+				resultMap.put("access-token", accessToken);
+				//Cookie 로 변경
+				resultMap.put("refresh-token", refreshToken);
+				
+				status = HttpStatus.CREATED;
+				
+				//쿠키 설정
+//                Cookie cookie = new Cookie("ssafy_id", getmemberDto.getUserId());
+//                cookie.setPath("/");
+//                if ("ok".equals(saveid)) {
+//                    cookie.setMaxAge(60 * 60 * 24 * 365 * 40);
+//                } else {
+//                    cookie.setMaxAge(0);
+//                }
+//                response.addCookie(cookie);
+
+//                return ResponseEntity.ok().body(loginUser);
+            } else {
+            	resultMap.put("message", "아이디 또는 패스워드를 확인해주세요.");
+            	status = HttpStatus.UNAUTHORIZED;
+            	
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+
+        }
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+    }
+
+	@GetMapping("/info/{userid}")
+	public ResponseEntity<Map<String, Object>> getInfo(
+			@PathVariable("userid") String userId,
+			HttpServletRequest request) {
+		log.debug("userId : {} ", userId);
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		System.out.println("getInfo 들어오나");
+		if (jwtUtil.checkToken(request.getHeader("Authorization"))) {
+			log.info("사용 가능한 토큰!!!");
+			try {
+//				로그인 사용자 정보.
+				MemberDto memberDto = memberService.userInfo(userId);
+				resultMap.put("userInfo", memberDto);
+				status = HttpStatus.OK;
+				System.out.println(memberDto);
+			} catch (Exception e) {
+				log.error("정보조회 실패 : {}", e);
+				resultMap.put("message", e.getMessage());
+				status = HttpStatus.INTERNAL_SERVER_ERROR;
+			}
+		} else {
+			log.error("사용 불가능 토큰!!!");
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+	
+
+	/**
+	 * 로그아웃
+	 * @param userId : 회원 아이디
+	 * @return
+	 */
+	@GetMapping("/logout/{userId}")
+	public ResponseEntity<?> removeToken(@PathVariable ("userId") String userId) {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		try {
+			memberService.deleRefreshToken(userId);
+			status = HttpStatus.OK;
+		} catch (Exception e) {
+			log.error("로그아웃 실패 : {}", e);
+			resultMap.put("message", e.getMessage());
+			status = HttpStatus.INTERNAL_SERVER_ERROR;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+
+	}
+	
+	@PostMapping("/refresh")
+	public ResponseEntity<?> refreshToken(@RequestBody MemberDto memberDto, HttpServletRequest request)
+			throws Exception {
+		Map<String, Object> resultMap = new HashMap<>();
+		HttpStatus status = HttpStatus.ACCEPTED;
+		String token = request.getHeader("refreshToken");
+		log.debug("token : {}, memberDto : {}", token, memberDto);
+		if (jwtUtil.checkToken(token)) {
+			if (token.equals(memberService.getRefreshToken(memberDto.getUserId()))) {
+				String accessToken = jwtUtil.createAccessToken(memberDto.getUserId());
+				log.debug("token : {}", accessToken);
+				log.debug("정상적으로 액세스토큰 재발급!!!");
+				resultMap.put("access-token", accessToken);
+				status = HttpStatus.CREATED;
+			}
+		} else {
+			log.debug("리프레쉬토큰도 사용불가!!!!!!!");
+			status = HttpStatus.UNAUTHORIZED;
+		}
+		return new ResponseEntity<Map<String, Object>>(resultMap, status);
+	}
+
+
+    @PutMapping("/modify")
+    public ResponseEntity<?> modify(@RequestBody MemberDto memberDto, HttpSession session) throws Exception {
+    	System.out.println("modify 접근: " + memberDto);
+        memberService.modifyMember(memberDto, memberDto.getUserId());
+        return ResponseEntity.ok(HttpStatus.OK);
+    }
+}

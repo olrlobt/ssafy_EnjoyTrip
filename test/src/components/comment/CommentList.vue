@@ -17,7 +17,6 @@ const maskUserId = (userId) => {
   return userId ? userId.slice(0, 2) + '*'.repeat(userId.length - 2) : '';
 };
 
-
 </script>
 
 <style scoped>

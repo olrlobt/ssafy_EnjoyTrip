@@ -9,7 +9,6 @@ import './assets/fonts/flaticon/font/flaticon.css';
 import './assets/css/style.css';
 
 
-
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
@@ -19,10 +18,6 @@ const app = createApp(App);
 const pinia = createPinia();
 app.use(pinia);
 
-// app.provide('isLoggedIn', () => {
-//     const token = sessionStorage.getItem('accessToken');
-//     return token !== null && token !== undefined;
-//   });
 
 app.use(router);
 app.mount('#app');

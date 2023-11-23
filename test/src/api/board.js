@@ -6,7 +6,6 @@ const local = localAxios(); // axios instance
 const url = "/article"
 
 function listArticle(param, success, fail) {
-  console.log("param", param)
   local.get(`${url}/${param.boardType}`, { params: param }).then(success).catch(fail);
 }
 
@@ -15,7 +14,6 @@ function detailArticle(articleno, success, fail) {
 }
 
 function registArticle(article, success, fail) {
-  console.log("article registArticle.js: ", article.type)
   local.post(`${url}/${article.type}/write`, JSON.stringify(article)).then(success).catch(fail);
 }
 

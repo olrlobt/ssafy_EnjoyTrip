@@ -1,5 +1,5 @@
 <script setup>
-import BoardFormItem from "./item/BoardFormItem2.vue";
+import BoardFormItem from "./item/BoardFormItem.vue";
 
 import { onMounted} from "vue";
 

@@ -37,18 +37,15 @@ const { boardType } = route.params;
 
 onMounted(() => {
   param.value.boardType = boardType;
-  console.log("boardType : " + boardType);
   props.changeHero("리스트","헬로")
   getArticleList();
 });
 
 const changeKey = (val) => {
-  console.log("BoarList에서 선택한 조건 : " + val);
   param.value.key = val;
 };
 
 const getArticleList = () => {
-  console.log("서버에서 글목록 얻어오자!!!", param.value);
    // API 호출
   listArticle(param.value, ({ data }) => { 
     console.log(data)
@@ -62,14 +59,12 @@ const getArticleList = () => {
 };
 
 const onPageChange = (val) => {
-  console.log(val + "번 페이지로 이동 준비 끝!!!");
   currentPage.value = val;
   param.value.pgno = val;
   getArticleList();
 };
 
 const moveWrite = () => {
-  console.log(param.value.boardType);
   router.push({ name: "article-write" , params : {boardType : boardType}  });
 };
 
@@ -98,7 +93,6 @@ const moveWrite = () => {
               </div>
             </form>
           </div>
-
 
         </div>
         <table class="table table-hover">

@@ -41,7 +41,6 @@ const getMemberInfo = async () => {
     if (userInfo) {
       memberInfo.value = userInfo;
       article.value.userId = memberInfo.value.userId;
-      console.log('MyPage User Info: ', userInfo);
     }
   } catch (error) {
     console.error("마이페이지 중 에러 발생:", error);
@@ -74,10 +73,6 @@ onMounted(async () => {
     if(article.value.userId === memberInfo.value.userId){
       checked.value = true;
     }
-    console.log("Data content: ", data.content);
-    console.log("content: ", content.value);
-
-    console.log("article content: " + content.value);
 
     // 프로퍼티 변경
     props.changeHero("Detail", "디테일화면입니다.");
@@ -108,8 +103,6 @@ const fetchComments = async () => {
       );
     });
 
-    console.log(data);
-
     comments.value = data;
   } catch (error) {
     console.error(error);
@@ -126,7 +119,6 @@ function moveList() {
 }
 
 
-
 function moveModify() {
   // 사용자 확인.
   if(checked.value){
@@ -135,7 +127,6 @@ function moveModify() {
 }
 
 function onDeleteArticle() {
-  console.log(articleno + "번글 삭제하러 가자!!!");
   // API 호출
   deleteArticle(articleno, ({ data }) => {
         console.log(data)
@@ -149,7 +140,6 @@ function onDeleteArticle() {
 
 const write = ref();
 function clickComment() {
-  console.log("member", memberInfo.value.userId);
   const newComment = ref({
     content: write.value,
     userId: memberInfo.value.userId,
@@ -189,7 +179,6 @@ function clickComment() {
       <p class="lead">
         <strong>{{ article.userId }}</strong> | {{ new Date(article.registerTime).toLocaleDateString() }}
       </p>
-
       <hr/>
     </div>
 

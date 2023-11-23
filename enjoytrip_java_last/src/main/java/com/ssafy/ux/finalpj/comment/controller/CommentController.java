@@ -24,7 +24,6 @@ public class CommentController {
 
     @PostMapping("/add")
     public ResponseEntity<?> addComment(@RequestBody CommentDto commentDto) {
-//        System.out.println("들어오나 설마 여기야>"+commentDto.getArticleNo());
         try {
             CommentDto savedComment = commentService.addComment(commentDto);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);

@@ -16,7 +16,6 @@ public class CommentServiceImpl implements CommentService {
     }
     @Override
     public CommentDto addComment(CommentDto commentDto) {
-        System.out.println(commentDto.getArticleNo());
         commentMapper.addComment(commentDto);
         return commentDto;
     }
