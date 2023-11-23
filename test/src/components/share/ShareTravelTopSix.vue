@@ -1,5 +1,6 @@
 <template>
-  <div class="custom-card">
+
+  <div class="custom-card" @click="getCardLink()">
     <div class="custom-card-body">
       <span class="flaticon-house display-4 text-primary"></span>
       <h3>{{ props.travelRoute.subject }}</h3>
@@ -10,11 +11,19 @@
       <!-- 추가적인 내용이 있다면 여기에 추가 -->
     </div>
   </div>
+
 </template>
 
 <script setup>
+import { useRouter } from "vue-router";
+const router = useRouter();
 const props = defineProps(['travelRoute']);
 // console.log(props.travelRoute)
+
+const getCardLink = () => {
+  router.push({ name: "share-travelRoute" });
+}
+
 </script>
 
 <style scoped>
