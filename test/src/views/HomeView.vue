@@ -1,10 +1,12 @@
 <script setup>
-import HeroSection from '@/components/HeroSection.vue';
 import ServicesSection from '@/components/ServicesSection.vue';
+import HeroSection from "@/components/HeroSection.vue";
+
+
 
 </script>
 
 <template>
-      <HeroSection />
-      <ServicesSection />
+  <HeroSection/>
+  <ServicesSection/>
 </template>

@@ -47,6 +47,7 @@ export default {
       } catch (error) {
         console.error('Top 6 여행 경로를 가져오는 중 에러 발생:', error);
       }
+
     });
 
     return {

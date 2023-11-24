@@ -346,20 +346,22 @@ const clearMyTravelRoute = () => {
 
 
     <div class="content">
-      <div :class="[active(1), 'tab-content']">
-
-        <VueDraggableNext id="travelRouteList" v-model="mapStore.travelList">
-          <KakaoListItem :item="mapStore.travelList" :click="clickSideList" :removeClick="removeFromTravelPlan"></KakaoListItem>
-        </VueDraggableNext>
-        <div class="chrome-style-button-container">
-          <button class="chrome-style-button">여행 경로</button>
-          <div class="slide-menu">
-            <!-- 여기에 메뉴 아이템들을 배치합니다 -->
-            <a @click="saveMyTravelRoute">내 경로 저장하기</a>
-            <a @click="clearMyTravelRoute">초기화</a>
-            <!-- 추가 메뉴 아이템들 -->
-          </div>
+      <div :class="[active(1), 'tab-content']" style="overflow: scroll">
+        <div style="height: 92%;">
+          <VueDraggableNext id="travelRouteList" v-model="mapStore.travelList">
+            <KakaoListItem :item="mapStore.travelList" :click="clickSideList" :removeClick="removeFromTravelPlan"></KakaoListItem>
+          </VueDraggableNext>
         </div>
+          <div class="chrome-style-button-container" style="background-color: white; position: fixed; z-index: 100; ">
+            <button class="chrome-style-button">여행 경로</button>
+            <div class="slide-menu">
+              <!-- 여기에 메뉴 아이템들을 배치합니다 -->
+              <a @click="saveMyTravelRoute">내 경로 저장하기</a>
+              <a @click="clearMyTravelRoute">초기화</a>
+              <!-- 추가 메뉴 아이템들 -->
+            </div>
+        </div>
+
       </div>
       <div :class="[active(2), 'tab-content']" class="side-list">
         <KakaoListItem :item="mapStore.markers" :click="clickSideList"></KakaoListItem>
@@ -388,7 +390,7 @@ const clearMyTravelRoute = () => {
 
 .chrome-style-button-container {
   position: relative;
-  width: 100%;
+  width: 80%;
 }
 
 .chrome-style-button {

@@ -25,8 +25,9 @@ onMounted(() => {
 
 });
 
-const props = defineProps(['userId']);
+const props = defineProps(['userId', '인기 여행지의 매력에 빠져보세요: 여행자들이 가장 사랑하는 Top 6 경로를 여기서 만나보세요.']);
 console.log(props.userId)
+
 
 
 const deleteTravelRouteBtn = () => {
@@ -91,10 +92,13 @@ const bringTravelRouteBtn = () => {
 </script>
 <template>
   <div class="container">
-    <div class="card">
-      <div class="card-title">{{ shareStore.travelRoute.subject }}</div>
+    <!-- 제목 카드 -->
+    <div class="header">
+      <h1 class="post-title">{{ shareStore.travelRoute.subject }}</h1>
+      <span class="author">{{ shareStore.travelRoute.userId }}</span>
     </div>
 
+    <!-- 지도와 여행 리스트 컨테이너 -->
     <div class="map-list-container">
       <div class="map">
         <ShareTravelRouteCardMap
@@ -109,14 +113,15 @@ const bringTravelRouteBtn = () => {
       </div>
     </div>
 
-    <div class="board">
-      <div class="card" v-if="!props.userId" style="margin-top: 20px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
-        <p class="card-text"><small class="text-muted">작성자: {{ shareStore.travelRoute.userId }}</small></p>
+    <!-- 게시글 내용 카드 -->
+    <div class="card" v-if="!props.userId" style="margin-top: 20px;">
+      <div class="card-body">
         <p class="card-text">{{ shareStore.travelRoute.content }}</p>
       </div>
     </div>
 
-    <div class="buttons" style="margin-top: 20px;">
+    <!-- 버튼 그룹 -->
+    <div class="card-footer" style="margin-top: 20px;">
       <button v-if="props.userId" @click="shareTravelRouteBtn" class="btn btn-primary">공유하기</button>
       <button @click="bringTravelRouteBtn" class="btn btn-secondary">가져오기</button>
       <button @click="deleteTravelRouteBtn" class="btn btn-danger">삭제하기</button>
@@ -126,46 +131,93 @@ const bringTravelRouteBtn = () => {
 <style scoped>
 .container {
   display: flex;
-  max-width: 1000px !important;
   flex-direction: column;
+  max-width: 1000px;
+  margin: auto;
   padding: 20px;
+  background-color: #ffffff; /* 흰색 배경 */
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.post-title {
+  font-size: 24px;
+  color: #333; /* 진한 회색 */
+}
+
+.author {
+  font-size: 14px;
+  color: #555; /* 중간 회색 */
 }
 
 .map-list-container {
-  display: flex; /* Flex 컨테이너로 설정 */
-  flex-grow: 1;
+  display: flex;
+  gap: 20px;
 }
 
-.map {
-  flex: 1.5; /* 두 컴포넌트가 동일한 비율로 공간을 차지하도록 설정 */
-}
-
-.travel-list {
-  flex: 1; /* 두 컴포넌트가 동일한 비율로 공간을 차지하도록 설정 */
+.map, .travel-list {
+  flex: 1;
+  background: #f8f9fa; /* 매우 밝은 회색 */
+  padding: 15px;
+  border-radius: 8px;
 }
 
 .card {
-  background: white;
-  padding: 15px;
-  border-radius: 5px;
-  margin-bottom: 20px;
-  padding : 30px;
+  background: #f8f9fa;
+  margin-top: 20px;
+  border-radius: 8px;
 }
 
-.card-title {
-  font-size: 24px;
-  font-weight: bold;
-  padding-left: 30px;
-  padding-right: 30px;
+.card-body {
+  padding: 20px;
 }
 
 .card-text {
+  font-size: 16px;
+  color: #333;
+}
 
-
+.card-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px 20px;
+  background: #f8f9fa;
 }
 
 .btn {
-  margin-right: 10px;
+  background-color: #007bff; /* 버튼 기본 색상 */
+  color: white;
+  border: none;
+  border-radius: 4px;
   padding: 10px 20px;
+  cursor: pointer;
+  margin-left: 10px;
 }
+
+.btn:hover {
+  background-color: #0056b3; /* 호버 시 버튼 색상 변경 */
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.btn-danger {
+  background-color: #dc3545;
+}
+
+.btn-danger:hover {
+  background-color: #c82333;
+}
+
 </style>

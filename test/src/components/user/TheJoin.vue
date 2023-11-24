@@ -3,6 +3,7 @@ import TheHeroVue from "../TheHero.vue";
 import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { joinUser } from "@/api/user.js";
+import Swal from "sweetalert2";
 
 const router = useRouter();
 // const props = defineProps({ type: String });
@@ -17,12 +18,24 @@ const memberInfo = ref({
 
 
 function join() { 
-  console.log("회원가입 클릭")
   joinUser(memberInfo.value,
     (response) => { 
       let msg = "글등록 처리시 문제 발생했습니다.";
       if (response.status == 201) msg = "회원가입 성공"
-      alert(msg);
+
+      Swal.fire({
+        icon: "success",
+        title: msg,
+        showConfirmButton: false,
+        timer: 800
+      });
+
+
+
+
+
+
+
       router.push({ name: "login" });
     },
     (error) => console.error(error));

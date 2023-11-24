@@ -37,8 +37,35 @@ onMounted( ()=> {
         })
         fixMarker(mapStore.markers[idx].marker,coordinates[idx])
     }
+    // setMapBounds();
   }
+
+  if(mapStore.infoWindow){
+    mapStore.infoWindow.close();
+  }
+
 })
+
+
+function setMapBounds() {
+  let bounds = new kakao.maps.LatLngBounds();
+
+  if(mapStore.markers){
+    mapStore.markers.forEach(marker => {
+
+      let markerPosition = new kakao.maps.LatLng(marker.mapy, marker.mapx);
+
+      new kakao.maps.Marker({
+        position: markerPosition,
+        title: marker.title,
+        map: mapStore.map
+      });
+      bounds.extend(new kakao.maps.LatLng(marker.mapy, marker.mapx));
+    });
+
+    mapStore.map.setBounds(bounds);
+  }
+}
 
 
 // 주어진 번호와 해당 번호에 대응하는 지역 코드를 매핑하는 객체
