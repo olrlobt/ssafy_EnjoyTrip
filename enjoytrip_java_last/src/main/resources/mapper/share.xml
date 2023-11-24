@@ -94,9 +94,26 @@
         <result column="SHAREDTRAVELROUTENO" property="sharedTravelRouteNo"/>
     </resultMap>
 
-    <select id="listTop6TravelRoute" resultType="SharedTravelRouteDto">
-        SELECT *
-        FROM TravelRoute
+    <select id="listTop6TravelRoute" resultType="SharedTravelRouteDto" resultMap="listSharedTravelRouteMap">
+        SELECT s.sharedTravelRouteNo,
+               t.travelRouteNo,
+               t.userId,
+               s.title as subject,
+               s.content,
+               t.hit,
+               t.registerTime,
+               m.addr1,
+               m.areacode,
+               m.firstimage,
+               m.mapX,
+               m.mapY,
+               m.title,
+               m.step
+        FROM sharedTravelRoute s
+                 LEFT JOIN TravelRoute t
+                           ON s.travelRouteNo = t.travelRouteNo
+                 LEFT JOIN Marker m
+                           ON t.travelRouteNo = m.travelRouteNo
         ORDER BY hit DESC
         LIMIT 6;
     </select>

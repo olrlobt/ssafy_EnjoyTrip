@@ -1,12 +1,16 @@
 <template>
 
-  <div class="custom-card" @click="getCardLink()">
+  <div class="custom-card" @click="showMyTravelDetail">
+    <ShareTravelRouteCardMap
+        :markers="props.travelRoute.markers"
+        style="width: 100%; height: 80%; min-height: 300px;"
+    ></ShareTravelRouteCardMap>
     <div class="custom-card-body">
       <span class="flaticon-house display-4 text-primary"></span>
       <h3>{{ props.travelRoute.subject }}</h3>
       <div class="additional-info">
-        <p>User ID: {{ props.travelRoute.userId }}</p>
-        <p>Hit: {{ props.travelRoute.hit }}</p>
+        <p>작성자: {{ props.travelRoute.userId }}</p>
+        <p>조회수: {{ props.travelRoute.hit }}</p>
       </div>
       <!-- 추가적인 내용이 있다면 여기에 추가 -->
     </div>
@@ -16,13 +20,36 @@
 
 <script setup>
 import { useRouter } from "vue-router";
+import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
+import {updateHit} from "@/api/share";
+import {useShareStore} from "@/stores/share";
+import {onMounted} from "vue";
 const router = useRouter();
 const props = defineProps(['travelRoute']);
-// console.log(props.travelRoute)
-
+console.log(props.travelRoute)
+const shareStore = useShareStore();
 const getCardLink = () => {
   router.push({ name: "share-travelRoute" });
 }
+
+
+const showMyTravelDetail = async() => {
+  //hit 올리기
+  try {
+    // hit 올리기\
+    const userId = null;
+    await updateHit(props.travelRoute.travelRouteNo);
+    router.push({
+      name: "share-travel-detail",
+      params: { travelRouteNo: props.travelRoute.travelRouteNo, userId: userId }
+    });
+    shareStore.travelRoute = props.travelRoute;
+  } catch (error) {
+    console.error('Hit를 올리고 상세 페이지로 이동하는 중 에러 발생:', error);
+  }
+}
+
+
 
 </script>
 

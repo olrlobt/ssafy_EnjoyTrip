@@ -1,9 +1,9 @@
 <template>
-  <div class="untree_co-section">
+  <div class="untree_co-section" style="margin-top: 250px">
     <div class="container">
       <div class="row mb-5 justify-content-center">
         <div class="col-lg-6 text-center">
-          <h2 class="section-title text-center mb-3">인기 있는 여행지 경로</h2>
+          <h2 class="section-title text-center mb-3" style="font-weight: bold">인기 있는 여행지 경로</h2>
           <p>현재 사용자들의 마음을 사로잡은 TOP6 여행 경로입니다.</p>
         </div>
       </div>
@@ -29,10 +29,11 @@
 import { ref, onMounted } from 'vue';
 import { listTop6TravelRoute } from "@/api/share";
 import ShareTravelTopSix from "@/components/share/ShareTravelTopSix.vue";
+import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
 
 export default {
   name: 'ServicesSection',
-  components: { ShareTravelTopSix },
+  components: {ShareTravelRouteCardMap, ShareTravelTopSix },
   setup() {
     const dataIsLoaded = ref(false);
     const top6TravelRoutes = ref([]);
