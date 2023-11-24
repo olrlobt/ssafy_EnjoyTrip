@@ -15,6 +15,8 @@ export const useMapStore = defineStore("mapStore", () => {
     const map = ref(null); // map
     const coord = ref([]);
 
+    const searchFromHome = ref({type: null , keyword: null});
+
     const updateTravelList = (travelPlan) => {
         travelList.value = travelPlan;
     }
@@ -48,6 +50,7 @@ export const useMapStore = defineStore("mapStore", () => {
         infoWindow,
         openMarkerInfowindow,
         coord,
+        searchFromHome,
         updateOpenMarkerInfowindow,
         updateTravelList,
         removeIndexOfTravelList,

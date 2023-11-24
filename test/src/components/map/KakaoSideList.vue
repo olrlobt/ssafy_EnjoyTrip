@@ -1,5 +1,5 @@
 <script setup>
-import {ref, watch} from 'vue';
+import {onMounted, ref, watch} from 'vue';
 import {useMapStore} from "@/stores/map";
 import {VueDraggableNext} from 'vue-draggable-next'
 import {saveTravelRoute} from '@/api/share'
@@ -14,10 +14,22 @@ const currentTabId = ref(2);
 const localFixedMarker = ref([]);
 const active = (id) => id === currentTabId.value ? "-active" : "";
 
-
+const mapSearchInput = ref("");
+const mapSearchType = ref(12);
+const mapSearchInputTag = ref(null);
 const props = defineProps({
   searchKeyword: Function,
 });
+
+
+onMounted(async ()=>{
+  if(mapStore.searchFromHome.keyword){
+    mapSearchInput.value = mapStore.searchFromHome.keyword;
+    mapSearchType.value = mapStore.searchFromHome.type;
+  }
+})
+
+
 
 const searchKeyup = (event) => {
   props.searchKeyword(event);
@@ -329,7 +341,7 @@ const clearMyTravelRoute = () => {
         <!--          <div class="arrow -forward"></div>-->
         <!--        </div>-->
 
-        <select id="tourismType">
+        <select id="tourismType" v-model="mapSearchType">
           <option value="12" selected>관광타입 선택</option>
           <option value="12">관광지</option>
           <option value="14">문화시설</option>
@@ -341,7 +353,7 @@ const clearMyTravelRoute = () => {
           <option value="39">음식점</option>
         </select>
       </div>
-      <input class="search" type="text" id="keyword" placeholder="지역/상호명 검색" @keyup="searchKeyup"/>
+      <input class="search" type="text" id="keyword" ref="mapSearchInputTag" v-model="mapSearchInput" placeholder="지역/상호명 검색" @keyup="searchKeyup" @click="searchKeyup"/>
     </div>
 
 

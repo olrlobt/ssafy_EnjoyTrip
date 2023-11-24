@@ -1,5 +1,20 @@
 
 <script setup>
+import {ref, watch} from "vue";
+import {useMapStore} from "@/stores/map";
+import router from "@/router";
+const searchHomeType = ref(12);
+const searchHomeInput = ref("");
+const clickHomeSearch = () => {
+  let mapStore = useMapStore();
+  mapStore.searchFromHome.type = searchHomeType.value;
+  mapStore.searchFromHome.keyword = searchHomeInput.value;
+
+  router.push({name: 'map'});
+}
+
+watch(()=> searchHomeType.value , () => {
+})
 
 </script>
 
@@ -18,7 +33,7 @@
                 <form class="form">
                   <div class="row mb-2">
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-4">
-                      <select name="" id="" class="form-control custom-select">
+                      <select name="" v-model="searchHomeType" class="form-control custom-select">
                         <option value="12" selected>Select Travel Type</option>
                         <option value="12">관광지</option>
                         <option value="14">문화시설</option>
@@ -31,11 +46,10 @@
                       </select>
                     </div>
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-5">
-                      <input type="text" class="form-control" name="daterange">
+                      <input type="text" class="form-control" v-model="searchHomeInput">
                     </div>
                     <div class="col-sm-12 col-md-6 mb-3 mb-lg-0 col-lg-3">
-                      <input type="submit" class="btn btn-primary btn-block" value="Search">
-
+                      <button type="button" class="btn btn-primary btn-block" @click="clickHomeSearch" >Search</button>
                     </div>
                   </div>
 

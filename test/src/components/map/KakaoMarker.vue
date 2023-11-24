@@ -91,6 +91,7 @@ const regionCodeMapping = {
 
 
 const searchKeyword = (event) => {
+  console.log("이벤트 발생")
   if (event) {
     let params = {
       numOfRows: 50,
