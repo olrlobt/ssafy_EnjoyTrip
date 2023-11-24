@@ -33,7 +33,7 @@ function join() {
 </script>
 
 <template>
-    <TheHeroVue title="Join" contents ="회원가입 창입니다."/>
+    <TheHeroVue title="Join" contents ="새로운 여행의 시작, 당신의 첫 걸음을 UX에서 시작하세요."/>
       <div class="container">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">

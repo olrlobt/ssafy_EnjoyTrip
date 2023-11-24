@@ -11,6 +11,8 @@ const changeHero = (title1, contents2) => {
 }
 
 
+
+
 </script>
 <template>
 

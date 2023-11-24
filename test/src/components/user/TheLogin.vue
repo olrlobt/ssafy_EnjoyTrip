@@ -44,7 +44,7 @@ const join = () => {
 </script>
 
 <template>
-  <TheHeroVue title="Login" contents ="로그인 창입니다." />
+  <TheHeroVue title="Login" contents ="당신의 이야기가 시작되는 곳, 우리와 함께해주세요." />
     <div class="container" style="margin-bottom: 100px;">
       <div class="row justify-content-center">
         <div class="col-lg-8 col-md-10 col-sm-12">

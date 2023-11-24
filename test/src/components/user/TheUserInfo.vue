@@ -57,7 +57,7 @@ function modify() {
 </script>
 
 <template>
-  <TheHeroVue title="User Info" contents ="회원정보를 수정할 수 있습니다."/>
+  <TheHeroVue title="User Info" contents ="당신의 여행을 더욱 특별하게: 여기에서 회원 정보를 최신 상태로 유지하세요."/>
   <div class="container">
         <!-- {{ userInfo.userName }} -->
       <div class="row justify-content-center">

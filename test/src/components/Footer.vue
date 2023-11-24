@@ -5,8 +5,8 @@
         <div class="row">
           <div class="col-md-6 col-lg-4">
             <div class="widget">
-              <h3 class="heading">About Tour</h3>
-              <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
+              <h3 class="heading">UX:너와 경험하다</h3>
+              <p>한 학기 동안의 여정에서 보여준 당신의 열정과 노력에 깊은 감사를 전합니다. 많은 도전과 성취를 겪으며 성장한 당신의 모습이 자랑스럽습니다. 휴식과 재충전의 시간을 가져, 다가오는 새로운 시작에 더욱 빛날 수 있기를 바랍니다. 정말로 고생 많았어요!</p>
             </div>
             <div class="widget">
               <ul class="list-unstyled social">
@@ -23,21 +23,21 @@
           </div>
           <div class="col-md-6 col-lg-2 pl-lg-5">
             <div class="widget">
-              <h3 class="heading">Pages</h3>
+              <h3 class="heading">Team</h3>
               <ul class="links list-unstyled">
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">이승헌</a></li>
+                <li><a href="#">정유경</a></li>
+                <li><a href="#"></a></li>
               </ul>
             </div>
           </div>
           <div class="col-md-6 col-lg-2">
             <div class="widget">
-              <h3 class="heading">Resources</h3>
+              <h3 class="heading">Thanks</h3>
               <ul class="links list-unstyled">
-                <li><a href="#">Blog</a></li>
-                <li><a href="#">About</a></li>
-                <li><a href="#">Contact</a></li>
+                <li><a href="#">SSAFY Seoul 17</a></li>
+                <li><a href="#">서민규 강사님</a></li>
+                <li><a href="#">오진선 프로님</a></li>
               </ul>
             </div>
           </div>
@@ -45,9 +45,9 @@
             <div class="widget">
               <h3 class="heading">Contact</h3>
               <ul class="list-unstyled quick-info links">
-                <li class="email"><a href="#">mail@example.com</a></li>
-                <li class="phone"><a href="#">+1 222 212 3819</a></li>
-                <li class="address"><a href="#">43 Raymouth Rd. Baltemoer, London 3910</a></li>
+                <li class="email"><a href="#">yyk834@naver.com</a></li>
+                <li class="phone"><a href="#">+1 000 000 000  </a></li>
+                <li class="address"><a href="#">역삼역 멀티캠퍼스 603호</a></li>
               </ul>
             </div>
           </div>

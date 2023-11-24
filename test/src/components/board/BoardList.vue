@@ -38,7 +38,7 @@ const { boardType } = route.params;
 onMounted(() => {
   param.value.boardType = boardType;
   if(boardType === "notice"){
-    props.changeHero("Notice","공지사항입니다.")
+    props.changeHero("Notice","당신의 여행 경험을 더욱 풍부하게 할 소식을 전해드립니다.")
   }
   if(boardType === "qna"){
     props.changeHero("Q&A","궁금한 점이 있으시면 언제든지 물어봐 주세요💟")
