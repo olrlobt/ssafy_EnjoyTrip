@@ -31,7 +31,7 @@
       <input class="search" type="text" :value="mapStore.currentSelectMarker.coord.title " />
     </div>
 
-    <div class="content" style=" padding: 20px;">
+    <div class="content" style=" padding: 20px; ">
       <div style="display: flex; align-items: flex-start; justify-content: center; padding-bottom: 20px;">
         <img
             :src="mapStore.currentSelectMarker.coord.firstimage"
@@ -44,9 +44,7 @@
         </div>
       </div>
 
-      <div style="height: 100%; background-color: #9fcdff; width: 100%; height: 50%; object-fit: cover; border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
 
-      </div>
     </div>
 
 
@@ -76,7 +74,8 @@ const props = defineProps({
   position: relative;
   width: 30vw;
   max-width: 600px;
-  height: 40vw;
+  min-width: 25vw;
+  min-height: 25vw;
   max-height: 500px;
   z-index: 100;
   overflow: hidden;

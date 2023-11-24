@@ -29,11 +29,10 @@
 import { ref, onMounted } from 'vue';
 import { listTop6TravelRoute } from "@/api/share";
 import ShareTravelTopSix from "@/components/share/ShareTravelTopSix.vue";
-import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
 
 export default {
   name: 'ServicesSection',
-  components: {ShareTravelRouteCardMap, ShareTravelTopSix },
+  components: { ShareTravelTopSix },
   setup() {
     const dataIsLoaded = ref(false);
     const top6TravelRoutes = ref([]);

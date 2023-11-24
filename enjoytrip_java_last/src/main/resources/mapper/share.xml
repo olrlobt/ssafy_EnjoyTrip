@@ -95,27 +95,26 @@
     </resultMap>
 
     <select id="listTop6TravelRoute" resultType="SharedTravelRouteDto" resultMap="listSharedTravelRouteMap">
-        SELECT s.sharedTravelRouteNo,
-               t.travelRouteNo,
+        SELECT MAX(s.sharedTravelRouteNo) as sharedTravelRouteNo,
+               MAX(t.travelRouteNo) as travelRouteNo,
                t.userId,
-               s.title as subject,
-               s.content,
-               t.hit,
-               t.registerTime,
-               m.addr1,
-               m.areacode,
-               m.firstimage,
-               m.mapX,
-               m.mapY,
-               m.title,
-               m.step
+               MAX(s.title) as subject,
+               MAX(s.content) as content,
+               MAX(t.hit) as hit,
+               MAX(t.registerTime) as registerTime,
+               MAX(m.addr1) as addr1,
+               MAX(m.areacode) as areacode,
+               MAX(m.firstimage) as firstimage,
+               MAX(m.mapX) as mapX,
+               MAX(m.mapY) as mapY,
+               MAX(m.title) as title,
+               MAX(m.step) as step
         FROM sharedTravelRoute s
-                 LEFT JOIN TravelRoute t
-                           ON s.travelRouteNo = t.travelRouteNo
-                 LEFT JOIN Marker m
-                           ON t.travelRouteNo = m.travelRouteNo
+                 LEFT JOIN TravelRoute t ON s.travelRouteNo = t.travelRouteNo
+                 LEFT JOIN Marker m ON t.travelRouteNo = m.travelRouteNo
+        GROUP BY t.userId
         ORDER BY hit DESC
-        LIMIT 6;
+            LIMIT 6;
     </select>
 
 </mapper>

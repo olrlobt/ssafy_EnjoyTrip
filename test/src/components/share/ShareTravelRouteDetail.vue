@@ -95,7 +95,7 @@ const bringTravelRouteBtn = () => {
     <!-- 제목 카드 -->
     <div class="header">
       <h1 class="post-title">{{ shareStore.travelRoute.subject }}</h1>
-      <span class="author">{{ shareStore.travelRoute.userId }}</span>
+      <span class="author">작성자 : {{ shareStore.travelRoute.userId }}</span>
     </div>
 
     <!-- 지도와 여행 리스트 컨테이너 -->
