@@ -20,6 +20,7 @@ const removeListenersMap = ref(new Map());
 onMounted( ()=> {
 
   mapStore.markers.splice(0, mapStore.markers.length);
+  mapStore.fixedMarkers.splice(0, mapStore.fixedMarkers.length);
   if(mapStore.coord){
     mapStore.coord.forEach(value => mapStore.travelList.push({coord: value}));
     mapStore.coord.splice(0, mapStore.coord.length);
@@ -28,9 +29,7 @@ onMounted( ()=> {
     const coordinates = [];
     mapStore.travelList.forEach(value => coordinates.push(value.coord));
     mapStore.travelList.splice(0, mapStore.travelList.length);
-    console.log(coordinates)
     updateMap(coordinates);
-
     for (let idx = 0; idx < mapStore.markers.length; idx++) {
         mapStore.travelList.push({
           marker: mapStore.markers[idx].marker,
@@ -39,8 +38,6 @@ onMounted( ()=> {
         fixMarker(mapStore.markers[idx].marker,coordinates[idx])
     }
   }
-
-  console.log("mount")
 })
 
 
