@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.ux.member.mapper.MemberMapper">
+
+	<resultMap type="memberDto" id="member">
+		<result column="userId" property="userId"/>
+		<result column="userName" property="userName"/>
+	</resultMap>
+	
+
+	<select id="idCheck" parameterType="String" resultType="int">
+		select count(userId)
+		from members
+		where userId = #{userId}
+	</select>
+
+	<insert id="joinMember" parameterType="memberDto">
+		insert into members (userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate)
+		values (#{userName}, #{userId}, #{userPwd}, #{userSalt}, #{emailId}, #{emailDomain}, now())
+	</insert>
+
+	<select id="loginMember" parameterType="map" resultType="memberDto">
+		select userName, userId, userPwd, userSalt, emailId, emailDomain, joinDate, token
+		from members
+		where userId = #{userId} and userPwd = #{userPwd}
+	</select>
+
+	<select id="getSaltById" parameterType="memberDto" resultType="String">
+		select userSalt
+		from members
+		where userId = #{userId}
+	</select>
+
+	<update id="modifyMember" parameterType="map">
+		update members
+		set userId = #{memberDto.userId}, userName = #{memberDto.userName},  emailId = #{memberDto.emailId}, emailDomain = #{memberDto.emailDomain}
+		where userId = #{userId}
+	</update>
+
+	<select id="userInfo" parameterType="string" resultMap="member">
+		select userName, userId, emailId, emailDomain, joinDate
+		from members
+		where userId = #{userId}
+	</select>
+	
+	<update id="saveRefreshToken" parameterType="map">
+		update members
+		set token = #{token}
+		where userId = #{userId}
+	</update>
+	
+	<select id="getRefreshToken" parameterType="string" resultType="string">
+		select token
+		from members
+		where userId = #{userId}
+	</select>
+	
+	<update id="deleteRefreshToken" parameterType="map">
+		update members
+		set token = #{token, jdbcType=VARCHAR}
+		where user_id = #{userId}
+	</update>
+	
+
+</mapper>
+
+<!-- 
+	<update id="modifyMember">
+	
+	</update>
+	String getSaltById(String userId) throws SQLException;
+	
+	int idCheck(String userId) throws SQLException;
+
+	void joinMember(MemberDto memberDto) throws SQLException;
+
+	MemberDto loginMember(String userId, String userPwd) throws SQLException;
+
+	void modifyMember(MemberDto memberDto, String userId) throws Exception;
+	
+	void modifyMemberPass(String userId, String password, String userSalt) throws Exception;
+	
+	void withdraw(String userId) throws Exception;
+
+
+
+ -->
