@@ -1,7 +1,7 @@
 package com.ssafy.ux.comment.service;
 
 import com.ssafy.ux.comment.mapper.CommentMapper;
-import com.ssafy.ux.comment.model.CommentDto;
+import com.ssafy.ux.comment.model.Comments;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,21 +15,21 @@ public class CommentServiceImpl implements CommentService {
         this.commentMapper = commentMapper;
     }
     @Override
-    public CommentDto addComment(CommentDto commentDto) {
-        commentMapper.addComment(commentDto);
-        System.out.println("commentDto = " + commentDto.toString());
-        return commentDto;
+    public Comments addComment(Comments comments) {
+        commentMapper.addComment(comments);
+        System.out.println("commentDto = " + comments.toString());
+        return comments;
     }
 
     @Override
-    public List<CommentDto> getCommentsForArticle(int articleNo) {
+    public List<Comments> getCommentsForArticle(int articleNo) {
         commentMapper.getCommentsForArticle(articleNo).forEach(System.out::println);
         return commentMapper.getCommentsForArticle(articleNo);
     }
 
     @Override
-    public void modifyComment(CommentDto commentDto) throws Exception {
-        commentMapper.modifyComment(commentDto);
+    public void modifyComment(Comments comments) throws Exception {
+        commentMapper.modifyComment(comments);
     }
 
     @Override

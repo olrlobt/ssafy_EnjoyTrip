@@ -56,8 +56,6 @@ public class ShareController {
 
     @GetMapping("/listTop6TravelRoute")
     public List<SharedTravelRouteDto> listTop6TravelRoute() throws SQLException{
-        List<SharedTravelRouteDto> list = service.listTop6TravelRoute();
-        System.out.println(list);
         return service.listTop6TravelRoute();
     }
 

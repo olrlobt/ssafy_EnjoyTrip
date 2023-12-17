@@ -6,7 +6,6 @@ export const useCommentStore = defineStore("shareStore", () => {
 
     const comments = ref([]);
 
-
     return {
         comments
     };

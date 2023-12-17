@@ -2,36 +2,48 @@ package com.ssafy.ux.chat.controller;
 
 import com.ssafy.ux.chat.model.ChatRequest;
 import com.ssafy.ux.chat.model.ChatResponse;
+import com.ssafy.ux.chat.model.service.ChatRepository;
+import com.ssafy.ux.chat.model.service.ChatService;
+import com.ssafy.ux.comment.model.Comments;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
-
-import java.util.List;
 
 @RestController
 @Slf4j
 public class ChatController {
 
-    @Qualifier("openaiRestTemplate")
+    private final RestTemplate restTemplate;
+    private final String model;
+    private final String apiUrl;
+    private final ChatService chatService;
+
     @Autowired
-    private RestTemplate restTemplate;
+    public ChatController(
+            RestTemplate restTemplate,
+            @Value("${openai.model}") String model,
+            @Value("${openai.api.url}") String apiUrl,
+            ChatService chatService) {
+        this.restTemplate = restTemplate;
+        this.model = model;
+        this.apiUrl = apiUrl;
+        this.chatService = chatService;
+    }
 
-    @Value("${openai.model}")
-    private String model;
+    @PostMapping("/chat")
+    public String chat(@RequestBody Comments comments) {
+        // check commentDto.getId
+        int articleNo = comments.getArticleNo();
+        String prompt = chatService.getConcatenatedCommentsByArticleNo(articleNo);
+        prompt += "위의 해당 글들은 갖고 있는 데이터입니다. 데이터를 한문장으로 요약해주세요 ";
 
-    @Value("${openai.api.url}")
-    private String apiUrl;
-
-    @GetMapping("/chat")
-    public String chat(@RequestParam String prompt) {
-        // create a request
         log.info("prompt: {}", prompt);
+
+        //create a request
         ChatRequest request = new ChatRequest(model, prompt);
         log.info("chat request: {}",request.getMessages().get(0).toString());
         // call the API

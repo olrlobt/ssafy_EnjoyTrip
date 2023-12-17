@@ -1,6 +1,6 @@
 package com.ssafy.ux.comment.controller;
 
-import com.ssafy.ux.comment.model.CommentDto;
+import com.ssafy.ux.comment.model.Comments;
 import com.ssafy.ux.comment.service.CommentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,9 +22,9 @@ public class CommentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<?> addComment(@RequestBody Comments comments) {
         try {
-            CommentDto savedComment = commentService.addComment(commentDto);
+            Comments savedComment = commentService.addComment(comments);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
         } catch (Exception e) {
             log.error("Error adding comment", e);
@@ -35,7 +35,7 @@ public class CommentController {
     @GetMapping("/get/{articleNo}")
     public ResponseEntity<?> getCommentsForArticle(@PathVariable("articleNo") String articleNo) {
         try {
-            List<CommentDto> comments = commentService.getCommentsForArticle(Integer.parseInt(articleNo));
+            List<Comments> comments = commentService.getCommentsForArticle(Integer.parseInt(articleNo));
             return ResponseEntity.ok().body(comments);
         } catch (Exception e) {
             log.error("Error getting comments for article", e);
@@ -44,10 +44,10 @@ public class CommentController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modifyComment(@RequestBody CommentDto commentDto) {
+    public ResponseEntity<?> modifyComment(@RequestBody Comments comments) {
         try {
-            log.info(commentDto.toString());
-            commentService.modifyComment(commentDto);
+            log.info(comments.toString());
+            commentService.modifyComment(comments);
             return ResponseEntity.ok().body("Comment modified successfully.");
         } catch (Exception e) {
             log.error("Error during comment modification", e);

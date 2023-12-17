@@ -26,9 +26,8 @@ const login = async () => {
     let token = sessionStorage.getItem("accessToken");
     if (isLogin.value) {
 
-      // console.log("token" + token);
+      console.log("token" + token);
       console.log("userInfo:" + userInfo.value.userId);
-
       await memberStore.getUserInfo(token);
       await router.push("/");
     }
