@@ -169,10 +169,11 @@ function clickComment() {
 <template>
   <div class="container mt-5">
     <!-- User Info and Date -->
+    <div class="detail-container">
     <div class="dropdown-container" v-if="checked">
       <div class="dropdown">
         <!-- 이미지를 드롭다운 버튼으로 사용 -->
-        <div class="dropbtn"><img src="@/assets/images/edit_icon.png" alt="드롭다운 아이콘"></div>
+        <div class="dropbtn"><img src="@/assets/images/edit_dripdown.png" alt="드롭다운 아이콘"></div>
         <div class="dropdown-content">
           <a href="#" @click="moveModify">글 수정</a>
           <a href="#" @click="onDeleteArticle">글 삭제</a>
@@ -180,7 +181,7 @@ function clickComment() {
       </div>
     </div>
     <div class="mb-3">
-      <h1 style="font-weight: bold">{{ article.subject }}</h1>
+      <h4 style="font-weight: bold">{{ article.subject }}</h4>
       <p class="lead">
         <strong>{{ article.userId }}</strong> | {{ new Date(article.registerTime).toLocaleDateString() }}
       </p>
@@ -189,19 +190,21 @@ function clickComment() {
 
     <!-- Article Content -->
     <div class="mb-3">
-      <div style="min-height: 600px;">
+      <div style="min-height: 400px;">
         <div ref="viewer"></div>
       </div>
       <hr/>
     </div>
-
-    <!-- Comment Input -->
-    <div class="mb-3">
-      <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
-      <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
-      <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
-      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
     </div>
+    <!-- Comment Input -->
+<!--    <div class="card bg-light">-->
+    <br/>
+      <div class="mb-3">
+        <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
+        <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
+        <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
+        <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
+      </div>
 
     <!-- Comments List -->
     <div>
@@ -209,9 +212,9 @@ function clickComment() {
       <!-- Replace with actual comments loop -->
       <!-- chatGpt 요약내용 -->
        <summary-of-chat-g-p-t :articleno="articleno"/>
-
     </div>
   </div>
+<!--  </div>-->
 </template>
 
 <style scoped lang="scss">
@@ -219,11 +222,21 @@ function clickComment() {
   max-width: 800px;
   position: relative;
 }
+
+.detail-container{
+  max-width: 800px; /* 컨테이너의 최대 너비 증가 */
+  margin: auto;
+  padding: 30px; /* 내부 패딩 증가 */
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
 .dropdown-container {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 10px; /* Adjust margin as needed */
+  margin: 60px; /* Adjust margin as needed */
 }
 .dropdown {
   position: relative;
