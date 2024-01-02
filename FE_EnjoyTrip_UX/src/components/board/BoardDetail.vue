@@ -160,6 +160,7 @@ function clickComment() {
         console.error("Error adding comment:", error);
       }
   );
+  write.value = "";
 }
 
 
@@ -195,24 +196,30 @@ function clickComment() {
       </div>
       <hr/>
     </div>
+
+    <div class="mb-3">
+      <textarea class="form-control" placeholder="댓글을 입력하세요" v-model="write" />
+      <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
+      <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
+      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
+    </div>
+
     </div>
     <!-- Comment Input -->
-<!--    <div class="card bg-light">-->
-    <br/>
-      <div class="mb-3">
-        <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
-        <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
-        <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
-        <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
-      </div>
 
-    <!-- Comments List -->
-    <div>
-      <CommentList  />
-      <!-- Replace with actual comments loop -->
-      <!-- chatGpt 요약내용 -->
-       <summary-of-chat-g-p-t :articleno="articleno"/>
+    <br/>
+    <div class="card bg-light">
+      <div class="card-body">
+
+        <div>
+          <!-- chatGpt 요약내용 -->
+          <summary-of-chat-g-p-t :articleno="articleno"/>
+        </div>
+        <!-- Comments List -->
+        <CommentList  />
+      </div>
     </div>
+
   </div>
 <!--  </div>-->
 </template>
