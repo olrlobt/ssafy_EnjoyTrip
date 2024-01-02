@@ -67,4 +67,37 @@ public class ChatController {
 
         return prompt;
     }
+
+    //Gpt 내용 요약 추가
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/chat/content")
+    public String chat(@RequestBody String title) {
+        // check commentDto.getId
+        log.info("title: {} ", title);
+        String prompt = title + "를 2줄 요약해주세요. ";
+
+        log.info("prompt: {}", prompt);
+
+        //create a request
+        ChatRequest request = new ChatRequest(model, prompt);
+        log.info("chat request: {}",request.getMessages().get(0).toString());
+        // call the API
+        try {
+            ChatResponse response = restTemplate.postForObject(apiUrl, request, ChatResponse.class);
+            assert response != null;
+
+            log.info("chat response: {}", response.getChoices().get(0).getMessage().getContent());
+            if (response.getChoices() == null || response.getChoices().isEmpty()) {
+                return "No response";
+            }
+
+            // return the first response
+            return response.getChoices().get(0).getMessage().getContent();
+
+        } catch (RestClientException e) {
+            log.error("Error occurred while making the API request: {}", e.getMessage());
+        }
+
+        return prompt;
+    }
 }

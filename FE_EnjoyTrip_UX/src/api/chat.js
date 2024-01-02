@@ -11,4 +11,12 @@ function chatWithOpenAI(comments, success, fail) {
         .catch(fail);
 }
 
-export { chatWithOpenAI };
+function getContentWithOpenAI(title, success, fail){
+    console.log("getContentWithOpenAI : " + title);
+    local.post(`${url}/content`,JSON.stringify(title))
+        .then(success)
+        .catch(fail);
+
+}
+
+export { chatWithOpenAI, getContentWithOpenAI };
