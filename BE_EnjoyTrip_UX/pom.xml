@@ -101,6 +101,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Spring Boot Starter for JPA -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+
 
 	</dependencies>
 

@@ -1,13 +1,15 @@
 <script setup>
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 
-import {onMounted, ref} from "vue";
-import {useRoute, useRouter} from "vue-router";
-import {deleteArticle, detailArticle} from "@/api/board";
-import {getCommentsForArticle} from "@/api/comment";
+import { ref, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import {detailArticle, deleteArticle, listArticle} from "@/api/board";
+import { addComment, getCommentsForArticle } from "@/api/comment";
+
 import {useMemberStore} from "@/stores/member";
 import CommentList from "@/components/comment/CommentList.vue";
 import {useCommentStore} from "@/stores/comment";
+import SummaryOfChatGPT from "@/components/comment/SummaryOfChatGPT.vue";
 
 const memberStore = useMemberStore();
 
@@ -140,6 +142,29 @@ function onDeleteArticle() {
 }
 
 const write = ref();
+function clickComment() {
+
+  const newComment = {
+    content: write.value,
+    userId: memberInfo.value.userId,
+    articleNo: articleno,
+  };
+
+  commentStore.comments.push(newComment);
+  console.log("------ add" + commentStore.comments);
+  addComment(
+      newComment,
+      (response) => {
+        console.log("Comment added successfully:", response);
+        fetchComments();
+      },
+      (error) => {
+        console.error("Error adding comment:", error);
+      }
+  );
+  write.value = "";
+}
+
 
 </script>
 
@@ -147,10 +172,11 @@ const write = ref();
 <template>
   <div class="container mt-5">
     <!-- User Info and Date -->
+    <div class="detail-container">
     <div class="dropdown-container" v-if="checked">
       <div class="dropdown">
         <!-- 이미지를 드롭다운 버튼으로 사용 -->
-        <div class="dropbtn"><img src="@/assets/images/edit_icon.png" alt="드롭다운 아이콘"></div>
+        <div class="dropbtn"><img src="@/assets/images/edit_dripdown.png" alt="드롭다운 아이콘"></div>
         <div class="dropdown-content">
           <a href="#" @click="moveModify">글 수정</a>
           <a href="#" @click="onDeleteArticle">글 삭제</a>
@@ -158,7 +184,7 @@ const write = ref();
       </div>
     </div>
     <div class="mb-3">
-      <h1 style="font-weight: bold">{{ article.subject }}</h1>
+      <h4 style="font-weight: bold">{{ article.subject }}</h4>
       <p class="lead">
         <strong>{{ article.userId }}</strong> | {{ new Date(article.registerTime).toLocaleDateString() }}
       </p>
@@ -167,13 +193,12 @@ const write = ref();
 
     <!-- Article Content -->
     <div class="mb-3">
-      <div style="min-height: 600px;">
+      <div style="min-height: 400px;">
         <div ref="viewer"></div>
       </div>
       <hr/>
     </div>
 
-    <!-- Comment Input -->
     <div class="mb-3">
       <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
@@ -184,7 +209,23 @@ const write = ref();
       <CommentList :url="url" :no="articleno" />
       <!-- Replace with actual comments loop -->
     </div>
+    <!-- Comment Input -->
+
+    <br/>
+    <div class="card bg-light">
+      <div class="card-body">
+
+        <div>
+          <!-- chatGpt 요약내용 -->
+          <summary-of-chat-g-p-t :articleno="articleno"/>
+        </div>
+        <!-- Comments List -->
+        <CommentList  />
+      </div>
+    </div>
+
   </div>
+<!--  </div>-->
 </template>
 
 <style scoped lang="scss">
@@ -192,11 +233,21 @@ const write = ref();
   max-width: 800px;
   position: relative;
 }
+
+.detail-container{
+  max-width: 800px; /* 컨테이너의 최대 너비 증가 */
+  margin: auto;
+  padding: 30px; /* 내부 패딩 증가 */
+  border: 1px solid #ddd;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  border-radius: 10px;
+}
+
 .dropdown-container {
   position: absolute;
   top: 0;
   right: 0;
-  margin: 10px; /* Adjust margin as needed */
+  margin: 60px; /* Adjust margin as needed */
 }
 .dropdown {
   position: relative;

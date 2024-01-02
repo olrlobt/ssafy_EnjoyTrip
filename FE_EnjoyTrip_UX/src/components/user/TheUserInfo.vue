@@ -170,6 +170,7 @@ function modify() {
 
 .input-group-text {
   border-radius: 5px 0 0 5px;
+  margin-bottom: 15px;
 }
 
 .form-select {

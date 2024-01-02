@@ -111,7 +111,7 @@ const bringTravelRouteBtn = () => {
         />
       </div>
       <div class="travel-list">
-        <KakaoListItem v-if="isMount" :item="travelList" style="margin-top: 20px;"></KakaoListItem>
+        <KakaoListItem v-if="isMount" :no="shareStore.travelRoute.travelRouteNo" style="margin-top: 20px;"></KakaoListItem>
       </div>
     </div>
 
@@ -121,6 +121,7 @@ const bringTravelRouteBtn = () => {
         <p class="card-text">{{ shareStore.travelRoute.content }}</p>
       </div>
     </div>
+
 
     <!-- 버튼 그룹 -->
     <div class="card-footer" style="margin-top: 20px;">

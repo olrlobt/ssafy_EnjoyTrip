@@ -60,11 +60,10 @@ public class MemberController extends HttpServlet {
     	
     	Map<String, Object> resultMap = new HashMap<String, Object>();
 		HttpStatus status = HttpStatus.ACCEPTED;
-//		System.out.println(getmemberDto);
-
+		System.out.println("오는 중이니");
         try {
             MemberDto loginUser = memberService.loginMember(getmemberDto);
-            System.out.println(loginUser);
+            log.info("loginUser: " , loginUser);
             if (loginUser != null) { //여기서부터 고칠 것
             	//jwt
             	String accessToken = jwtUtil.createAccessToken(loginUser.getUserId());
