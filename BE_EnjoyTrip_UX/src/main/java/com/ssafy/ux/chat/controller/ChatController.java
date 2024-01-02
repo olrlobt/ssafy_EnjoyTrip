@@ -34,10 +34,12 @@ public class ChatController {
         this.chatService = chatService;
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/chat")
-    public String chat(@RequestBody Comments comments) {
+    public String chat(@RequestBody int articleNo) {
         // check commentDto.getId
-        int articleNo = comments.getArticleNo();
+//        int articleNo = comments.getArticleNo();
+        log.info("articleNo: {} ", articleNo);
         String prompt = chatService.getConcatenatedCommentsByArticleNo(articleNo);
         prompt += "위의 해당 글들은 갖고 있는 데이터입니다. 데이터를 한문장으로 요약해주세요 ";
 

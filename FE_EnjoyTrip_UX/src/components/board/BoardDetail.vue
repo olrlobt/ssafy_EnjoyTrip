@@ -3,11 +3,12 @@ import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 
 import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { detailArticle, deleteArticle } from "@/api/board";
+import {detailArticle, deleteArticle, listArticle} from "@/api/board";
 import { addComment, getCommentsForArticle } from "@/api/comment";
 import {useMemberStore} from "@/stores/member";
 import CommentList from "@/components/comment/CommentList.vue";
 import {useCommentStore} from "@/stores/comment";
+import SummaryOfChatGPT from "@/components/comment/SummaryOfChatGPT.vue";
 
 const memberStore = useMemberStore();
 
@@ -160,6 +161,8 @@ function clickComment() {
       }
   );
 }
+
+
 </script>
 
 
@@ -204,6 +207,9 @@ function clickComment() {
     <div>
       <CommentList  />
       <!-- Replace with actual comments loop -->
+      <!-- chatGpt 요약내용 -->
+       <summary-of-chat-g-p-t :articleno="articleno"/>
+
     </div>
   </div>
 </template>
