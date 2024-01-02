@@ -1,8 +1,8 @@
 <template>
   <div class="review-card">
     <div class="card-header">
-<!--      <img class="icon" :src="icon" alt="Icon">-->
-      <h2>ChatGPT가 요약한 최근 리뷰 내용입니다.</h2>
+      <img class="icon" src="@/assets/images/chatgpt-icon.png" alt="Icon">
+      <h6>ChatGPT가 요약한 최근 리뷰 내용입니다.</h6>
     </div>
     <div class="card-content">
       <!-- 여기에 ChatGPT가 요약한 최근 리뷰 내용을 보여주는 내용을 적습니다. -->
@@ -19,7 +19,7 @@ const props = defineProps([
 ])
 
 const boardNo = ref(props.articleno);
-// const icon = 'https://example.com/chatgpt-icon.png'; // ChatGPT 아이콘 이미지 URL을 업데이트하세요.
+// const icon = '@/assets/images/chatgpt-icon.png'; // ChatGPT 아이콘 이미지 URL을 업데이트하세요.
 const summary = ref('ChatGPT가 최근 리뷰를 요약한 내용이 여기에 나타납니다.');
 
 const getChatGptResponse = () => {
@@ -33,9 +33,9 @@ const getChatGptResponse = () => {
       });
 };
 
-onMounted(()=>{
-  getChatGptResponse();
-});
+// onMounted(()=>{
+//   getChatGptResponse();
+// });
 </script>
 
 <style scoped>
@@ -56,6 +56,8 @@ onMounted(()=>{
 
 .icon {
   margin-right: 8px;
+  width:30px;
+  height: 30px;
 }
 
 .card-content {

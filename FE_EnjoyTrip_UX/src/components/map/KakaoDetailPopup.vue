@@ -43,6 +43,7 @@
           <span style="font-size: 0.9rem; color: #666;">{{ mapStore.currentSelectMarker.coord.addr1 }}</span>
           <br/>
           <br/> <!-- 한칸 띄우긴 했는데 .. to. 승헌씨,,-->
+          <img class="icon" src="@/assets/images/chatgpt-icon.png" alt="Icon">
           <span style="font-size: 1.1rem; color: #333;">상세내용 :</span><br/>
           <span style="font-size: 0.9rem; color: #666;">{{ summary }}</span>
         </div>
@@ -62,7 +63,7 @@ import {getContentWithOpenAI} from "@/api/chat";
 const mapStore = useMapStore();
 const currentTabId = ref(1);
  //Gpt 요약본
-const summary = ref();
+const summary = ref("ChatGpt 가 요약한 내용입니다. ");
 const title = ref(mapStore.currentSelectMarker.coord.title);
 const getChatGptResponse = () => {
   getContentWithOpenAI(title.value, ({data}) =>{
@@ -78,9 +79,9 @@ const props = defineProps({
   hideMarkerPopup: Function
 })
 
-onMounted(()=>{
-  getChatGptResponse();
-});
+// onMounted(()=>{
+//   getChatGptResponse();
+// });
 
 
 </script>
@@ -104,6 +105,12 @@ onMounted(()=>{
   height: 40px !important;
   font-size: 1.2rem !important;
   font-weight: bold;
+}
+
+.icon {
+  margin-right: 6px;
+  width:25px;
+  height: 25px;
 }
 
 @import "../../assets/scss/map/mapAppleThema";
