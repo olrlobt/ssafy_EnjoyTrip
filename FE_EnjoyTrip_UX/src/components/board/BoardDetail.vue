@@ -5,6 +5,7 @@ import { ref, onMounted } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import {detailArticle, deleteArticle, listArticle} from "@/api/board";
 import { addComment, getCommentsForArticle } from "@/api/comment";
+
 import {useMemberStore} from "@/stores/member";
 import CommentList from "@/components/comment/CommentList.vue";
 import {useCommentStore} from "@/stores/comment";
@@ -53,7 +54,7 @@ const content = ref('');
 const viewer = ref(null);
 const viewerValid = ref(null);
 const checked = ref(false);
-
+const url = ref('comments');
 
 onMounted(async () => {
   await getMemberInfo();
@@ -99,6 +100,7 @@ const fetchComments = async () => {
   try {
     const { data } = await new Promise((resolve, reject) => {
       getCommentsForArticle(
+          url.value,
           articleno,
           (response) => resolve(response),
           (error) => reject(error)
@@ -198,12 +200,14 @@ function clickComment() {
     </div>
 
     <div class="mb-3">
-      <textarea class="form-control" placeholder="댓글을 입력하세요" v-model="write" />
       <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
-      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
     </div>
 
+    <!-- Comments List -->
+    <div>
+      <CommentList :url="url" :no="articleno" />
+      <!-- Replace with actual comments loop -->
     </div>
     <!-- Comment Input -->
 
