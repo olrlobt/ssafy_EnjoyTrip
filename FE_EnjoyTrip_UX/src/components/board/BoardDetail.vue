@@ -204,26 +204,19 @@ function clickComment() {
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
     </div>
 
-    <!-- Comments List -->
-    <div>
-      <CommentList :url="url" :no="articleno" />
-      <!-- Replace with actual comments loop -->
     </div>
-    <!-- Comment Input -->
-
     <br/>
+    <!-- Comments List -->
     <div class="card bg-light">
       <div class="card-body">
-
         <div>
-          <!-- chatGpt 요약내용 -->
           <summary-of-chat-g-p-t :articleno="articleno"/>
+          <CommentList :url="url" :no="articleno" />
+          <!-- Replace with actual comments loop -->
         </div>
-        <!-- Comments List -->
-        <CommentList  />
       </div>
     </div>
-
+    <!-- Comment Input -->
   </div>
 <!--  </div>-->
 </template>
