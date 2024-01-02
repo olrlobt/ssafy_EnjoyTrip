@@ -19,11 +19,11 @@
 </template>
 
 <script setup>
-import { useRouter } from "vue-router";
+import {useRouter} from "vue-router";
 import ShareTravelRouteCardMap from "@/components/share/ShareTravelRouteCardMap.vue";
 import {updateHit} from "@/api/share";
 import {useShareStore} from "@/stores/share";
-import {onMounted} from "vue";
+
 const router = useRouter();
 const props = defineProps(['travelRoute']);
 console.log(props.travelRoute)

@@ -6,7 +6,8 @@ import {useMemberStore} from "@/stores/member";
 import {ref} from "vue";
 import {useCommentStore} from "@/stores/comment";
 
-let props = defineProps(['comment', 'index']);
+let props = defineProps(['comment', 'index','url']);
+console.log(props.url)
 const memberStore = useMemberStore();
 const isChanging = ref(false); // 수정 중인지 판단.
 const write = ref("");
@@ -30,6 +31,7 @@ function clickComment(comment) {
   comment.content = write.value;
 
   modifyComment(
+      props.url,
       comment,
       (response) => {
         isChanging.value = !isChanging.value;
@@ -51,6 +53,7 @@ const editComment = (comment) => { //userId, commentNo
 
 const deleteButton =  (comment,index) => {
   deleteComment(
+      props.url,
       comment.commentNo,
       () => {
         if (index !== -1) {

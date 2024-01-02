@@ -36,16 +36,7 @@ CREATE TABLE `boards`
 
 
 
-CREATE TABLE TravelRoute
-(
-    `travelRouteNo` INT AUTO_INCREMENT PRIMARY KEY,
-    `userId`        VARCHAR(255) NOT NULL,
-    `subject`       VARCHAR(255) NOT NULL,
-    `content`       TEXT,
-    `hit`           INT          NOT NULL DEFAULT 0,
-    `registerTime`  VARCHAR(255),
-    FOREIGN KEY (`userId`) REFERENCES `members` (`userId`)
-)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 
 CREATE TABLE Marker
 (
@@ -71,6 +62,17 @@ CREATE TABLE comments (
   FOREIGN KEY (userId) REFERENCES members(userId) ON DELETE CASCADE
 );
 
+CREATE TABLE TravelRoute
+(
+    `travelRouteNo` INT AUTO_INCREMENT PRIMARY KEY,
+    `userId`        VARCHAR(255) NOT NULL,
+    `subject`       VARCHAR(255) NOT NULL,
+    `content`       TEXT,
+    `hit`           INT          NOT NULL DEFAULT 0,
+    `registerTime`  VARCHAR(255),
+    FOREIGN KEY (`userId`) REFERENCES `members` (`userId`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 CREATE TABLE SHAREDTRAVELROUTE
 (
     `sharedTravelRouteNo` INT auto_increment NOT NULL ,
@@ -81,3 +83,14 @@ CREATE TABLE SHAREDTRAVELROUTE
     PRIMARY KEY (`sharedTravelRouteNo`),
     FOREIGN KEY (`travelRouteNo`) REFERENCES TravelRoute(`travelRouteNo`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+
+CREATE TABLE SHAREDTRAVELROUTECOMMENTS (
+      commentNo INT AUTO_INCREMENT PRIMARY KEY,
+      content VARCHAR(255) NOT NULL,
+      sharedTravelRouteNo INT NOT NULL,
+      userId varchar(255) NOT NULL,
+      FOREIGN KEY (sharedTravelRouteNo) REFERENCES SHAREDTRAVELROUTE(sharedTravelRouteNo) ON DELETE CASCADE,
+      FOREIGN KEY (userId) REFERENCES members(userId) ON DELETE CASCADE
+);

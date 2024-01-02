@@ -1,10 +1,10 @@
 <script setup>
 import Viewer from "@toast-ui/editor/dist/toastui-editor-viewer";
 
-import { ref, onMounted } from "vue";
-import { useRoute, useRouter } from "vue-router";
-import { detailArticle, deleteArticle } from "@/api/board";
-import { addComment, getCommentsForArticle } from "@/api/comment";
+import {onMounted, ref} from "vue";
+import {useRoute, useRouter} from "vue-router";
+import {deleteArticle, detailArticle} from "@/api/board";
+import {getCommentsForArticle} from "@/api/comment";
 import {useMemberStore} from "@/stores/member";
 import CommentList from "@/components/comment/CommentList.vue";
 import {useCommentStore} from "@/stores/comment";
@@ -52,7 +52,7 @@ const content = ref('');
 const viewer = ref(null);
 const viewerValid = ref(null);
 const checked = ref(false);
-
+const url = ref('comments');
 
 onMounted(async () => {
   await getMemberInfo();
@@ -98,6 +98,7 @@ const fetchComments = async () => {
   try {
     const { data } = await new Promise((resolve, reject) => {
       getCommentsForArticle(
+          url.value,
           articleno,
           (response) => resolve(response),
           (error) => reject(error)
@@ -139,27 +140,7 @@ function onDeleteArticle() {
 }
 
 const write = ref();
-function clickComment() {
 
-  const newComment = {
-    content: write.value,
-    userId: memberInfo.value.userId,
-    articleNo: articleno,
-  };
-
-  commentStore.comments.push(newComment);
-  console.log("------ add" + commentStore.comments);
-  addComment(
-      newComment,
-      (response) => {
-        console.log("Comment added successfully:", response);
-        fetchComments();
-      },
-      (error) => {
-        console.error("Error adding comment:", error);
-      }
-  );
-}
 </script>
 
 
@@ -194,15 +175,13 @@ function clickComment() {
 
     <!-- Comment Input -->
     <div class="mb-3">
-      <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
       <button type="button" class="btn btn-primary mt-2" @click="reply">답글달기</button>
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
-      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
     </div>
 
     <!-- Comments List -->
     <div>
-      <CommentList  />
+      <CommentList :url="url" :no="articleno" />
       <!-- Replace with actual comments loop -->
     </div>
   </div>

@@ -7,8 +7,11 @@ import {deleteTravelRoute, shareTravelRoute} from "@/api/share";
 import router from "@/router";
 import Swal from "sweetalert2";
 import {useMapStore} from "@/stores/map";
+import CommentList from "@/components/comment/CommentList.vue";
 
 const shareStore = useShareStore();
+const url = ref('sharedTravelRouteComments');
+
 
 let travelList;
 if(shareStore.travelRoute.markers){
@@ -26,7 +29,6 @@ onMounted(() => {
 });
 
 const props = defineProps(['userId', '인기 여행지의 매력에 빠져보세요: 여행자들이 가장 사랑하는 Top 6 경로를 여기서 만나보세요.']);
-console.log(props.userId)
 
 
 
@@ -126,8 +128,19 @@ const bringTravelRouteBtn = () => {
       <button @click="bringTravelRouteBtn" class="btn btn-secondary">가져오기</button>
       <button @click="deleteTravelRouteBtn" class="btn btn-danger">삭제하기</button>
     </div>
+
+
+
+    <!-- Comments List -->
+    <div>
+
+      <CommentList :url="url" :no="shareStore.travelRoute.sharedTravelRouteNo"  />
+      <!-- Replace with actual comments loop -->
+    </div>
+
   </div>
 </template>
+
 <style scoped>
 .container {
   display: flex;
