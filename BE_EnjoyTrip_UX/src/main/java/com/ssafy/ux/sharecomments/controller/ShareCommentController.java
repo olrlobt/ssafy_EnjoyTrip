@@ -1,6 +1,6 @@
 package com.ssafy.ux.sharecomments.controller;
 
-import com.ssafy.ux.sharecomments.model.ShareCommentDto;
+import com.ssafy.ux.sharecomments.model.SharedTravelRouteComments;
 import com.ssafy.ux.sharecomments.service.ShareCommentService;
 import java.util.List;
 import lombok.extern.slf4j.Slf4j;
@@ -29,9 +29,9 @@ public class ShareCommentController {
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> addComment(@RequestBody ShareCommentDto shareCommentDto) {
+    public ResponseEntity<?> addComment(@RequestBody SharedTravelRouteComments sharedTravelRouteComments) {
         try {
-            ShareCommentDto savedComment = shareCommentService.addComment(shareCommentDto);
+            SharedTravelRouteComments savedComment = shareCommentService.addComment(sharedTravelRouteComments);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedComment);
         } catch (Exception e) {
             log.error("Error adding comment", e);
@@ -44,7 +44,7 @@ public class ShareCommentController {
 
         System.out.println("sharedTravelRouteNo = " + sharedTravelRouteNo);
         try {
-            List<ShareCommentDto> comments = shareCommentService.getCommentsForArticle(Integer.parseInt(sharedTravelRouteNo));
+            List<SharedTravelRouteComments> comments = shareCommentService.getCommentsForArticle(Integer.parseInt(sharedTravelRouteNo));
             return ResponseEntity.ok().body(comments);
         } catch (Exception e) {
             log.error("Error getting comments for article", e);
@@ -53,10 +53,10 @@ public class ShareCommentController {
     }
 
     @PutMapping("/modify")
-    public ResponseEntity<?> modifyComment(@RequestBody ShareCommentDto shareCommentDto) {
+    public ResponseEntity<?> modifyComment(@RequestBody SharedTravelRouteComments sharedTravelRouteComments) {
         try {
-            log.info(shareCommentDto.toString());
-            shareCommentService.modifyComment(shareCommentDto);
+            log.info(sharedTravelRouteComments.toString());
+            shareCommentService.modifyComment(sharedTravelRouteComments);
             return ResponseEntity.ok().body("Comment modified successfully.");
         } catch (Exception e) {
             log.error("Error during comment modification", e);

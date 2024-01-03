@@ -67,6 +67,7 @@ function clickComment() {
         console.error("Error adding comment:", error);
       }
   );
+  write.value = "";
 }
 
 const fetchComments = async () => {

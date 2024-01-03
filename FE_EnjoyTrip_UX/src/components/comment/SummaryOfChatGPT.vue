@@ -13,12 +13,14 @@
 
 <script setup>
 import {defineProps, onMounted, ref} from 'vue';
-import { chatWithOpenAI } from "@/api/chat";
+import {chatWithOpenAI, chatWithOpenAIByShare} from "@/api/chat";
 const props = defineProps([
-  'articleno'
-])
+  'no','itemKey'
+]);
 
-const boardNo = ref(props.articleno);
+console.log(props.itemKey);
+
+const boardNo = ref(props.no);
 // const icon = '@/assets/images/chatgpt-icon.png'; // ChatGPT 아이콘 이미지 URL을 업데이트하세요.
 const summary = ref('ChatGPT가 최근 리뷰를 요약한 내용이 여기에 나타납니다.');
 
@@ -33,9 +35,24 @@ const getChatGptResponse = () => {
       });
 };
 
-// onMounted(()=>{
-//   getChatGptResponse();
-// });
+const getShareGptResponse = () => {
+  // API 호출
+  chatWithOpenAIByShare(boardNo.value, ({ data }) => {
+        console.log(data);
+        summary.value = data;
+      },
+      (error) => {
+        console.log(error)
+      });
+};
+
+onMounted(()=>{
+  if(props.itemKey === 'comments'){
+    getChatGptResponse();
+  }else if(props.itemKey === 'share'){
+    getShareGptResponse();
+  }
+});
 </script>
 
 <style scoped>

@@ -1,7 +1,7 @@
 package com.ssafy.ux.sharecomments.service;
 
 import com.ssafy.ux.sharecomments.mapper.ShareCommentMapper;
-import com.ssafy.ux.sharecomments.model.ShareCommentDto;
+import com.ssafy.ux.sharecomments.model.SharedTravelRouteComments;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -14,21 +14,21 @@ public class ShareCommentServiceImpl implements ShareCommentService {
         this.shareCommentMapper = commentMapper;
     }
     @Override
-    public ShareCommentDto addComment(ShareCommentDto shareCommentDto) {
-        shareCommentMapper.addComment(shareCommentDto);
-        System.out.println("commentDto = " + shareCommentDto.toString());
-        return shareCommentDto;
+    public SharedTravelRouteComments addComment(SharedTravelRouteComments sharedTravelRouteComments) {
+        shareCommentMapper.addComment(sharedTravelRouteComments);
+        System.out.println("commentDto = " + sharedTravelRouteComments.toString());
+        return sharedTravelRouteComments;
     }
 
     @Override
-    public List<ShareCommentDto> getCommentsForArticle(int sharedTravelRouteNo) {
+    public List<SharedTravelRouteComments> getCommentsForArticle(int sharedTravelRouteNo) {
         shareCommentMapper.getCommentsForArticle(sharedTravelRouteNo).forEach(System.out::println);
         return shareCommentMapper.getCommentsForArticle(sharedTravelRouteNo);
     }
 
     @Override
-    public void modifyComment(ShareCommentDto shareCommentDto) throws Exception {
-        shareCommentMapper.modifyComment(shareCommentDto);
+    public void modifyComment(SharedTravelRouteComments sharedTravelRouteComments) throws Exception {
+        shareCommentMapper.modifyComment(sharedTravelRouteComments);
     }
 
     @Override

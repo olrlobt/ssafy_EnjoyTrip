@@ -25,4 +25,12 @@ public class ChatService {
         return concatenatedComments;
     }
 
+    public String getConcatenatedCommentsBySharedTravelRouteNo(int sharedTravelRouteNo) {
+        List<String> commentsContent = chatRepository.findCommentsContentBySharedTravelRouteNo(sharedTravelRouteNo);
+
+        // 댓글 내용을 추출하여 하나의 문자열로 연결
+        String concatenatedComments = String.join(", ", commentsContent);
+
+        return concatenatedComments;
+    }
 }

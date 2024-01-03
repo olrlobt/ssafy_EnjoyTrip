@@ -68,6 +68,40 @@ public class ChatController {
         return prompt;
     }
 
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping("/chat/share")
+    public String getShareComments(@RequestBody int sharedTravelRouteNo) {
+        // check commentDto.getId
+//        int articleNo = comments.getArticleNo();
+        log.info("sharedTravelRouteNo: {} ", sharedTravelRouteNo);
+        String prompt = chatService.getConcatenatedCommentsBySharedTravelRouteNo(sharedTravelRouteNo);
+        prompt += "위의 해당 글들은 갖고 있는 데이터입니다. 데이터를 한문장으로 요약해주세요 ";
+
+        log.info("prompt: {}", prompt);
+
+        //create a request
+        ChatRequest request = new ChatRequest(model, prompt);
+        log.info("chat request: {}",request.getMessages().get(0).toString());
+        // call the API
+        try {
+            ChatResponse response = restTemplate.postForObject(apiUrl, request, ChatResponse.class);
+            assert response != null;
+
+            log.info("chat response: {}", response.getChoices().get(0).getMessage().getContent());
+            if (response.getChoices() == null || response.getChoices().isEmpty()) {
+                return "No response";
+            }
+
+            // return the first response
+            return response.getChoices().get(0).getMessage().getContent();
+
+        } catch (RestClientException e) {
+            log.error("Error occurred while making the API request: {}", e.getMessage());
+        }
+
+        return prompt;
+    }
+
     //Gpt 내용 요약 추가
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @PostMapping("/chat/content")

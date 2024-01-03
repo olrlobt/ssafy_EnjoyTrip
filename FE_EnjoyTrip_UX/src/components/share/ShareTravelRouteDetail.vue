@@ -8,9 +8,11 @@ import router from "@/router";
 import Swal from "sweetalert2";
 import {useMapStore} from "@/stores/map";
 import CommentList from "@/components/comment/CommentList.vue";
+import SummaryOfChatGPT from "@/components/comment/SummaryOfChatGPT.vue";
 
 const shareStore = useShareStore();
 const url = ref('sharedTravelRouteComments');
+const itemKey = ref('share');
 
 
 let travelList;
@@ -137,6 +139,7 @@ const bringTravelRouteBtn = () => {
 
       <CommentList :url="url" :no="shareStore.travelRoute.sharedTravelRouteNo"  />
       <!-- Replace with actual comments loop -->
+      <summary-of-chat-g-p-t :itemKey="itemKey" :no="shareStore.travelRoute.sharedTravelRouteNo"/>
     </div>
 
   </div>

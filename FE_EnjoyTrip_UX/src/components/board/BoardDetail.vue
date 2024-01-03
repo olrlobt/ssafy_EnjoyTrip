@@ -55,6 +55,7 @@ const viewer = ref(null);
 const viewerValid = ref(null);
 const checked = ref(false);
 const url = ref('comments');
+const itemKey = ref('comments');
 
 onMounted(async () => {
   await getMemberInfo();
@@ -210,8 +211,8 @@ function clickComment() {
     <div class="card bg-light">
       <div class="card-body">
         <div>
-          <summary-of-chat-g-p-t :articleno="articleno"/>
-          <CommentList :url="url" :no="articleno" />
+          <summary-of-chat-g-p-t :no="articleno" :itemKey="itemKey"/>
+          <CommentList :url="url" :no="articleno"  />
           <!-- Replace with actual comments loop -->
         </div>
       </div>
