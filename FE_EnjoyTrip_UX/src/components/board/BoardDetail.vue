@@ -55,6 +55,7 @@ const viewer = ref(null);
 const viewerValid = ref(null);
 const checked = ref(false);
 const url = ref('comments');
+const itemKey = ref('comments');
 
 onMounted(async () => {
   await getMemberInfo();
@@ -204,26 +205,19 @@ function clickComment() {
       <button type="button" class="btn btn-primary mt-2" @click="moveList">글목록</button>
     </div>
 
-    <!-- Comments List -->
-    <div>
-      <CommentList :url="url" :no="articleno" />
-      <!-- Replace with actual comments loop -->
     </div>
-    <!-- Comment Input -->
-
     <br/>
+    <!-- Comments List -->
     <div class="card bg-light">
       <div class="card-body">
-
         <div>
-          <!-- chatGpt 요약내용 -->
-          <summary-of-chat-g-p-t :articleno="articleno"/>
+          <summary-of-chat-g-p-t :no="articleno" :itemKey="itemKey"/>
+          <CommentList :url="url" :no="articleno"  />
+          <!-- Replace with actual comments loop -->
         </div>
-        <!-- Comments List -->
-        <CommentList  />
       </div>
     </div>
-
+    <!-- Comment Input -->
   </div>
 <!--  </div>-->
 </template>

@@ -10,4 +10,7 @@ import java.util.List;
 public interface ChatRepository extends JpaRepository<Comments, Integer> {
     @Query("SELECT c.content FROM Comments c WHERE c.articleNo = :articleNo")
     List<String> findCommentsContentByArticleNo(@Param("articleNo") int articleNo);
+
+    @Query("SELECT c.content FROM SharedTravelRouteComments c WHERE c.sharedTravelRouteNo = :sharedTravelRouteNo")
+    List<String> findCommentsContentBySharedTravelRouteNo(@Param("sharedTravelRouteNo") int sharedTravelRouteNo);
 }

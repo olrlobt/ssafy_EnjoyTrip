@@ -19,4 +19,11 @@ function getContentWithOpenAI(title, success, fail){
 
 }
 
-export { chatWithOpenAI, getContentWithOpenAI };
+function chatWithOpenAIByShare(boardNo, success, fail) {
+    console.log("chatWithOpenAI여기까지는 오나요" + boardNo);
+    local.post(`${url}/share`, JSON.stringify(boardNo))
+        .then(success)
+        .catch(fail);
+}
+
+export { chatWithOpenAI, getContentWithOpenAI, chatWithOpenAIByShare };

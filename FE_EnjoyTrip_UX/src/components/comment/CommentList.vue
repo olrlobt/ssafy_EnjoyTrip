@@ -1,6 +1,9 @@
 <template>
     <input type="text" class="form-control" placeholder="댓글을 입력하세요" v-model="write">
-    <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
+    <div class="btn-class">
+      <button class="btn btn-primary mt-2" @click="clickComment()">댓글 입력</button>
+    </div>
+<!--   <summary-of-chat-g-p-t :articleno="articleno"/>-->
     <CommentUnit v-for="(comment,index) in commentStore.comments"
                  :key="comment.id"
                  :comment="comment"
@@ -17,6 +20,7 @@ import {useCommentStore} from "@/stores/comment";
 import CommentUnit from "@/components/comment/CommentUnit.vue";
 import {addComment, getCommentsForArticle} from "@/api/comment";
 import {useMemberStore} from "@/stores/member";
+import SummaryOfChatGPT from "@/components/comment/SummaryOfChatGPT.vue";
 const write = ref("");
 
 const newComment = ref({
@@ -63,6 +67,7 @@ function clickComment() {
         console.error("Error adding comment:", error);
       }
   );
+  write.value = "";
 }
 
 const fetchComments = async () => {
@@ -99,4 +104,7 @@ onMounted(async () => {
 </script>
 
 <style scoped>
+.btn-class{
+  margin-bottom: 6px;
+}
 </style>
